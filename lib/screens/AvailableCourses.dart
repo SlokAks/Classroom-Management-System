@@ -15,9 +15,9 @@ class _AvailableCoursesState extends State<AvailableCourses> {
   void initState() {
     // TODO: implement initState
     list.add(CustomListTile(widget: Icon(Icons.book),title: "Software Engineering",));
-    list.add(CustomListTile(widget: Icon(Icons.book),title: "Software Engineering",));
-    list.add(CustomListTile(widget: Icon(Icons.book),title: "Software Engineering",));
-    list.add(CustomListTile(widget: Icon(Icons.book),title: "Software Engineering",));
+    list.add(CustomListTile(widget: Icon(Icons.book),title: "RAJU Engineering",));
+    list.add(CustomListTile(widget: Icon(Icons.book),title: "PHANTOM Engineering",));
+    list.add(CustomListTile(widget: Icon(Icons.book),title: "paryuk Engineering",));
     super.initState();
   }
   @override
