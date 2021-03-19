@@ -6,6 +6,10 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
       MaterialApp(
+        theme: ThemeData(
+          accentColor: Colors.lightBlueAccent,
+          splashColor: Colors.greenAccent,
+        ),
       home:MyApp()));
 }
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:classroom_management/screens/home.dart';
 class NavDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,10 @@ class NavDrawer extends StatelessWidget {
                 fontSize: 22.0,
                 fontWeight: FontWeight.bold
             ),),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () async{
+              await FirebaseAuth.instance.signOut();
+              Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+            },
           ),
           Divider(),
         ],
