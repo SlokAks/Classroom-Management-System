@@ -12,7 +12,8 @@ class EnroledCourses extends StatefulWidget {
 
 class _EnroledCoursesState extends State<EnroledCourses> {
   User user = FirebaseAuth.instance.currentUser;
-
+  CollectionReference dbCourses =
+      FirebaseFirestore.instance.collection('courses');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +35,16 @@ class _EnroledCoursesState extends State<EnroledCourses> {
           }
           return ListView(
             children: snapshot.data.docs.map((document) {
+              String courseTitle = "NA";
+              dbCourses
+                  .where("course_id", isEqualTo: document['course_id'])
+                  .get()
+                  .then((value) => value.docs
+                      .map((e) => {courseTitle = e.data()['course_name']}));
               return CustomListTile(
                 widget: Icon(Icons.book),
-                title: "asd",
-                description: "sad",
+                title: courseTitle,
+                description: "NA",
               );
             }).toList(),
           );
