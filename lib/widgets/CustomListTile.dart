@@ -12,26 +12,32 @@ import 'package:flutter/material.dart';
 //  );
 //}
 class CustomListTile extends StatelessWidget {
-  Widget widget;String title;
-  CustomListTile({this.widget,this.title});
+  Widget widget;
+  String title;
+  String description;
+  CustomListTile({this.widget, this.title, this.description});
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         GestureDetector(
-          onTap: (){
+          onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CourseDescription()),
+              MaterialPageRoute(
+                  builder: (context) => CourseDescription(
+                        title: title,
+                        description: description,
+                      )),
             );
           },
           child: ListTile(
-          leading: widget,
-          title: Text(title,style: TextStyle(
-            fontSize: 26.0,
-            fontWeight: FontWeight.bold
-          ),),
-  ),
+            leading: widget,
+            title: Text(
+              title,
+              style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
         Divider(),
       ],
