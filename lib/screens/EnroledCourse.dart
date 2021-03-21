@@ -1,4 +1,3 @@
-import 'package:classroom_management/widgets/CustomListTile.dart';
 import 'package:classroom_management/widgets/appbar.dart';
 import 'package:classroom_management/widgets/navbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -41,11 +40,11 @@ class _EnroledCoursesState extends State<EnroledCourses> {
                   .get()
                   .then((value) => value.docs
                       .map((e) => {courseTitle = e.data()['course_name']}));
-              return CustomListTile(
-                widget: Icon(Icons.book),
-                title: courseTitle,
-                description: "NA",
-              );
+              // return CustomListTile(
+              //   widget: Icon(Icons.book),
+              //   title: courseTitle,
+              //   description: "NA",
+              // );
             }).toList(),
           );
         },

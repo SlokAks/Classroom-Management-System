@@ -12,6 +12,9 @@ class AvailableCourses extends StatefulWidget {
 class _AvailableCoursesState extends State<AvailableCourses> {
   List<CustomListTile> list = [];
 
+  CollectionReference courseCollectionReference =
+      FirebaseFirestore.instance.collection("Courses");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,25 +23,28 @@ class _AvailableCoursesState extends State<AvailableCourses> {
         title: "Available Courses",
       ).build(context),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('courses').snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+          stream: courseCollectionReference.snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text("Something went wrong");
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            }
 
-          return ListView(
-            children: snapshot.data.docs.map((document) {
-              return CustomListTile(
-                widget: Icon(Icons.book),
-                title: document['course_name'],
-                description: document['course_description'],
-              );
-            }).toList(),
-          );
-        },
-      ),
+            return ListView(
+              children: snapshot.data.docs.map(
+                (document) {
+                  return CustomListTile(
+                    document.id,
+                    title: document["name"] + "(" + document.id + ")",
+                    description: document["description"],
+                  );
+                },
+              ).toList(),
+            );
+          }),
     );
   }
 }
