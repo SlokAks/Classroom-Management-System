@@ -12,10 +12,11 @@ import 'package:flutter/material.dart';
 //  );
 //}
 class CustomListTile extends StatelessWidget {
+  String courseId;
   Widget widget;
   String title;
   String description;
-  CustomListTile({this.widget, this.title, this.description});
+  CustomListTile(this.courseId, {this.widget, this.title, this.description});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,6 +27,7 @@ class CustomListTile extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => CourseDescription(
+                        courseId,
                         title: title,
                         description: description,
                       )),
