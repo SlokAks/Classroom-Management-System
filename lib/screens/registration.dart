@@ -11,8 +11,6 @@ class TextFormFieldExample extends StatefulWidget {
   State<StatefulWidget> createState() => _TextFormFieldExampleState();
 }
 
-// Adapted from the text form demo in official gallery app:
-// https://github.com/flutter/flutter/blob/master/examples/flutter_gallery/lib/demo/material/text_form_field_demo.dart
 class _TextFormFieldExampleState extends State<TextFormFieldExample> {
   final GlobalKey<FormFieldState<String>> _passwordFieldKey = GlobalKey<FormFieldState<String>>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
@@ -25,7 +23,8 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
         "id" : user.uid,
         "name" : this._name,
         "email" : this._email,
-        "contact" :this._phoneNumber
+        "contact" :this._phoneNumber,
+        "isProf" : false,
       });
     }
   }
@@ -176,6 +175,7 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
             const SizedBox(height: 24.0),
             // "Re-type password" form.
             TextFormField(
+
              enabled: this._password != null && this._password.isNotEmpty,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),

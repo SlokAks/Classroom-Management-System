@@ -1,3 +1,5 @@
+import 'package:classroom_management/screens/AvailableCourses.dart';
+import 'package:classroom_management/screens/EnroledCourse.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:classroom_management/screens/home.dart';
@@ -20,13 +22,26 @@ class NavDrawer extends StatelessWidget {
                     image: AssetImage('assets/images/cover.jpeg'))),
           ),
           ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Home',style: TextStyle(
+                fontSize: 22.0,
+                fontWeight: FontWeight.bold
+            ),),
+            onTap: () => {
+              Navigator.pop(context),
+              Navigator.push(context, MaterialPageRoute(builder: (context) =>HomePage())),
+            },
+          ),
+          Divider(),
+          ListTile(
             leading: Icon(Icons.book),
             title: Text('Available Courses',style: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.bold
             ),),
             onTap: () => {
-
+              Navigator.pop(context),
+              Navigator.push(context, MaterialPageRoute(builder: (context) =>AvailableCourses())),
             },
           ),
           Divider(),
@@ -37,7 +52,10 @@ class NavDrawer extends StatelessWidget {
                   fontSize: 22.0,
                   fontWeight: FontWeight.bold
               ),),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {
+              Navigator.pop(context),
+              Navigator.push(context, MaterialPageRoute(builder: (context) => EnroledCourses())),
+            },
           ),
           Divider(),
           ListTile(

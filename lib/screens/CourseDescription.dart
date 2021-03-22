@@ -1,11 +1,15 @@
-import 'package:classroom_management/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 
-class CourseDescription extends StatelessWidget {
+import 'Announcements.dart';
 
-  String title = "Software Engineering";
+class CourseDescription extends StatelessWidget {
+  String courseId;
+  String title = "NA";
+  String description = "NA";
+  CourseDescription(this.courseId, {this.title, this.description});
   @override
   Widget build(BuildContext context) {
+    print(courseId);
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -15,10 +19,10 @@ class CourseDescription extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(2.0),
-            child: Text("Course Description",style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 44.0
-            ),),
+            child: Text(
+              "Course Description",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 44.0),
+            ),
           ),
           Divider(),
           Container(
@@ -28,24 +32,56 @@ class CourseDescription extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text("Name of the Course :    Software Engineering",style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 28.0,
-                ),),
-                Text("LTP structure of the course:    2-1-1",style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 28.0,
-                ),),
-                Text("Objective of the course: Apply software engineering theory, principles, tools and processes",style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 28.0,
-                ),),
+                Text(
+                  "Name of the Course :    " + title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 28.0,
+                  ),
+                ),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 28.0,
+                  ),
+                ),
               ],
             ),
-          )
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Announcements(courseId)),
+              );
+            },
+            child: Container(
+              height: 130.0,
+              width: 450.0,
+              child: Card(
+                elevation: 14.0,
+                child: Container(
+                  height: 130.0,
+                  decoration: BoxDecoration(
+                    color: Colors.white70,
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Announcements",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 26.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
-
     );
   }
 }

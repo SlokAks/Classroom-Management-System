@@ -1,5 +1,6 @@
 import 'package:classroom_management/screens/AvailableCourses.dart';
 import 'package:classroom_management/screens/CourseDescription.dart';
+import 'package:classroom_management/screens/EnroledCourse.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:classroom_management/variables/variables.dart';
@@ -13,24 +14,16 @@ import 'package:classroom_management/variables/variables.dart';
 //    ),),
 //  );
 //}
-class CustomListTile extends StatelessWidget {
+class EnroledCourseListTile extends StatelessWidget {
   String courseId;
   Widget widget;
   String title;
   String description;
-  bool isEnroled=false;
-  enrolCourse() async{
-    CollectionReference usersEnroledCourses = FirebaseFirestore.instance.collection('users').doc(currentUser.uid).collection("enrolledCourses");
-    await usersEnroledCourses.doc(courseId).set({});
-    isEnroled=true;
-
-  }
   unEnrolCourse() async{
     CollectionReference usersEnroledCourses = FirebaseFirestore.instance.collection('users').doc(currentUser.uid).collection("enrolledCourses");
     await usersEnroledCourses.doc(courseId).delete();
-    isEnroled=false;
   }
-  CustomListTile(this.courseId, {this.widget, this.title, this.description,this.isEnroled});
+  EnroledCourseListTile(this.courseId, {this.widget, this.title, this.description});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -50,14 +43,14 @@ class CustomListTile extends StatelessWidget {
               ),
             ),
 
-           trailing: Row(
+            trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ElevatedButton(onPressed: (){
                   showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                      title: Text(isEnroled ? "Want to Unenrol from $title? (Warning : All course Progress & Submissions would be deleted!)" : "Want to Enrol in $title"),
+                      title: Text( "Want to Unenrol from $title? (Warning : All course Progress & Submissions would be deleted!)"),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -65,11 +58,11 @@ class CustomListTile extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                              isEnroled?  unEnrolCourse() : enrolCourse();
+                            unEnrolCourse();
 
-                          Navigator.pop(context);
                             Navigator.pop(context);
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => AvailableCourses()));
+                            Navigator.pop(context);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => EnroledCourses()));
 
                           },
                           child: const Text('Yes'),
@@ -91,38 +84,39 @@ class CustomListTile extends StatelessWidget {
                     primary: Colors.white, // background
                     onPrimary: Colors.white, // foreground
                   ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    isEnroled?"Enroled":"Not Enroled", style: TextStyle(
-                      color: isEnroled?Colors.green:Colors.red,
-                    fontWeight: FontWeight.bold
-                    ),
-                  ),
-
-                ),
-//color: Colors.white70,
-//                    color: isEnroled?Colors.green:Colors.red,
-                ),
-                SizedBox(width: 4.0,),
-                ElevatedButton(
-                 onPressed: (){
-                   Navigator.push(
-                     context,
-                     MaterialPageRoute(
-                         builder: (context) => CourseDescription(
-                           courseId,
-                           title: title,
-                           description: description,
-                         )),
-                   );
-                 },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                        "Course Details",style: TextStyle(
+                     "Unenrol?",
+                        style: TextStyle( color: Colors.red,
+                            fontWeight: FontWeight.bold),
+
+                    ),
+                    ),
+
+                  ),
+//color: Colors.white70,
+//                    color: isEnroled?Colors.green:Colors.red,
+
+                SizedBox(width: 4.0,),
+                ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CourseDescription(
+                            courseId,
+                            title: title,
+                            description: description,
+                          )),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Course Details",style: TextStyle(
                         color: Theme.of(context).accentColor,
-                      fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold
                     ),
                     ),
                   ),
