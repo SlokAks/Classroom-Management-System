@@ -1,6 +1,8 @@
 import 'package:classroom_management/widgets/CustomListTile.dart';
+import 'package:classroom_management/widgets/EnroledCourseListTile.dart';
 import 'package:classroom_management/widgets/appbar.dart';
 import 'package:classroom_management/widgets/navbar.dart';
+import 'package:classroom_management/widgets/progress.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,7 @@ class _EnroledCoursesState extends State<EnroledCourses> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Center(
-              child: CircularProgressIndicator(),
+              child:circularProgress(),
             );
           }
           return ListView(
@@ -48,7 +50,7 @@ class _EnroledCoursesState extends State<EnroledCourses> {
                     }
 
                     if (courseSnapsot.connectionState == ConnectionState.done) {
-                      return CustomListTile(
+                      return EnroledCourseListTile(
                         enrolledCoursesSnapshot.id,
                         title: courseSnapsot.data.data()["name"] +
                             "(" +
@@ -57,7 +59,9 @@ class _EnroledCoursesState extends State<EnroledCourses> {
                         description: courseSnapsot.data.data()["description"],
                       );
                     }
-                    return Text("loading");
+                    return Center(
+                      child: circularProgress(),
+                    );
                   },
                 );
               },
