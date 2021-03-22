@@ -15,10 +15,10 @@ class _AssignmentsState extends State<Assignments> {
   void initState() {
     // TODO: implement initState
     list.add(CustomAssignmentListTile(widget : Icon(Icons.assessment),title: "SOE : Assignment -1 (Demo)",));
-    list.add(CustomAssignmentListTile(widget : Icon(Icons.assessment),title: "SOE : Assignment -1 (Demo)",));
-    list.add(CustomAssignmentListTile(widget : Icon(Icons.assessment),title: "SOE : Assignment -1 (Demo)",));
-    list.add(CustomAssignmentListTile(widget : Icon(Icons.assessment),title: "SOE : Assignment -1 (Demo)",));
-    list.add(CustomAssignmentListTile(widget : Icon(Icons.assessment),title: "SOE : Assignment -1 (Demo)",));
+    list.add(CustomAssignmentListTile(widget : Icon(Icons.assessment),title: "phantom",));
+    list.add(CustomAssignmentListTile(widget : Icon(Icons.assessment),title: "phantom",));
+    list.add(CustomAssignmentListTile(widget : Icon(Icons.assessment),title: "vip",));
+    list.add(CustomAssignmentListTile(widget : Icon(Icons.assessment),title: "vip",));
 
     super.initState();
   }

@@ -176,7 +176,7 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
             const SizedBox(height: 24.0),
             // "Re-type password" form.
             TextFormField(
-//              enabled: this._password != null && this._password.isNotEmpty,
+             enabled: this._password != null && this._password.isNotEmpty,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 filled: true,
