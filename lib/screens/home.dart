@@ -281,74 +281,77 @@ SignIn() async{
           appBar: AppBar(
             title: Text("Home Page"),
           ),
-          body: Center(
-              child: ListView(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 260.0,
-                    width: 580.0,
-                    child: Card(
-                      elevation: 14.0,
-                      child: Container(
-                        height: 230.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                        ),
-                        child: Column(
+           body: Row(
+             children: [
+               Expanded(
+                   child: Container(
+                     margin: EdgeInsets.all(15.0),
+                     decoration: BoxDecoration(
+                       color: Colors.transparent,
+                       borderRadius: BorderRadius.circular(10.0),
+                     ),
+                     child: Card(
+                       color: Colors.white.withOpacity(0.7),
+                       elevation: 14.0,
+                       child: Container(
+                         margin: EdgeInsets.all(15.0),
+                         decoration: BoxDecoration(
+                           color: Colors.transparent,
+                           borderRadius: BorderRadius.circular(10.0),
+                         ),
+                         child: Column(
 
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CircleAvatar(
-                                child: Icon(
-                                  Icons.person
-                                ),
-                              ),
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Name : ",style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 26.0,
-                                ),),
-                                Text(name==null?"":name,style: TextStyle(
-                                  fontSize: 26.0,
-                                ),),
-                              ],
-                            ),
-                            Divider(),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Contact : ",style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 26.0,
-                                ),),
-                                Text(contact==null?"":contact,style: TextStyle(
-                                  fontSize: 26.0,
-                                ),),
-                              ],
-                            ),
-                            Divider(),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Email : ",style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 26.0,
-                                ),),
-                                Text(email==null?"":email,style: TextStyle(
-                                  fontSize: 26.0,
-                                ),),
+                           children: [
+                             Padding(
+                               padding: const EdgeInsets.all(8.0),
+                               child: CircleAvatar(
+                                 child: Icon(
+                                     Icons.person
+                                 ),
+                               ),
+                             ),
+                             Row(
+                               crossAxisAlignment: CrossAxisAlignment.center,
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               children: [
+                                 Text("Name : ",style: TextStyle(
+                                   fontWeight: FontWeight.bold,
+                                   fontSize: 26.0,
+                                 ),),
+                                 Text(name==null?"":name,style: TextStyle(
+                                   fontSize: 26.0,
+                                 ),),
+                               ],
+                             ),
+                             Divider(),
+                             Row(
+                               crossAxisAlignment: CrossAxisAlignment.center,
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               children: [
+                                 Text("Contact : ",style: TextStyle(
+                                   fontWeight: FontWeight.bold,
+                                   fontSize: 26.0,
+                                 ),),
+                                 Text(contact==null?"":contact,style: TextStyle(
+                                   fontSize: 26.0,
+                                 ),),
+                               ],
+                             ),
+                             Divider(),
+                             Row(
+                               crossAxisAlignment: CrossAxisAlignment.center,
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               children: [
+                                 Text("Email : ",style: TextStyle(
+                                   fontWeight: FontWeight.bold,
+                                   fontSize: 26.0,
+                                 ),),
+                                 Text(email==null?"":email,style: TextStyle(
+                                   fontSize: 26.0,
+                                 ),),
 
-                              ],
-                            ),
+                               ],
+                             ),
 //                          Divider(),
 //                          Row(
 //                            crossAxisAlignment: CrossAxisAlignment.center,
@@ -363,127 +366,146 @@ SignIn() async{
 //                              ),),
 //                            ],
 //                          )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => AvailableCourses()),
-                          );
-                        },
-                        child: Container(
-                          height: 130.0,
-                          width: 450.0,
-                          child: Card(
-                            elevation: 14.0,
-                            child: Container(
-                              height: 130.0,
-                              decoration: BoxDecoration(
-                                color: Colors.white70,
-                              ),
-                              child: Center(
-                                child: Text("Available Courses",style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 26.0,
-                                ),),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => EnroledCourses()),
-                          );
-                        },
-                        child: Container(
-                          height: 130.0,
-                          width: 450.0,
-                          child: Card(
-                            elevation: 14.0,
-                            child: Container(
-                              height: 130.0,
-                              decoration: BoxDecoration(
-                                color: Colors.white70,
-                              ),
-                              child: Center(
-                                child: Text("Enroled Courses",style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                  fontSize: 26.0,
-                                ),),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Assignments()),
-                          );
-                        },
-                        child: Container(
-                          height: 130.0,
-                          width: 400.0,
-                          child: Card(
-                            elevation: 14.0,
-                            child: Container(
-                              height: 130.0,
-                              decoration: BoxDecoration(
-                                color: Colors.white70,
-                              ),
-                              child: Center(
-                                child: Text("Assignments",style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 26.0,
-                                ),),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: (){},
-                        child: Container(
-                          height: 130.0,
-                          width: 400.0,
-                          child: Card(
-                            elevation: 14.0,
-                            child: Container(
-                              height: 130.0,
-                              decoration: BoxDecoration(
-                                color: Colors.white70,
-                              ),
-                              child: Center(
-                                child: Text("Edit Profile",style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 26.0,
-                                ),),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-
-                ],
-              )
-            ],
-          )),
+                           ],
+                         ),
+                       ),
+                     ),
+                   ),
+               ),
+               Expanded(
+                   child: Column(
+                     children: [
+                       Expanded(
+                           child: GestureDetector(
+                             onTap: (){
+                               Navigator.push(
+                                 context,
+                                 MaterialPageRoute(builder: (context) => AvailableCourses()),
+                               );
+                             },
+                             child: Container(
+                               margin: EdgeInsets.all(15.0),
+                               decoration: BoxDecoration(
+                                 color: Colors.transparent,
+                                 borderRadius: BorderRadius.circular(10.0),
+                               ),
+                               child: Card(
+                                 color: Colors.white.withOpacity(0.7),
+                                 elevation: 14.0,
+                                 child: Container(
+                                   height: 130.0,
+                                   decoration: BoxDecoration(
+                                     color: Colors.transparent,
+                                   ),
+                                   child: Center(
+                                     child: Text("Available Courses",style: TextStyle(
+                                       fontWeight: FontWeight.bold,
+                                       fontSize: 26.0,
+                                     ),),
+                                   ),
+                                 ),
+                               ),
+                             ),
+                           ),
+                       ),
+                       Expanded(
+                           child: GestureDetector(
+                             onTap: (){
+                               Navigator.push(
+                                 context,
+                                 MaterialPageRoute(builder: (context) => EnroledCourses()),
+                               );
+                             },
+                             child: Container(
+                               margin: EdgeInsets.all(15.0),
+                               decoration: BoxDecoration(
+                                 color: Colors.transparent,
+                                 borderRadius: BorderRadius.circular(10.0),
+                               ),
+                               child: Card(
+                                 color: Colors.white.withOpacity(0.7),
+                                 elevation: 14.0,
+                                 child: Container(
+                                   height: 130.0,
+                                   decoration: BoxDecoration(
+                                     color: Colors.transparent,
+                                   ),
+                                   child: Center(
+                                     child: Text("Enroled Courses",style: TextStyle(
+                                       fontWeight: FontWeight.bold,
+                                       fontSize: 26.0,
+                                     ),),
+                                   ),
+                                 ),
+                               ),
+                             ),
+                           )
+                       ),
+                       Expanded(
+                           child: GestureDetector(
+                             onTap: (){
+                               Navigator.push(
+                                 context,
+                                 MaterialPageRoute(builder: (context) => Assignments()),
+                               );
+                             },
+                             child: Container(
+                               margin: EdgeInsets.all(15.0),
+                               decoration: BoxDecoration(
+                                 color: Colors.transparent,
+                                 borderRadius: BorderRadius.circular(10.0),
+                               ),
+                               child: Card(
+                                 color: Colors.white.withOpacity(0.7),
+                                 elevation: 14.0,
+                                 child: Container(
+                                   height: 130.0,
+                                   decoration: BoxDecoration(
+                                     color: Colors.transparent,
+                                   ),
+                                   child: Center(
+                                     child: Text("Assignments",style: TextStyle(
+                                       fontWeight: FontWeight.bold,
+                                       fontSize: 26.0,
+                                     ),),
+                                   ),
+                                 ),
+                               ),
+                             ),
+                           ),
+                       ),
+                       Expanded(
+                           child: GestureDetector(
+                             onTap: (){},
+                             child: Container(
+                               margin: EdgeInsets.all(15.0),
+                               decoration: BoxDecoration(
+                                 color: Colors.transparent,
+                                 borderRadius: BorderRadius.circular(10.0),
+                               ),
+                               child: Card(
+                                 elevation: 14.0,
+                                 color: Colors.white.withOpacity(0.7),
+                                 child: Container(
+                                   height: 130.0,
+                                   decoration: BoxDecoration(
+                                     color: Colors.transparent,
+                                   ),
+                                   child: Center(
+                                     child: Text("Edit Profile",style: TextStyle(
+                                       fontWeight: FontWeight.bold,
+                                       fontSize: 26.0,
+                                     ),),
+                                   ),
+                                 ),
+                               ),
+                             ),
+                           )
+                       ),
+                     ],
+                   )),
+             ],
+           ),
       ),
     ],
        );
