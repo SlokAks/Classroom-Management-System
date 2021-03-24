@@ -1,3 +1,4 @@
+import 'package:classroom_management/screens/course.dart';
 import 'package:flutter/material.dart';
 
 import 'Announcements.dart';
@@ -54,7 +55,7 @@ class CourseDescription extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Announcements(courseId)),
+                    builder: (context) => Course(courseId,title: title,description: description,)),
               );
             },
             child: Container(
@@ -69,7 +70,7 @@ class CourseDescription extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      "Announcements",
+                      "Go to Course Page",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 26.0,

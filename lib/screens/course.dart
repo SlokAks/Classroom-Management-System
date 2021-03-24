@@ -1,4 +1,5 @@
 import 'package:classroom_management/screens/Announcements.dart';
+import 'package:classroom_management/screens/assignments.dart';
 import 'package:classroom_management/widgets/navbar.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class _CourseState extends State<Course> {
   Widget build(BuildContext context) {
     final _kTabPages = <Widget>[
       Announcements(courseId),
-      const Center(child: Icon(Icons.alarm, size: 64.0, color: Colors.cyan)),
+      Assignments(courseId: courseId,title: title,description: description,),
       const Center(child: Icon(Icons.forum, size: 64.0, color: Colors.blue)),
     ];
     final _kTabs = <Tab>[

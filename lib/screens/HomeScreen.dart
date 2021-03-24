@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 MaterialApp HomeScreen(String name) {
   return MaterialApp(
+//    theme: ThemeData.dark(),
     home: Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
