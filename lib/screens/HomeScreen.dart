@@ -1,3 +1,4 @@
+import 'package:classroom_management/screens/CourseDescription.dart';
 import 'package:classroom_management/widgets/EnrolledCoursesTile.dart';
 import 'package:classroom_management/widgets/navbar.dart';
 import 'package:classroom_management/widgets/progress.dart';
@@ -93,11 +94,28 @@ MaterialApp HomeScreen(String name) {
 
                                     if (courseSnapsot.connectionState ==
                                         ConnectionState.done) {
-                                      return EnrolledCoursesTile(
-                                          courseSnapsot.data.data()['name'],
-                                          "NA",
-                                          courseSnapsot.data
-                                              .data()['description']);
+                                      return GestureDetector(
+                                        onTap: (){
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => CourseDescription(
+                                                    courseSnapsot.data
+                                                        .id,
+                                                  title: courseSnapsot.data
+                                                      .data()['name'],
+                                                  description:   courseSnapsot.data
+                                                      .data()['description'],
+                                                )),
+                                          );
+                                        },
+                                        child: EnrolledCoursesTile(
+                                            courseSnapsot.data.data()['name'],
+                                            "NA",
+                                            courseSnapsot.data
+                                                .data()['description']),
+                                      );
                                     }
                                     return Center(
                                       child: circularProgress(),
