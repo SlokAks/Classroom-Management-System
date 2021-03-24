@@ -32,6 +32,7 @@ dependencies:
   firebase_auth: ^1.0.1
   google_sign_in: "^4.5.1"
   cloud_firestore: ^1.0.1
+  table_calendar: ^2.3.3
   firebase_storage: ^8.0.0
 
 

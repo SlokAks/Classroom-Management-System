@@ -1,14 +1,26 @@
 import 'package:classroom_management/screens/CourseDescription.dart';
 import 'package:classroom_management/screens/course.dart';
 import 'package:classroom_management/widgets/EnrolledCoursesTile.dart';
+import 'package:classroom_management/widgets/HomeAnnouncementTile.dart';
 import 'package:classroom_management/widgets/navbar.dart';
 import 'package:classroom_management/widgets/progress.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
+
+class AnnouncementsContainer {
+  String course;
+  String text;
+  Timestamp time;
+  String userId;
+  AnnouncementsContainer(this.course, this.text, this.userId, this.time);
+}
 
 MaterialApp HomeScreen(String name) {
+  CalendarController _calendarController = CalendarController();
+
   return MaterialApp(
 //    theme: ThemeData.dark(),
     home: Scaffold(
@@ -61,7 +73,53 @@ MaterialApp HomeScreen(String name) {
                     flex: 1,
                     child: Container(
                       child: Center(
-                        child: Text("Announcements"),
+                        child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(FirebaseAuth.instance.currentUser.uid)
+                              .collection("enrolledCourses")
+                              .snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> coursesSnapshot) {
+                            if (!coursesSnapshot.hasData) {
+                              return circularProgress();
+                            }
+
+                            return ListView(
+                              children:
+                                  coursesSnapshot.data.docs.map((courses) {
+                                print(courses.id);
+                                return StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection("Courses")
+                                      .doc(courses.id)
+                                      .collection("Announcements")
+                                      .orderBy('time', descending: true)
+                                      .snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<QuerySnapshot>
+                                          announcementSnapshot) {
+                                    if (!announcementSnapshot.hasData) {
+                                      return Text("Looading");
+                                    }
+                                    return Column(
+                                        children: announcementSnapshot.data.docs
+                                            .map((announcement) {
+                                      return HomeAnnouncementTile(
+                                        announcement.data()['text'],
+                                        announcementTime:
+                                            announcement.data()['time'],
+                                        courseId: courses.id,
+                                      );
+                                    }).toList());
+
+                                    // return Text("Loading");
+                                  },
+                                );
+                              }).toList(),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -144,10 +202,11 @@ MaterialApp HomeScreen(String name) {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      child: Center(
-                        child: Text("Calender"),
-                      ),
-                    ),
+                        child: Column(
+                      children: <Widget>[
+                        TableCalendar(calendarController: _calendarController),
+                      ],
+                    )),
                   )
                 ],
               ),
