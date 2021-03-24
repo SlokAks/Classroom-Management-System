@@ -1,4 +1,5 @@
 import 'package:classroom_management/screens/CourseDescription.dart';
+import 'package:classroom_management/screens/course.dart';
 import 'package:classroom_management/widgets/EnrolledCoursesTile.dart';
 import 'package:classroom_management/widgets/navbar.dart';
 import 'package:classroom_management/widgets/progress.dart';
@@ -100,7 +101,7 @@ MaterialApp HomeScreen(String name) {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => CourseDescription(
+                                                builder: (context) => Course(
                                                     courseSnapsot.data
                                                         .id,
                                                   title: courseSnapsot.data

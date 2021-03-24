@@ -20,12 +20,7 @@ class _AnnouncementsState extends State<Announcements> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: NavDrawer(),
-      appBar: CustomAppBar(
-        title: "Announcements",
-      ).build(context),
-      body: StreamBuilder(
+    return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("Courses")
             .doc(courseId)
@@ -64,7 +59,6 @@ class _AnnouncementsState extends State<Announcements> {
             }).toList(),
           );
         },
-      ),
-    );
+      );
   }
 }
