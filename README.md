@@ -1,6 +1,8 @@
 # classroom_management
 
-An Application to manage classroom made using Flutter and Firebase as backend,
+An Application to manage classroom made using Flutter and Firebase as backend.
+___
+Live Link : https://classroommanagement-7a087.web.app/
 
 ## Getting Started
 
