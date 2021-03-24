@@ -1,5 +1,6 @@
 import 'package:classroom_management/screens/Announcements.dart';
 import 'package:classroom_management/screens/assignments.dart';
+import 'package:classroom_management/screens/chat_screen.dart';
 import 'package:classroom_management/widgets/navbar.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class _CourseState extends State<Course> {
     final _kTabPages = <Widget>[
       Announcements(courseId),
       Assignments(courseId: courseId,title: title,description: description,),
-      const Center(child: Icon(Icons.forum, size: 64.0, color: Colors.blue)),
+     ChatScreen(courseId: courseId,),
     ];
     final _kTabs = <Tab>[
       const Tab(icon: Icon(Icons.announcement), text: 'Announcements'),
