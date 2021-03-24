@@ -2,14 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AnnouncementTile extends StatelessWidget {
-  Icon icon;
-  String userName;
+class HomeAnnouncementTile extends StatelessWidget {
+  String courseId;
   Timestamp announcementTime;
   String announcementDescription;
 
-  AnnouncementTile(this.announcementDescription,
-      {this.userName, this.announcementTime});
+  HomeAnnouncementTile(this.announcementDescription,
+      {this.courseId, this.announcementTime});
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +18,8 @@ class AnnouncementTile extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Icon(
-                Icons.account_circle_sharp,
-                size: 25,
-              ),
-              Column(
-                children: <Widget>[
-                  Text(userName),
-                  Text(announcementTime.toDate().toString()),
-                ],
-              ),
+              Text(courseId),
+              Text(announcementTime.toDate().toString()),
             ],
           ),
           Text(announcementDescription),
