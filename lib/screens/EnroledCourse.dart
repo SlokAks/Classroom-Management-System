@@ -1,5 +1,4 @@
-import 'package:classroom_management/widgets/CustomListTile.dart';
-import 'package:classroom_management/widgets/EnroledCourseListTile.dart';
+import 'package:classroom_management/widgets/EnrolledCoursesTile.dart';
 import 'package:classroom_management/widgets/appbar.dart';
 import 'package:classroom_management/widgets/navbar.dart';
 import 'package:classroom_management/widgets/progress.dart';
@@ -32,7 +31,7 @@ class _EnroledCoursesState extends State<EnroledCourses> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Center(
-              child:circularProgress(),
+              child: circularProgress(),
             );
           }
           return ListView(
@@ -50,14 +49,10 @@ class _EnroledCoursesState extends State<EnroledCourses> {
                     }
 
                     if (courseSnapsot.connectionState == ConnectionState.done) {
-                      return EnroledCourseListTile(
-                        enrolledCoursesSnapshot.id,
-                        title: courseSnapsot.data.data()["name"] +
-                            "(" +
-                            enrolledCoursesSnapshot.id +
-                            ")",
-                        description: courseSnapsot.data.data()["description"],
-                      );
+                      return EnrolledCoursesTile(
+                          courseSnapsot.data.data()['name'],
+                          "NA",
+                          courseSnapsot.data.data()['description']);
                     }
                     return Center(
                       child: circularProgress(),
