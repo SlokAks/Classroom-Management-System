@@ -24,47 +24,52 @@ MaterialApp HomeScreen(String name) {
   return MaterialApp(
 //    theme: ThemeData.dark(),
     home: Scaffold(
+      backgroundColor: Color(0xFFF7F7F7),
       drawer: NavDrawer(),
       appBar: AppBar(
-        title: Text("Welcome " + name),
+        backgroundColor: Colors.white,
+        // leading: const Icon(Icons.tag_faces),
+        title: Center(child: Text("Welcome " + name)),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.add,
+              color: Colors.blue,
+            ),
+            //TODO onpressed
+          ),
+          IconButton(
+            icon: const Icon(Icons.account_circle_sharp),
+            //TODO onpressed
+          ),
+          PopupMenuButton(
+            itemBuilder: (BuildContext context) {
+              return [
+                const PopupMenuItem(child: Text('Boat')),
+                const PopupMenuItem(child: Text('Train'))
+              ];
+            },
+          )
+        ],
       ),
       body: Container(
         child: Column(
           children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: Image(
-                      width: 200,
-                      height: 100,
-                      image: AssetImage("assets/images/logo.png"),
-                    ),
-                  ),
-                  Expanded(
-                      flex: 4, child: Center(child: Text("Welcome " + name))),
-                  Expanded(
-                    flex: 1,
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.add,
-                        color: Colors.blue,
-                      ),
-                      //TODO onpressed
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: IconButton(
-                      icon: const Icon(Icons.account_circle_sharp),
-                      //TODO onpressed
-                    ),
-                  )
-                ],
-              ),
-            ),
+            // Expanded(
+            //   flex: 1,
+            //   child: Row(
+            //     children: <Widget>[
+            //       Expanded(
+            //         flex: 2,
+            //         child: Image(
+            //           width: 200,
+            //           height: 100,
+            //           image: AssetImage("assets/images/logo.png"),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Expanded(
               flex: 10,
               child: Row(
@@ -72,6 +77,12 @@ MaterialApp HomeScreen(String name) {
                   Expanded(
                     flex: 1,
                     child: Container(
+                      margin: EdgeInsets.all(30),
+                      padding: EdgeInsets.all(30),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                       child: Center(
                         child: StreamBuilder(
                           stream: FirebaseFirestore.instance
@@ -199,15 +210,15 @@ MaterialApp HomeScreen(String name) {
                       },
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                        child: Column(
-                      children: <Widget>[
-                        TableCalendar(calendarController: _calendarController),
-                      ],
-                    )),
-                  )
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: Container(
+                  //       child: Column(
+                  //     children: <Widget>[
+                  //       TableCalendar(calendarController: _calendarController),
+                  //     ],
+                  //   )),
+                  // )
                 ],
               ),
             )
