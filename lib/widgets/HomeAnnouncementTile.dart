@@ -13,6 +13,7 @@ class HomeAnnouncementTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       margin: const EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
