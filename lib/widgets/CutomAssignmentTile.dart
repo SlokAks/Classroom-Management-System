@@ -1,14 +1,17 @@
+import 'package:classroom_management/screens/AssignmentView.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:html' as html;
 
 class CustomAssignmentListTile extends StatelessWidget {
   Widget widget;
+  String courseId;
   String title;
   String description;
   String url;
   Timestamp dueDate;
-  CustomAssignmentListTile({this.title,this.description,this.dueDate,this.url});
+  String assignmentId;
+  CustomAssignmentListTile({this.courseId,this.title,this.description,this.dueDate,this.url,this.assignmentId});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,7 +50,14 @@ class CustomAssignmentListTile extends StatelessWidget {
                      SizedBox(height: 20.0,),
                      IconButton(onPressed:(){
                        html.window.open(url, 'new tab');
-                     }, icon: Icon(Icons.assignment))
+                     }, icon: Icon(Icons.assignment)),
+                     SizedBox(width: 60.0,),
+                     ElevatedButton(onPressed: (){
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => AssignmentView(title: this.title,description: this.description,courseId: this.courseId,assignmentId: this.assignmentId,dueDate: dueDate,url : this.url)));
+                     }, child: Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: Text("Go to Assignment"),
+                     ),)
                    ],
                  ),
                )

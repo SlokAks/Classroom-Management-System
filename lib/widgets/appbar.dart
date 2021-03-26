@@ -5,8 +5,21 @@ class CustomAppBar extends StatelessWidget {
   CustomAppBar({this.title});
   @override
   AppBar build(BuildContext context) {
-    return AppBar(
-      title: Text(this.title),
+    return   AppBar(
+    backgroundColor: Colors.white,
+    // leading: const Icon(Icons.tag_faces),
+    title: Center(child: Text(this.title)),
+    flexibleSpace: Container(
+    decoration: BoxDecoration(
+    gradient: LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: <Color>[
+    Color(0xFFAD70FA),
+    Color(0xFF8857DF)
+    ])
+    ),
+    ),
     );
   }
 }

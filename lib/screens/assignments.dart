@@ -16,14 +16,19 @@ class Assignments extends StatefulWidget {
 
 class _AssignmentsState extends State<Assignments> {
 
-   String courseId="NA";
+   String courseId = "NA";
   String title = "NA";
   String description = "NA";
   _AssignmentsState({this.courseId,this.title,this.description});
   List <CustomAssignmentListTile> list=[];
-  CollectionReference assignments = FirebaseFirestore.instance.collection('Courses').doc("DBMS").collection("Assignments");
+  CollectionReference assignments;
 
-
+@override
+  void initState() {
+    // TODO: implement initState
+  assignments=FirebaseFirestore.instance.collection('Courses').doc(courseId).collection("Assignments");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -42,6 +47,8 @@ class _AssignmentsState extends State<Assignments> {
         return new ListView(
           children: snapshot.data.docs.map((DocumentSnapshot document) {
             return CustomAssignmentListTile(
+              courseId: this.courseId,
+              assignmentId: document.id,
               title: document.data()['title'],
               description: document.data()['Description'],
               url: document.data()['link'],
