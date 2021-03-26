@@ -2,6 +2,7 @@ import 'package:classroom_management/screens/AssignmentComments.dart';
 import 'package:classroom_management/widgets/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:html' as html;
 
 class AssignmentView extends StatefulWidget {
@@ -18,7 +19,39 @@ class AssignmentView extends StatefulWidget {
 
 class _AssignmentViewState extends State<AssignmentView> {
   bool isSubmitted=false;
-  bool isLoading=false;
+  bool isLoading=true;
+  User user;
+  CollectionReference assignment;
+  findIfSubmitted() async{
+    setState(() {
+      isLoading=true;
+    });
+    DocumentSnapshot documentSnapshot = await assignment.doc(widget.assignmentId).get();
+    if(documentSnapshot.exists) {
+      setState(() {
+        isSubmitted=true;
+      });
+    }
+    else{
+      setState(() {
+        isSubmitted=false;
+      });
+
+    }
+    print('done');
+    setState(() {
+      isLoading=false;
+    });
+  }
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    user= FirebaseAuth.instance.currentUser;
+    assignment = FirebaseFirestore.instance.collection('users').doc(user.uid).collection('enrolledCourses').doc(widget.courseId).collection('Assignments');
+    findIfSubmitted();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
