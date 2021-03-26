@@ -1,4 +1,4 @@
-import 'package:classroom_management/screens/CourseDescription.dart';
+import 'package:classroom_management/screens/CalendarWithAssignment.dart';
 import 'package:classroom_management/screens/course.dart';
 import 'package:classroom_management/widgets/EnrolledCoursesTile.dart';
 import 'package:classroom_management/widgets/HomeAnnouncementTile.dart';
@@ -155,19 +155,19 @@ MaterialApp HomeScreen(String name) {
                                     if (courseSnapsot.connectionState ==
                                         ConnectionState.done) {
                                       return GestureDetector(
-                                        onTap: (){
-
+                                        onTap: () {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) => Course(
-                                                    courseSnapsot.data
-                                                        .id,
-                                                  title: courseSnapsot.data
-                                                      .data()['name'],
-                                                  description:   courseSnapsot.data
-                                                      .data()['description'],
-                                                )),
+                                                      courseSnapsot.data.id,
+                                                      title: courseSnapsot.data
+                                                          .data()['name'],
+                                                      description: courseSnapsot
+                                                              .data
+                                                              .data()[
+                                                          'description'],
+                                                    )),
                                           );
                                         },
                                         child: EnrolledCoursesTile(
@@ -199,15 +199,7 @@ MaterialApp HomeScreen(String name) {
                       },
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                        child: Column(
-                      children: <Widget>[
-                        TableCalendar(calendarController: _calendarController),
-                      ],
-                    )),
-                  )
+                  Expanded(flex: 1, child: CalendarWithAssignment())
                 ],
               ),
             )
