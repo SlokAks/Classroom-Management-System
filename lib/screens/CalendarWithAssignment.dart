@@ -16,8 +16,6 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
   AnimationController _animationController;
   CalendarController _calendarController;
 
-  bool CalendarLoaded = false;
-
   @override
   void initState() {
     super.initState();
@@ -40,7 +38,7 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
 
     _animationController.forward();
     _calendarController = CalendarController();
-
+    getEvents();
     super.initState();
   }
 
@@ -83,7 +81,6 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
                 });
               }
               setState(() {
-                CalendarLoaded = true;
                 DateTime now = DateTime.now();
                 _selectedEvents =
                     _events[DateTime(now.year, now.month, now.day)] ?? [];
@@ -122,20 +119,11 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
 
   @override
   Widget build(BuildContext context) {
-    if (CalendarLoaded) {
-      return Container(
-        child: Column(
-          children: [_buildTableCalendar(), Expanded(child: _buildEventList())],
-        ),
-      );
-    } else {
-      getEvents();
-      return Container(
-        child: Column(
-          children: [CircularProgressIndicator(), CircularProgressIndicator()],
-        ),
-      );
-    }
+    return Container(
+      child: Column(
+        children: [_buildTableCalendar(), Expanded(child: _buildEventList())],
+      ),
+    );
   }
 
   // Simple TableCalendar configuration (using Styles)
