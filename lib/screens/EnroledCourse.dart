@@ -20,9 +20,37 @@ class _EnroledCoursesState extends State<EnroledCourses> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavDrawer(),
-      appBar: CustomAppBar(
-        title: "Enroled Courses",
-      ).build(context),
+      appBar: AppBar(
+      backgroundColor: Colors.white,
+      // leading: const Icon(Icons.tag_faces),
+      title: Center(child: Text("Enrolled Courses")),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+                  Color(0xFFAD70FA),
+                  Color(0xFF8857DF)
+                ])
+        ),
+      ),
+      actions: <Widget>[
+
+        IconButton(
+          icon: const Icon(Icons.account_circle_sharp),
+          //TODO onpressed
+        ),
+        // PopupMenuButton(
+        //   itemBuilder: (BuildContext context) {
+        //     return [
+        //       const PopupMenuItem(child: Text('Boat')),
+        //       const PopupMenuItem(child: Text('Train'))
+        //     ];
+        //   },
+        // )
+      ],
+    ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('users')

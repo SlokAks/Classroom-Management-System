@@ -100,8 +100,8 @@ MaterialApp HomeScreen(String name, BuildContext context) {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      margin: EdgeInsets.all(30),
-                      padding: EdgeInsets.all(30),
+                      margin: EdgeInsets.only(top: 15,bottom: 15),
+                      padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20.0),
@@ -233,7 +233,15 @@ MaterialApp HomeScreen(String name, BuildContext context) {
                       },
                     ),
                   ),
-                  Expanded(flex: 1, child: CalendarWithAssignment())
+                  Expanded(flex: 1,
+                      child: Container(
+                        padding: EdgeInsets.all(15),
+                        margin: EdgeInsets.only(top: 15,bottom: 15),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                          child: CalendarWithAssignment()))
                 ],
               ),
             )
