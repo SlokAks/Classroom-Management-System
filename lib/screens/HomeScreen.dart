@@ -1,3 +1,4 @@
+import 'package:classroom_management/screens/AvailableCoursesDialog.dart';
 import 'package:classroom_management/screens/CalendarWithAssignment.dart';
 import 'package:classroom_management/screens/course.dart';
 import 'package:classroom_management/widgets/EnrolledCoursesTile.dart';
@@ -18,7 +19,7 @@ class AnnouncementsContainer {
   AnnouncementsContainer(this.course, this.text, this.userId, this.time);
 }
 
-MaterialApp HomeScreen(String name) {
+MaterialApp HomeScreen(String name, BuildContext context) {
   CalendarController _calendarController = CalendarController();
 
   return MaterialApp(
@@ -31,12 +32,23 @@ MaterialApp HomeScreen(String name) {
         // leading: const Icon(Icons.tag_faces),
         title: Center(child: Text("Welcome " + name)),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.add,
-              color: Colors.blue,
+          GestureDetector(
+            onTap: () {
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => AvailableCourses()));
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AvailableCoursesDialog();
+                  });
+            },
+            child: IconButton(
+              icon: const Icon(
+                Icons.add,
+                color: Colors.blue,
+              ),
+              //TODO onpressed
             ),
-            //TODO onpressed
           ),
           IconButton(
             icon: const Icon(Icons.account_circle_sharp),

@@ -552,7 +552,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     if (isSigned) {
-      return HomeScreen(name);
+      return HomeScreen(name, context);
     } else {
       return buildSignInScreen();
     }

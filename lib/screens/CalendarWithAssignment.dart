@@ -43,6 +43,7 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
   }
 
   void getEvents() {
+    _events.clear();
     User currentUserr = FirebaseAuth.instance.currentUser;
     CollectionReference enrolledCoursesReference = FirebaseFirestore.instance
         .collection("users")
@@ -57,9 +58,9 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
           assignmentSnapshot.docs.forEach((assignment) {
             FirebaseFirestore.instance
                 .collection("Courses")
-                .doc(enrolledCourse.id)
+                .doc(enrolledCourse.id.trim())
                 .collection("Assignments")
-                .doc(assignment.id)
+                .doc((assignment.id).trim())
                 .get()
                 .then((value) {
               print(assignment.id);
@@ -121,7 +122,17 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: [_buildTableCalendar(), Expanded(child: _buildEventList())],
+        children: [
+          _buildTableCalendar(),
+          GestureDetector(
+            onTap: getEvents,
+            child: Icon(
+              Icons.refresh,
+              size: 40,
+            ),
+          ),
+          Expanded(child: _buildEventList())
+        ],
       ),
     );
   }
