@@ -31,6 +31,17 @@ MaterialApp HomeScreen(String name, BuildContext context) {
         backgroundColor: Colors.white,
         // leading: const Icon(Icons.tag_faces),
         title: Center(child: Text("Welcome " + name)),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    Color(0xFFAD70FA),
+                    Color(0xFF8857DF)
+                  ])
+          ),
+        ),
         actions: <Widget>[
           GestureDetector(
             onTap: () {

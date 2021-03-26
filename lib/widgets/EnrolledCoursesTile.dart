@@ -10,13 +10,8 @@ class EnrolledCoursesTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.blue,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30.0),
-          topRight: Radius.elliptical(40.0, 80.0),
-        ),
-      ),
+      color: Colors.white,
+      elevation: 20,
       child:
         Stack(
           children: [
@@ -24,52 +19,85 @@ class EnrolledCoursesTile extends StatelessWidget {
 
             child: Column(
               children: [
+                Expanded(flex:2,child: Container(
+                  child: Image.asset('images/thumbnail/thumbnail.png',fit: BoxFit.fill,),
+                )),
                 Expanded(
                   flex: 1,
-                  child: Column(children: <Widget>[
+                  child: Column(
+                      children: <Widget>[
                     SizedBox(
                       height: 20,
                     ),
-                    Text(courseName),
-                    Text(courseInstructor),
-                    Text(courseDescription),
+                        Padding(
+                          padding: const EdgeInsets.only(right:4.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(courseName,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right:4.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(courseInstructor,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right:4.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(courseDescription,
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                   ]),
                 ),
-                Expanded(
-                  flex: 2,
-                    child: Container(color: Colors.white,)
-                )
 
               ],
             ),
           ),
-            Container(
+            Expanded(
               child: Column(
                 children: [
+                  Expanded(flex: 3,child: Container()),
                   Expanded(
-                    flex:7,
+                    flex: 2,
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Expanded(
-                          flex: 2,
-                            child: Container()),
-                        Expanded(
-                          flex: 1,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
-                            radius: 40,
-                            child: Icon(
-                                Icons.person,
-                              size: 60,
-                            ),
+                          radius: 30,
+                          child: Icon(
+                            Icons.person,
+                            size: 30,
                           ),
-                        ),
 
-                        ]
+            ),
+                        ),
+                      ],
                     ),
                   ),
-                  Expanded(
-                    flex: 4,
-                      child: Container()),
+                  Expanded(flex:1,child: Container())
                 ],
               ),
             )
