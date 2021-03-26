@@ -1,5 +1,6 @@
 import 'package:classroom_management/screens/AvailableCourses.dart';
 import 'package:classroom_management/screens/EnroledCourse.dart';
+import 'package:classroom_management/screens/editProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:classroom_management/screens/home.dart';
@@ -70,7 +71,10 @@ class NavDrawer extends StatelessWidget {
                   color: Colors.white,
                   fontWeight: FontWeight.bold
               ),),
-              onTap: () => {Navigator.of(context).pop()},
+              onTap: () => {
+                Navigator.pop(context),
+                Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile())),
+              },
             ),
             Divider(),
             ListTile(

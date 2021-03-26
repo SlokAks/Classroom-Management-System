@@ -30,7 +30,7 @@ class EnrolledCoursesTile extends StatelessWidget {
                       height: 20,
                     ),
                         Padding(
-                          padding: const EdgeInsets.only(right:4.0),
+                          padding: const EdgeInsets.only(left:8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -43,7 +43,7 @@ class EnrolledCoursesTile extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right:4.0),
+                          padding: const EdgeInsets.only(left:8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -56,7 +56,7 @@ class EnrolledCoursesTile extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right:4.0),
+                          padding: const EdgeInsets.only(left:8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -85,14 +85,18 @@ class EnrolledCoursesTile extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: CircleAvatar(
-                          radius: 30,
-                          child: Icon(
-                            Icons.person,
-                            size: 30,
-                          ),
+                          child: Flexible(
+                            child: CircleAvatar(
+                            radius: 30,
+                            child: Flexible(
+                              child: Icon(
+                                Icons.person,
+                                size: 30,
+                              ),
+                            ),
 
             ),
+                          ),
                         ),
                       ],
                     ),
