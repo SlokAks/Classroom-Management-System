@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:html' as html;
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
 
 class AssignmentView extends StatefulWidget {
   String courseId="NA";
@@ -43,7 +45,31 @@ class _AssignmentViewState extends State<AssignmentView> {
       isLoading=false;
     });
   }
-  
+
+  Future getPdfAndUpload()async{
+//    var rng = new Random();
+//    String randomName="";
+//    for (var i = 0; i < 20; i++) {
+//      print(rng.nextInt(100));
+//      randomName += rng.nextInt(100).toString();
+//    }
+
+    FilePickerResult result = await FilePicker.platform.pickFiles(type: FileType.custom,allowedExtensions: ['.pdf','.jpg','.png','.docx','.pptx','jpeg']);
+//    String fileName = '${randomName}.pdf';
+//    print(fileName);
+//    print('${file.readAsBytesSync()}');
+//    savePdf(file.readAsBytesSync(), fileName);
+  }
+
+//  Future savePdf(List<int> asset, String name) async {
+//
+//    StorageReference reference = FirebaseStorage.instance.ref().child(name);
+//    StorageUploadTask uploadTask = reference.putData(asset);
+//    String url = await (await uploadTask.onComplete).ref.getDownloadURL();
+//    print(url);
+//    documentFileUpload(url);
+//    return  url;
+//  }
   @override
   void initState() {
     // TODO: implement initState
@@ -254,6 +280,7 @@ class _AssignmentViewState extends State<AssignmentView> {
                                       ),
                                       onPressed: (){
                                         //Todo : Implement File Submission functionality
+                                        getPdfAndUpload();
 //                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>AssignmentComments(courseId: widget.courseId,AssignmentId: widget.assignmentId,title: widget.title,)));
                                       }, child: Row(
                                     children: [
