@@ -14,20 +14,24 @@ class _AvailableCoursesDialogState extends State<AvailableCoursesDialog> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: Stack(
+      child: Row(
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black,
-                      offset: Offset(0, 10),
-                      blurRadius: 10),
-                ]),
-            child: AvailableCourses(),
+          Expanded(flex:2,child: Container()),
+          Expanded(
+            flex: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black,
+                        offset: Offset(0, 10),
+                        blurRadius: 10),
+                  ]),
+              child: AvailableCourses(),
+            ),
           )
         ],
       ),
