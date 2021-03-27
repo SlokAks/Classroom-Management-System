@@ -106,54 +106,86 @@ MaterialApp HomeScreen(String name, BuildContext context) {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      child: Center(
-                        child: StreamBuilder(
-                          stream: FirebaseFirestore.instance
-                              .collection("users")
-                              .doc(FirebaseAuth.instance.currentUser.uid)
-                              .collection("enrolledCourses")
-                              .snapshots(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<QuerySnapshot> coursesSnapshot) {
-                            if (!coursesSnapshot.hasData) {
-                              return circularProgress();
-                            }
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(8),
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Color(0xFF858D8F),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF858D8F),
+                                  ),
+                                  child: Text('Announcement',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Center(
+                              child: StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection("users")
+                                    .doc(FirebaseAuth.instance.currentUser.uid)
+                                    .collection("enrolledCourses")
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> coursesSnapshot) {
+                                  if (!coursesSnapshot.hasData) {
+                                    return circularProgress();
+                                  }
 
-                            return ListView(
-                              children:
-                                  coursesSnapshot.data.docs.map((courses) {
-                                print(courses.id);
-                                return StreamBuilder(
-                                  stream: FirebaseFirestore.instance
-                                      .collection("Courses")
-                                      .doc(courses.id)
-                                      .collection("Announcements")
-                                      .orderBy('time', descending: true)
-                                      .snapshots(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<QuerySnapshot>
-                                          announcementSnapshot) {
-                                    if (!announcementSnapshot.hasData) {
-                                      return Text("Looading");
-                                    }
-                                    return Column(
-                                        children: announcementSnapshot.data.docs
-                                            .map((announcement) {
-                                      return HomeAnnouncementTile(
-                                        announcement.data()['text'],
-                                        announcementTime:
-                                            announcement.data()['time'],
-                                        courseId: courses.id,
+                                  return ListView(
+                                    children:
+                                        coursesSnapshot.data.docs.map((courses) {
+                                      print(courses.id);
+                                      return StreamBuilder(
+                                        stream: FirebaseFirestore.instance
+                                            .collection("Courses")
+                                            .doc(courses.id)
+                                            .collection("Announcements")
+                                            .orderBy('time', descending: true)
+                                            .snapshots(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<QuerySnapshot>
+                                                announcementSnapshot) {
+                                          if (!announcementSnapshot.hasData) {
+                                            return Text("Looading");
+                                          }
+                                          return Column(
+                                              children: announcementSnapshot.data.docs
+                                                  .map((announcement) {
+                                            return HomeAnnouncementTile(
+                                              announcement.data()['text'],
+                                              announcementTime:
+                                                  announcement.data()['time'],
+                                              courseId: courses.id,
+                                            );
+                                          }).toList());
+
+                                          // return Text("Loading");
+                                        },
                                       );
-                                    }).toList());
-
-                                    // return Text("Loading");
-                                  },
-                                );
-                              }).toList(),
-                            );
-                          },
-                        ),
+                                    }).toList(),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -235,7 +267,7 @@ MaterialApp HomeScreen(String name, BuildContext context) {
                   ),
                   Expanded(flex: 1,
                       child: Container(
-                        padding: EdgeInsets.all(15),
+                        // padding: EdgeInsets.all(15),
                         margin: EdgeInsets.only(top: 15,bottom: 15),
                         decoration: BoxDecoration(
                           color: Colors.white,
