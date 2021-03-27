@@ -51,7 +51,8 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
         .collection("enrolledCourses");
     enrolledCoursesReference.get().then((courseSnapshot) {
       courseSnapshot.docs.forEach((enrolledCourse) {
-        CollectionReference assignmentsReference = enrolledCoursesReference
+        CollectionReference assignmentsReference = FirebaseFirestore.instance
+            .collection("Courses")
             .doc(enrolledCourse.id)
             .collection("Assignments");
         assignmentsReference.get().then((assignmentSnapshot) {
