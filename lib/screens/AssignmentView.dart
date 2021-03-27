@@ -1,11 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:classroom_management/screens/AssignmentComments.dart';
 import 'package:classroom_management/widgets/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:html' as html;
+import 'dart:html';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart'  as firebase_storage;
+
+import 'package:flutter/services.dart';
 
 class AssignmentView extends StatefulWidget {
   String courseId="NA";
@@ -21,8 +26,20 @@ class AssignmentView extends StatefulWidget {
 
 class _AssignmentViewState extends State<AssignmentView> {
   bool isSubmitted=false;
-  bool isLoading=true;
+  bool isLoading;
   User user;
+  bool _loadingPath=false;
+  List<PlatformFile> _paths;
+  FileType _pickingType = FileType.any;
+  String _directoryPath;
+  String fileName;
+  bool isLate=false;
+  String _extension;
+  bool _multiPick=false;
+  String userAssignmentUrl="";
+  Timestamp userSubmissionTime;
+  String userFileName="";
+  String userGrade="";
   CollectionReference assignment;
   findIfSubmitted() async{
     setState(() {
@@ -31,45 +48,107 @@ class _AssignmentViewState extends State<AssignmentView> {
     DocumentSnapshot documentSnapshot = await assignment.doc(widget.assignmentId).get();
     if(documentSnapshot.exists) {
       setState(() {
+        userSubmissionTime = documentSnapshot.data()['submittedAt'];
+        userAssignmentUrl=documentSnapshot.data()['url'];
+        userGrade=documentSnapshot.data()['grade'];
+        userFileName=documentSnapshot.data()['fileName'];
+        if(userSubmissionTime.toDate().isBefore( widget.dueDate.toDate()) ){
+            isLate=false;
+        }
+        else{
+          isLate=true;
+        }
         isSubmitted=true;
-      });
-    }
-    else{
-      setState(() {
-        isSubmitted=false;
       });
 
     }
-    print('done');
+    else {
+      setState(() {
+        isSubmitted = false;
+      });
+    }
     setState(() {
       isLoading=false;
     });
   }
-
-  Future getPdfAndUpload()async{
-//    var rng = new Random();
-//    String randomName="";
-//    for (var i = 0; i < 20; i++) {
-//      print(rng.nextInt(100));
-//      randomName += rng.nextInt(100).toString();
-//    }
-
-    FilePickerResult result = await FilePicker.platform.pickFiles(type: FileType.custom,allowedExtensions: ['.pdf','.jpg','.png','.docx','.pptx','jpeg']);
-//    String fileName = '${randomName}.pdf';
-//    print(fileName);
-//    print('${file.readAsBytesSync()}');
-//    savePdf(file.readAsBytesSync(), fileName);
+  storeToFirestore(String url,String fileName) async{
+  try {
+    await assignment.doc(widget.assignmentId).set({
+      "submittedAt" : DateTime.now(),
+      "url" : url,
+      "grade" : "",
+      "fileName" :  fileName
+    });
+    Navigator.pop(context);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => AssignmentView(title: this.widget.title,description: this.widget.description,courseId: this.widget.courseId,assignmentId: this.widget.assignmentId,dueDate: this.widget.dueDate,url : this.widget.url)));
+  }
+  catch(e){
+    SnackBar snackBar= SnackBar(content: Text(e.toString()));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-//  Future savePdf(List<int> asset, String name) async {
-//
-//    StorageReference reference = FirebaseStorage.instance.ref().child(name);
-//    StorageUploadTask uploadTask = reference.putData(asset);
-//    String url = await (await uploadTask.onComplete).ref.getDownloadURL();
-//    print(url);
-//    documentFileUpload(url);
-//    return  url;
-//  }
+  }
+  Upload(fileName,Uint8List data) async {
+    setState(() => _loadingPath = true);
+    firebase_storage.Reference ref =
+    firebase_storage.FirebaseStorage.instance.ref(
+        'usersdata/${user.uid}/${widget.courseId}/${widget.assignmentId}/${fileName}');
+    _extension = fileName
+        .toString()
+        .split('.').last;
+    firebase_storage.SettableMetadata metadata =
+    firebase_storage.SettableMetadata(
+        contentType: '$_pickingType/$_extension'
+    );
+
+    try {
+      await ref.putData(data,metadata);
+      String downloadURL = await ref.getDownloadURL();
+      print(downloadURL);
+      storeToFirestore(downloadURL,fileName);
+      setState(() {
+        _loadingPath=false;
+      });
+    } catch (e) {
+      SnackBar snackBar= SnackBar(content: Text(e.toString()));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      print(e);
+    }
+  }
+  Future getFileAndUpload()async {
+
+    try {
+      _directoryPath = null;
+      _paths = (await FilePicker.platform.pickFiles(
+        type: _pickingType,
+        allowMultiple: _multiPick,
+        allowedExtensions: (_extension?.isNotEmpty ?? false)
+            ? _extension?.replaceAll(' ', '')?.split(',')
+            : null,
+      ))
+          ?.files;
+    } on PlatformException catch (e) {
+      print("Unsupported operation" + e.toString());
+    } catch (ex) {
+      print(ex);
+    }
+    if (!mounted) return;
+    setState(() {
+      _loadingPath = false;
+
+      _paths != null ? _paths.map((e) => fileName = e.name).toString() : '...';
+      List<int> bytes;
+      _paths != null ? _paths.map((e) => {bytes = e.bytes}).toString() : '...';
+
+      Uint8List data = Uint8List.fromList(bytes);
+      SnackBar snackBar= SnackBar(content: Text("Uploading Your Assignment......."));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Upload(fileName, data);
+    });
+  }
+
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -84,7 +163,7 @@ class _AssignmentViewState extends State<AssignmentView> {
       appBar: CustomAppBar(title: widget.title,).build(context),
 
       body: SingleChildScrollView(
-        child: Column(
+        child: _loadingPath?Center(child: CircularProgressIndicator(),): Column(
 
           children: [
             Padding(
@@ -159,7 +238,7 @@ class _AssignmentViewState extends State<AssignmentView> {
                                   primary: Colors.tealAccent,
                                 ),
                                 onPressed: (){
-                                  html.window.open(this.widget.url, 'new tab');
+                                  window.open(this.widget.url, 'new tab');
                                 }, child: Row(
                               children: [
                                 Padding(
@@ -259,51 +338,221 @@ class _AssignmentViewState extends State<AssignmentView> {
                                   color: Colors.purple,
                                 ),
                               ),),
-                             isLoading?Center(child: CircularProgressIndicator(),) : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: isSubmitted? Text("Submitted",style: TextStyle(
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0
-                                ),) :
 
-                                Text("Not Submitted",style: TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0
-                                ),),
-                              ),
-                              isLoading?Center(child: CircularProgressIndicator(),) :
-                                  isSubmitted ?  Container() :  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.lightBlueAccent,
-                                      ),
-                                      onPressed: (){
-                                        //Todo : Implement File Submission functionality
-                                        getPdfAndUpload();
-//                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>AssignmentComments(courseId: widget.courseId,AssignmentId: widget.assignmentId,title: widget.title,)));
-                                      }, child: Row(
+                              isLoading?Center(child: CircularProgressIndicator(),) : (
+                                  isSubmitted ?  Column(
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Icon(Icons.add,color: Colors.purple,),
+                                        child:  Text( isLate ? "Submitted Late!":"Submitted",style: TextStyle(
+                                            color: isLate ? Colors.red:Colors.green,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18.0
+                                        ),),
                                       ),
-                                      SizedBox(width: 4.0,child: Container(
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child:  Text( "Submitted at : ${userSubmissionTime.toDate()} ",style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14.0
+                                        ),),
+                                      ),
+                                      SizedBox(height: 2.0,child: Container(
                                         decoration: BoxDecoration(
-                                          color: Colors.yellow,
+                                          color: Colors.purple,
                                         ),
                                       ),),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.tealAccent,
+                                          ),
+                                          onPressed: (){
+                                            window.open(userAssignmentUrl, 'new tab');
+                                          }, child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(Icons.file_download,color: Colors.blueAccent,),
+                                          ),
+                                          SizedBox(height: 4.0,child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.purple,
+                                            ),
+                                          ),),
+                                          SizedBox(width: 4.0,child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.yellow,
+                                            ),
+                                          ),),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(3.0),
+                                                  child: Text("Download Your Submission",style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontWeight:
+                                                    FontWeight.bold,
+                                                    color: Colors.purple,
+                                                  ),),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(3.0),
+                                                  child: Text("(${userFileName})",style: TextStyle(
+                                                    fontSize: 12.0,
+                                                    fontWeight:
+                                                    FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(height: 4.0,child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.purple,
+                                            ),
+                                          ),),
+
+                                        ],
+                                      )),
+                                      SizedBox(height: 2.0,child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.purple,
+                                        ),
+                                      ),),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.lightBlueAccent,
+                                          ),
+                                          onPressed: (){
+                                          }, child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(Icons.grade,color: Colors.yellow,),
+                                          ),
+                                          SizedBox(height: 4.0,child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.purple,
+                                            ),
+                                          ),),
+                                          SizedBox(width: 4.0,child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.yellow,
+                                            ),
+                                          ),),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(userGrade==""?"Not Yet Graded!" : "Grade : ${userGrade}",style: TextStyle(
+                                              fontSize: 18.0,
+                                              fontWeight:
+                                              FontWeight.bold,
+                                              color: Colors.black,
+                                            ),),
+                                          ),
+                                          SizedBox(height: 2.0,child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.purple,
+                                            ),
+                                          ),),
+
+                                        ],
+                                      )),
+                                      SizedBox(height: 2.0,child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.purple,
+                                        ),
+                                      ),),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.lightBlueAccent,
+                                          ),
+                                          onPressed: (){
+
+                                            getFileAndUpload();
+//
+                                          }, child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(Icons.restore,color: Colors.red,),
+                                          ),
+                                          SizedBox(width: 4.0,child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.red,
+                                            ),
+                                          ),),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text("Submit a Different File",style: TextStyle(
+                                              fontSize: 18.0,
+                                              fontWeight:
+                                              FontWeight.bold,
+                                              color: Colors.black,
+                                            ),),
+                                          )
+                                        ],
+                                      )),
+                                      SizedBox(height: 2.0,child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.purple,
+                                        ),
+                                      ),),
+                                    ],
+                                  ) :  Column(
+                                    children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text("Add Work",style: TextStyle(
-                                          fontSize: 18.0,
-                                          fontWeight:
-                                          FontWeight.bold,
-                                          color: Colors.black,
+                                        child: Text("Not Submitted",style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18.0
                                         ),),
-                                      )
+                                      ),
+
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.lightBlueAccent,
+                                          ),
+                                          onPressed: (){
+                                            //Todo : Implement File Submission functionality
+//                                        getPdfAndUpload();
+                                            getFileAndUpload();
+//                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>AssignmentComments(courseId: widget.courseId,AssignmentId: widget.assignmentId,title: widget.title,)));
+                                          }, child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(Icons.add,color: Colors.purple,),
+                                          ),
+                                          SizedBox(width: 4.0,child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.yellow,
+                                            ),
+                                          ),),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text("Add Work",style: TextStyle(
+                                              fontSize: 18.0,
+                                              fontWeight:
+                                              FontWeight.bold,
+                                              color: Colors.black,
+                                            ),),
+                                          )
+                                        ],
+                                      )),
+                                      SizedBox(height: 2.0,child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.purple,
+                                        ),
+                                      ),),
                                     ],
-                                  )),
+                                  )
+
+                              ),
                             ],
                           ),
                         ),
@@ -327,3 +576,45 @@ class _AssignmentViewState extends State<AssignmentView> {
     );
   }
 }
+
+
+// Code that gone wrong
+//    var result = await FilePicker.platform.pickFiles(
+//      type: FileType.any,
+//      withReadStream: true,
+//    );
+//    PlatformFile file = result.files.single;
+//    String name = result.names.first;
+//    result.
+//    Upload(name, file);
+
+//  _startFilePicker() async {
+//    InputElement uploadInput = FileUploadInputElement();
+//    uploadInput.click();
+//
+//    uploadInput.onChange.listen((e) {
+//      File myfile;
+//      // read file content as dataURL
+//      final files = uploadInput.files;
+//      if (files.length == 1) {
+//        final file = files[0];
+//        final name = files[0].name;
+//        FileReader reader =  FileReader();
+//
+//        reader.onLoadEnd.listen((e) {
+//         Upload(name, file);
+//        });
+//
+//        reader.onError.listen((fileEvent) {
+//          setState(() {
+////            option1Text = "Some Error occured while reading the file";
+//          print('Some Error');
+//          });
+//        });
+//
+//      reader.readAsDataUrl(file);
+////        print(file);
+////        Upload(name,myfile);
+//      }
+//    });
+//  }
