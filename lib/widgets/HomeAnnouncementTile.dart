@@ -42,7 +42,6 @@ class HomeAnnouncementTile extends StatelessWidget {
               ],
             ),
           ),
-
           Container(
               padding: EdgeInsets.all(8),
               decoration : BoxDecoration(

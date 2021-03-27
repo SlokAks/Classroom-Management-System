@@ -118,152 +118,368 @@ class _HomePageState extends State<HomePage> {
   MaterialApp buildSignInScreen() {
     return MaterialApp(
       home: Scaffold(
-        body: Container(
-//            height: MediaQuery.of(context).size.height,
-//            width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
+        body: Stack(
+          children: [
+            Container(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                Theme.of(context).accentColor,
-                Theme.of(context).primaryColor
-              ])),
-          alignment: Alignment.center,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+                Color(0xFFD427A4),
+                Color(0xFF20BBAA),
+              ]
+              ),
+            )
+            ),
+            Column(
               children: [
-                Text(
-                  "Classroom System",
-                  style: TextStyle(
-                    fontSize: 92.0,
-                    color: Colors.white,
+                // Expanded(flex: 1,
+                //   child: Container(),
+                // ),
+                Expanded(
+                  flex: 10,
+                  child: Container(
+                    alignment: Alignment.center,
+                    // child: Image.asset('images/thumbnail/thumbnail.png',
+                    //   // fit: BoxFit.fill,
+                    //
+                    // ),
                   ),
                 ),
-                SizedBox(
-                  height: 26.0,
-                ),
-                Text(
-                  "Login",
-                  style: TextStyle(
-                    fontSize: 70.0,
-                    color: Colors.white,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white70,
-                      focusColor: Colors.grey,
-                      icon: Icon(Icons.email),
-                      hintText: 'Your email address',
-                      labelText: 'E-mail',
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (String value) {
-                      this._email = value;
-                    },
-                    onSaved: (String value) {
-                      this._email = value;
-                      print('email=$_email');
-                    },
-                  ),
-                ),
-                const SizedBox(height: 24.0),
-                // "Password" form.
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      filled: true,
-                      icon: Icon(Icons.keyboard),
-                      fillColor: Colors.white70,
-                      focusColor: Colors.grey,
-                      hintText: 'Password',
-                      labelText: 'Shhh... Password here!',
-                    ),
-                    obscureText: true,
-                    onChanged: (String value) {
-                      this._password = value;
-                    },
-                  ),
-                ),
-
-                const SizedBox(height: 24.0),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isLoading = true;
-                    });
-
-                    SignIn();
-
-                    isLoggedIn();
-                  },
-                  child: Card(
-                    elevation: 14.0,
-                    child: Container(
-                      width: 150.0,
-                      height: 60.0,
-                      decoration: BoxDecoration(
-                        color: Colors.greenAccent,
-                      ),
-                      child: Center(
-                        child: Text("Login"),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24.0),
-                GestureDetector(
-                  onTap: () {
-                    print("Button Pressed");
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TextFormFieldExample()));
-//                  login();
-                    isLoggedIn();
-                  },
-                  child: Card(
-                    elevation: 14.0,
-                    child: Container(
-                      width: 150.0,
-                      height: 60.0,
-                      decoration: BoxDecoration(
-                        color: Colors.greenAccent,
-                      ),
-                      child: Center(
-                        child: Text("New User ? Regester"),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 12.0,
-                ),
-                isLoading
-                    ? circularProgress()
-                    : Container(
-                        child: Center(
-                          child: Text(
-                            error,
-                            style: (TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.red,
-                            )),
-                          ),
-                        ),
-                      )
+                // Expanded(flex: 1,
+                //   child: Container(),
+                // ),
               ],
             ),
-          ),
+            // Container(color: Colors.white.withOpacity(0.5),),
+            Container(
+              child: Column(
+                children: [
+                  Container(
+                    child: Expanded(flex: 3,
+                      child: Container(
+                        // color: Colors.white.withOpacity(0.9),
+                        // child: Text(
+                        //   "Classroom System",
+                        //   style: TextStyle(
+                        //     fontSize: 92.0,
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 10,
+                    child: Row(
+                      children: [
+                        Expanded(flex: 1, child: Container(),),
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            // color: Colors.white.withOpacity(0.9),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.9),
+                              borderRadius: BorderRadius.circular(10),
+                              // borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Classroom System",
+                                  style: TextStyle(
+                                    fontSize: 92.0,
+                                    color: Color(0xFFD427A4),
+                                  ),
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      filled: true,
+                                      fillColor: Colors.white70,
+                                      focusColor: Colors.grey,
+                                      icon: Icon(Icons.person),
+                                      hintText: 'Your email address',
+                                      labelText: 'User ID (mail)',
+                                    ),
+                                    keyboardType: TextInputType.emailAddress,
+                                    onChanged: (String value) {
+                                      this._email = value;
+                                    },
+                                    onSaved: (String value) {
+                                      this._email = value;
+                                      print('email=$_email');
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      filled: true,
+                                      icon: Icon(Icons.security),
+                                      fillColor: Colors.white70,
+                                      focusColor: Colors.grey,
+                                      hintText: 'Password',
+                                      labelText: 'Password',
+                                    ),
+                                    obscureText: true,
+                                    onChanged: (String value) {
+                                      this._password = value;
+                                    },
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+
+                                    SignIn();
+
+                                    isLoggedIn();
+                                  },
+                                  child: Card(
+                                    elevation: 14.0,
+                                    color: Colors.white.withOpacity(0.0),
+                                    child: Container(
+                                      width: 150.0,
+                                      height: 60.0,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.greenAccent,
+                                      ),
+                                      child: Center(
+                                        child: Text("Login"),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    print("Button Pressed");
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => TextFormFieldExample()));
+//                  login();
+                                    isLoggedIn();
+                                  },
+                                  child: Card(
+                                    elevation: 14.0,
+                                    color: Colors.white.withOpacity(0.0),
+                                    child: Container(
+                                      width: 150.0,
+                                      height: 60.0,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.greenAccent,
+                                      ),
+                                      child: Center(
+                                        child: Text("New User ? Regester"),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                isLoading
+                                    ? circularProgress()
+                                    : Container(
+                                  child: Center(
+                                    child: Text(
+                                      error,
+                                      style: (TextStyle(
+                                        fontSize: 18.0,
+                                        color: Colors.red,
+                                      )),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(flex: 1, child: Container(),),
+                      ],
+                    )
+                  ),
+                  Expanded(flex: 1, child: Container(),),
+                ],
+              ),
+            ),
+            Container(
+              // child: CircleAvatar(
+                child:Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                        // child: Image.asset('images/logoo.png',
+                          // fit: BoxFit.fill,
+                        // ),
+                      ),
+                    ),
+                    Expanded(flex: 2,child: Container())
+                  ],
+                )
+              // ),
+            ),
+            Container(
+//            height: MediaQuery.of(context).size.height,
+//            width: MediaQuery.of(context).size.width,
+//               decoration: BoxDecoration(
+                  // gradient: LinearGradient(
+                  //     begin: Alignment.topLeft,
+                  //     end: Alignment.bottomRight,
+                  //     colors: [
+                  //   Theme.of(context).accentColor,
+                  //   Theme.of(context).primaryColor
+                  // ]
+                  //   )
+            // ),
+              alignment: Alignment.center,
+              child: SingleChildScrollView(
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  // children: [
+                  //   Text(
+                  //     "Classroom System",
+                  //     style: TextStyle(
+                  //       fontSize: 92.0,
+                  //       color: Colors.white,
+                  //     ),
+                  //   ),
+                  //   SizedBox(
+                  //     height: 26.0,
+                  //   ),
+                  //   Text(
+                  //     "Login",
+                  //     style: TextStyle(
+                  //       fontSize: 70.0,
+                  //       color: Colors.white,
+                  //     ),
+                  //   ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: TextFormField(
+                    //     decoration: const InputDecoration(
+                    //       border: UnderlineInputBorder(),
+                    //       filled: true,
+                    //       fillColor: Colors.white70,
+                    //       focusColor: Colors.grey,
+                    //       icon: Icon(Icons.email),
+                    //       hintText: 'Your email address',
+                    //       labelText: 'E-mail',
+                    //     ),
+                    //     keyboardType: TextInputType.emailAddress,
+                    //     onChanged: (String value) {
+                    //       this._email = value;
+                    //     },
+                    //     onSaved: (String value) {
+                    //       this._email = value;
+                    //       print('email=$_email');
+                    //     },
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 24.0),
+                    // "Password" form.
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: TextFormField(
+                    //     decoration: const InputDecoration(
+                    //       border: UnderlineInputBorder(),
+                    //       filled: true,
+                    //       icon: Icon(Icons.keyboard),
+                    //       fillColor: Colors.white70,
+                    //       focusColor: Colors.grey,
+                    //       hintText: 'Password',
+                    //       labelText: 'Shhh... Password here!',
+                    //     ),
+                    //     obscureText: true,
+                    //     onChanged: (String value) {
+                    //       this._password = value;
+                    //     },
+                    //   ),
+                    // ),
+
+//                     const SizedBox(height: 24.0),
+//                     GestureDetector(
+//                       onTap: () {
+//                         setState(() {
+//                           isLoading = true;
+//                         });
+//
+//                         SignIn();
+//
+//                         isLoggedIn();
+//                       },
+//                       child: Card(
+//                         elevation: 14.0,
+//                         child: Container(
+//                           width: 150.0,
+//                           height: 60.0,
+//                           decoration: BoxDecoration(
+//                             color: Colors.greenAccent,
+//                           ),
+//                           child: Center(
+//                             child: Text("Login"),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     const SizedBox(height: 24.0),
+//                     GestureDetector(
+//                       onTap: () {
+//                         print("Button Pressed");
+//                         Navigator.push(
+//                             context,
+//                             MaterialPageRoute(
+//                                 builder: (context) => TextFormFieldExample()));
+// //                  login();
+//                         isLoggedIn();
+//                       },
+//                       child: Card(
+//                         elevation: 14.0,
+//                         child: Container(
+//                           width: 150.0,
+//                           height: 60.0,
+//                           decoration: BoxDecoration(
+//                             color: Colors.greenAccent,
+//                           ),
+//                           child: Center(
+//                             child: Text("New User ? Regester"),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: 12.0,
+//                     ),
+//                     isLoading
+//                         ? circularProgress()
+//                         : Container(
+//                             child: Center(
+//                               child: Text(
+//                                 error,
+//                                 style: (TextStyle(
+//                                   fontSize: 18.0,
+//                                   color: Colors.red,
+//                                 )),
+//                               ),
+//                             ),
+//                           )
+//                   ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
