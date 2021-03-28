@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Container(
                     child: Expanded(
-                      flex: 3,
+                      flex: 1,
                       child: Container(
                           // color: Colors.white.withOpacity(0.9),
                           // child: Text(
@@ -187,126 +187,173 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(10),
                                 // borderRadius: BorderRadius.circular(20.0),
                               ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Classroom System",
-                                    style: TextStyle(
-                                      fontSize: 92.0,
-                                      color: Color(0xFFD427A4),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                      decoration: const InputDecoration(
-                                        border: UnderlineInputBorder(),
-                                        filled: true,
-                                        fillColor: Colors.white70,
-                                        focusColor: Colors.grey,
-                                        icon: Icon(Icons.person),
-                                        hintText: 'Your email address',
-                                        labelText: 'User ID (mail)',
+                              child: SingleChildScrollView(
+                                //padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Classroom System",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 92.0,
+                                        color: Color(0xFFD427A4),
                                       ),
-                                      keyboardType: TextInputType.emailAddress,
-                                      onChanged: (String value) {
-                                        this._email = value;
-                                      },
-                                      onSaved: (String value) {
-                                        this._email = value;
-                                        print('email=$_email');
-                                      },
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                      decoration: const InputDecoration(
-                                        border: UnderlineInputBorder(),
-                                        filled: true,
-                                        icon: Icon(Icons.security),
-                                        fillColor: Colors.white70,
-                                        focusColor: Colors.grey,
-                                        hintText: 'Password',
-                                        labelText: 'Password',
-                                      ),
-                                      obscureText: true,
-                                      onChanged: (String value) {
-                                        this._password = value;
-                                      },
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isLoading = true;
-                                      });
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 60.0,
+                                          top: 30.0,
+                                          right: 60.0,
+                                          bottom: 10.0),
 
-                                      SignIn();
+                                      child: TextFormField(
+                                        decoration: const InputDecoration(
+                                          border: UnderlineInputBorder(),
+                                          filled: true,
+                                          fillColor: Colors.white70,
+                                          focusColor: Colors.grey,
+                                          icon: Icon(Icons.person),
+                                          // hintText: 'Your email address',
+                                          labelText: 'User ID (Email)',
+                                        ),
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        onChanged: (String value) {
+                                          this._email = value;
+                                        },
+                                        onSaved: (String value) {
+                                          this._email = value;
+                                          print('email=$_email');
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 60.0,
+                                          top: 30.0,
+                                          right: 60.0,
+                                          bottom: 30.0),
 
-                                      isLoggedIn();
-                                    },
-                                    child: Card(
-                                      elevation: 14.0,
-                                      color: Colors.white.withOpacity(0.0),
-                                      child: Container(
-                                        width: 150.0,
-                                        height: 60.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          color: Colors.greenAccent,
+                                      child: TextFormField(
+                                        decoration: const InputDecoration(
+                                          border: UnderlineInputBorder(),
+                                          filled: true,
+                                          icon: Icon(Icons.lock),
+                                          fillColor: Colors.white70,
+                                          focusColor: Colors.grey,
+                                          //hintText: 'Password',
+                                          labelText: 'Password',
                                         ),
-                                        child: Center(
-                                          child: Text("Login"),
-                                        ),
+                                        obscureText: true,
+                                        onChanged: (String value) {
+                                          this._password = value;
+                                        },
                                       ),
                                     ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      print("Button Pressed");
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  TextFormFieldExample()));
-//                  login();
-                                      isLoggedIn();
-                                    },
-                                    child: Card(
-                                      elevation: 14.0,
-                                      color: Colors.white.withOpacity(0.0),
-                                      child: Container(
-                                        width: 150.0,
-                                        height: 60.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          color: Colors.greenAccent,
-                                        ),
-                                        child: Center(
-                                          child: Text("New User ? Register"),
-                                        ),
+
+                                    Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(),
                                       ),
-                                    ),
-                                  ),
-                                  isLoading
-                                      ? circularProgress()
-                                      : Container(
-                                          child: Center(
-                                            child: Text(
-                                              error,
-                                              style: (TextStyle(
-                                                fontSize: 18.0,
-                                                color: Colors.red,
-                                              )),
+
+                                      Expanded(
+                                        flex: 3,
+                                          child:GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                isLoading = true;
+                                              });
+
+                                              SignIn();
+
+                                              isLoggedIn();
+                                            },
+                                            child: Card(
+                                              elevation: 14.0,
+                                              color: Colors.white.withOpacity(0.0),
+                                              child: Container(
+                                                width: 150.0,
+                                                height: 60.0,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.circular(20),
+                                                  color: Colors.greenAccent,
+                                                ),
+                                                child: Center(
+                                                  child: Text("Login"),
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        )
-                                ],
+                                      ),
+
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(),
+                                      ),
+
+                                      Expanded(
+                                        flex: 3,
+                                          child:GestureDetector(
+                                            onTap: () {
+                                              print("Button Pressed");
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          TextFormFieldExample()));
+//                  login();
+                                              isLoggedIn();
+                                            },
+                                            child: Card(
+                                              elevation: 14.0,
+                                              color: Colors.white.withOpacity(0.0),
+                                              child: Container(
+                                                width: 150.0,
+                                                height: 60.0,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.circular(20),
+                                                  color: Colors.greenAccent,
+                                                ),
+                                                child: Center(
+                                                  child: Text("New User ? Register"),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+
+                                      ),
+
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(),
+                                      ),
+
+                                    ],
+                                    ),
+
+
+
+                                    isLoading
+                                        ? circularProgress()
+                                        : Container(
+                                            child: Center(
+                                              child: Text(
+                                                error,
+                                                style: (TextStyle(
+                                                  fontSize: 18.0,
+                                                  color: Colors.red,
+                                                )),
+                                              ),
+                                            ),
+                                          )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
