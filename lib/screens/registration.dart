@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:classroom_management/widgets/appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 class TextFormFieldExample extends StatefulWidget {
@@ -85,124 +86,350 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Register").build(context),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            const SizedBox(height: 24.0),
-            // "Name" form.
-            TextFormField(
-              textCapitalization: TextCapitalization.words,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                icon: Icon(Icons.person),
-                hintText: 'What do people call you?',
-                labelText: 'Name *',
-              ),
-              onChanged: (String value){
-                this._name=value;
-              },
-              onSaved: (String value) {
-                this._name = value;
-                print('name=$_name');
-              },
-              validator: _validateName,
-            ),
-            const SizedBox(height: 24.0),
-            // "Phone number" form.
-            TextFormField(
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                icon: Icon(Icons.phone),
-                hintText: 'Phone Number',
-                labelText: 'Phone Number *',
-                prefixText: '+91',
-              ),
-              keyboardType: TextInputType.phone,
-              onChanged: (String value){
-                this._phoneNumber=value;
-              },
-              onSaved: (String value) {
-                this._phoneNumber = value;
-                print('phoneNumber=$_phoneNumber');
-              },
-              // TextInputFormatters are applied in sequence.
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-            ),
-            const SizedBox(height: 24.0),
-            // "Email" form.
-            TextFormField(
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                icon: Icon(Icons.email),
-                hintText: 'Your email address',
-                labelText: 'E-mail',
-              ),
-              keyboardType: TextInputType.emailAddress,
-              onChanged: (String value){
-                this._email=value;
-              },
-              onSaved: (String value) {
-                this._email = value;
-                print('email=$_email');
-              },
-            ),
-            const SizedBox(height: 24.0),
-            // "Life story" form.
-            const SizedBox(height: 24.0),
-            // "Salary" form.
-
-            const SizedBox(height: 24.0),
-            // "Password" form.
-            PasswordField(
-              fieldKey: _passwordFieldKey,
-              helperText: 'No more than 8 characters.',
-              labelText: 'Password *',
-              onFieldSubmitted: (String value) {
-                setState(() {
-                  this._password = value;
-                });
-              },
-            ),
-            const SizedBox(height: 24.0),
-            // "Re-type password" form.
-            TextFormField(
-
-             enabled: this._password != null && this._password.isNotEmpty,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                labelText: 'Re-type password',
-              ),
-              maxLength: 8,
-              obscureText: true,
-            ),
-            SizedBox(height: 16.0,),
-            Container(
-              width: 60,
-              height: 30,
-              child: RaisedButton(onPressed: (){
-                   register();
-
-              },
-                elevation: 8.0,
-                child: Center(
-                  child: Text("Register"),
+      appBar: CustomAppBar(title: "Student Registration             ").build(context),
+      body: Stack(
+        children: [
+          Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFFD427A4),
+                      Color(0xFF20BBAA),
+                    ]
                 ),
-              color: Theme.of(context).accentColor,
               ),
-            )
+          ),
+
+          Column(
+          children: [
+
+            Expanded(flex: 1,
+              child: Container(),
+            ),
+
+            Expanded(
+              flex: 10,
+              child: Row(
+                children: [
+                  Expanded(flex: 3, child: Container(),),
+
+                  Expanded(
+                    flex: 5,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.9),
+                        borderRadius: BorderRadius.circular(10),
+                        // borderRadius: BorderRadius.circular(20.0),
+                      ),
+
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+
+                          Expanded(
+                            flex: 3,
+                            child: Container(),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Text(
+                              "Please enter your info",
+                              style: TextStyle(
+                                // fontSize: 92.0,
+                                color: Color(0xFFD427A4),
+                              ),
+                            ),
+                          ),
+
+
+                          Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: SingleChildScrollView(
+                              padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: <Widget>[
+                                  const SizedBox(height: 24.0),
+                                  // "Name" form.
+                                  TextFormField(
+                                    textCapitalization: TextCapitalization.words,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      filled: true,
+                                      icon: Icon(Icons.person),
+                                      //hintText: 'What do people call you?',
+                                      labelText: 'Name *',
+                                    ),
+                                    onChanged: (String value){
+                                      this._name=value;
+                                    },
+                                    onSaved: (String value) {
+                                      this._name = value;
+                                      print('name=$_name');
+                                    },
+                                    validator: _validateName,
+                                  ),
+                                  const SizedBox(height: 24.0),
+                                  // "Phone number" form.
+                                  TextFormField(
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      filled: true,
+                                      icon: Icon(Icons.phone),
+                                      //hintText: 'Phone Number',
+                                      labelText: 'Phone Number',
+                                      prefixText: '+91',
+                                    ),
+                                    keyboardType: TextInputType.phone,
+                                    onChanged: (String value){
+                                      this._phoneNumber=value;
+                                    },
+                                    onSaved: (String value) {
+                                      this._phoneNumber = value;
+                                      print('phoneNumber=$_phoneNumber');
+                                    },
+                                    // TextInputFormatters are applied in sequence.
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                  ),
+                                  const SizedBox(height: 24.0),
+                                  // "Email" form.
+                                  TextFormField(
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      filled: true,
+                                      icon: Icon(Icons.email),
+                                      //hintText: 'Your email address',
+                                      labelText: 'E-mail *',
+                                    ),
+                                    keyboardType: TextInputType.emailAddress,
+                                    onChanged: (String value){
+                                      this._email=value;
+                                    },
+                                    onSaved: (String value) {
+                                      this._email = value;
+                                      print('email=$_email');
+                                    },
+                                  ),
+                                  const SizedBox(height: 24.0),
+                                  // "Life story" form.
+                                  // const SizedBox(height: 24.0),
+                                  // "Salary" form.
+
+                                  const SizedBox(height: 24.0),
+                                  // "Password" form.
+
+                                  PasswordField(
+                                    fieldKey: _passwordFieldKey,
+                                    helperText: 'Not more than 8 characters.',
+                                    labelText: 'Password *',
+                                    onFieldSubmitted: (String value) {
+                                      setState(() {
+                                        this._password = value;
+                                      });
+                                    },
+                                  ),
+                                  const SizedBox(height: 24.0),
+                                  // "Re-type password" form.
+                                  TextFormField(
+
+                                    enabled: this._password != null && this._password.isNotEmpty,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      filled: true,
+                                      icon: Icon(Icons.security),
+                                      labelText: 'Re-type password *',
+                                    ),
+                                    maxLength: 8,
+                                    obscureText: true,
+                                  ),
+                                  SizedBox(height: 16.0,),
+
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(),
+                                      ),
+
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                          width: 60,
+                                          height: 35,
+                                          child: RaisedButton(onPressed: (){
+                                            register();
+                                          },
+                                            elevation: 8.0,
+                                            child: Center(
+                                              child: Text("Register"),
+                                            ),
+                                            color: Theme.of(context).accentColor,
+                                          ),
+                                        ),
+                                      ),
+
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(),
+                                      ),
+                                    ],
+                                  ),
+
+
+
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          Expanded(
+                            flex: 2,
+                            child: Container(),
+                          ),
+                        ],
+                      ),
+
+                    ),
+
+                  ),
+
+                  Expanded(flex: 3, child: Container(),),
+                ],
+              ),
+            ),
+
+            Expanded(flex: 1,
+              child: Container(),
+            ),
           ],
-        ),
+          ),
+
+
+          // SingleChildScrollView(
+          //   padding: const EdgeInsets.symmetric(horizontal: 60.0),
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //     crossAxisAlignment: CrossAxisAlignment.stretch,
+          //     children: <Widget>[
+          //       const SizedBox(height: 24.0),
+          //       // "Name" form.
+          //       TextFormField(
+          //         textCapitalization: TextCapitalization.words,
+          //         decoration: const InputDecoration(
+          //           border: UnderlineInputBorder(),
+          //           filled: true,
+          //           icon: Icon(Icons.person),
+          //           //hintText: 'What do people call you?',
+          //           labelText: 'Name *',
+          //         ),
+          //         onChanged: (String value){
+          //           this._name=value;
+          //         },
+          //         onSaved: (String value) {
+          //           this._name = value;
+          //           print('name=$_name');
+          //         },
+          //         validator: _validateName,
+          //       ),
+          //       const SizedBox(height: 24.0),
+          //       // "Phone number" form.
+          //       TextFormField(
+          //         decoration: const InputDecoration(
+          //           border: UnderlineInputBorder(),
+          //           filled: true,
+          //           icon: Icon(Icons.phone),
+          //           hintText: 'Phone Number',
+          //           labelText: 'Phone Number *',
+          //           prefixText: '+91',
+          //         ),
+          //         keyboardType: TextInputType.phone,
+          //         onChanged: (String value){
+          //           this._phoneNumber=value;
+          //         },
+          //         onSaved: (String value) {
+          //           this._phoneNumber = value;
+          //           print('phoneNumber=$_phoneNumber');
+          //         },
+          //         // TextInputFormatters are applied in sequence.
+          //         inputFormatters: <TextInputFormatter>[
+          //           FilteringTextInputFormatter.digitsOnly
+          //         ],
+          //       ),
+          //       const SizedBox(height: 24.0),
+          //       // "Email" form.
+          //       TextFormField(
+          //         decoration: const InputDecoration(
+          //           border: UnderlineInputBorder(),
+          //           filled: true,
+          //           icon: Icon(Icons.email),
+          //           hintText: 'Your email address',
+          //           labelText: 'E-mail',
+          //         ),
+          //         keyboardType: TextInputType.emailAddress,
+          //         onChanged: (String value){
+          //           this._email=value;
+          //         },
+          //         onSaved: (String value) {
+          //           this._email = value;
+          //           print('email=$_email');
+          //         },
+          //       ),
+          //       const SizedBox(height: 24.0),
+          //       // "Life story" form.
+          //       const SizedBox(height: 24.0),
+          //       // "Salary" form.
+          //
+          //       const SizedBox(height: 24.0),
+          //       // "Password" form.
+          //       PasswordField(
+          //         fieldKey: _passwordFieldKey,
+          //         helperText: 'No more than 8 characters.',
+          //         labelText: 'Password *',
+          //         onFieldSubmitted: (String value) {
+          //           setState(() {
+          //             this._password = value;
+          //           });
+          //         },
+          //       ),
+          //       const SizedBox(height: 24.0),
+          //       // "Re-type password" form.
+          //       TextFormField(
+          //
+          //         enabled: this._password != null && this._password.isNotEmpty,
+          //         decoration: const InputDecoration(
+          //           border: UnderlineInputBorder(),
+          //           filled: true,
+          //           labelText: 'Re-type password',
+          //         ),
+          //         maxLength: 8,
+          //         obscureText: true,
+          //       ),
+          //       SizedBox(height: 16.0,),
+          //       Container(
+          //         width: 60,
+          //         height: 30,
+          //         child: RaisedButton(onPressed: (){
+          //           register();
+          //         },
+          //           elevation: 8.0,
+          //           child: Center(
+          //             child: Text("Register"),
+          //           ),
+          //           color: Theme.of(context).accentColor,
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
+        ],
       ),
+
     );
   }
 }
