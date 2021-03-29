@@ -1,4 +1,5 @@
 import 'package:classroom_management/screens/Announcements.dart';
+import 'package:classroom_management/screens/MakeAnnouncements.dart';
 import 'package:classroom_management/screens/assignments.dart';
 import 'package:classroom_management/screens/chat_screen.dart';
 import 'package:classroom_management/widgets/navbar.dart';
@@ -21,7 +22,12 @@ class _CourseState extends State<Course> {
   @override
   Widget build(BuildContext context) {
     final _kTabPages = <Widget>[
-      Announcements(courseId),
+      Column(
+        children: [
+          Announcements(courseId),
+          MakeAnnouncements(courseId)
+        ],
+      ),
       Assignments(courseId: courseId,title: title,description: description,),
      ChatScreen(courseId: courseId,),
     ];

@@ -61,10 +61,21 @@ MaterialApp HomeScreen(String name, BuildContext context) {
               //TODO onpressed
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.account_circle_sharp),
-            //TODO onpressed
+          GestureDetector(
+            onTap: () {
+              // Navigator.push(context,
+                  // MaterialPageRoute(builder: (context) => Make()));
+              // showDialog(
+              //     context: context,
+              //     builder: (BuildContext context) {
+              //       return AvailableCoursesDialog();
+              //     });
+            },
+            child: IconButton(icon: const Icon(Icons.account_circle_sharp),
+              //TODO onpressed
+            ),
           ),
+
           PopupMenuButton(
             itemBuilder: (BuildContext context) {
               return [
