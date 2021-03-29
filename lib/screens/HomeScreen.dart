@@ -19,8 +19,9 @@ class AnnouncementsContainer {
   AnnouncementsContainer(this.course, this.text, this.userId, this.time);
 }
 
-MaterialApp HomeScreen(String name, BuildContext context) {
+MaterialApp HomeScreen(BuildContext context) {
   CalendarController _calendarController = CalendarController();
+  String name = "NA";
 
   return MaterialApp(
 //    theme: ThemeData.dark(),
@@ -36,11 +37,7 @@ MaterialApp HomeScreen(String name, BuildContext context) {
               gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: <Color>[
-                    Color(0xFFAD70FA),
-                    Color(0xFF8857DF)
-                  ])
-          ),
+                  colors: <Color>[Color(0xFFAD70FA), Color(0xFF8857DF)])),
         ),
         actions: <Widget>[
           GestureDetector(
@@ -64,18 +61,18 @@ MaterialApp HomeScreen(String name, BuildContext context) {
           GestureDetector(
             onTap: () {
               // Navigator.push(context,
-                  // MaterialPageRoute(builder: (context) => Make()));
+              // MaterialPageRoute(builder: (context) => Make()));
               // showDialog(
               //     context: context,
               //     builder: (BuildContext context) {
               //       return AvailableCoursesDialog();
               //     });
             },
-            child: IconButton(icon: const Icon(Icons.account_circle_sharp),
+            child: IconButton(
+              icon: const Icon(Icons.account_circle_sharp),
               //TODO onpressed
             ),
           ),
-
           PopupMenuButton(
             itemBuilder: (BuildContext context) {
               return [
@@ -111,7 +108,7 @@ MaterialApp HomeScreen(String name, BuildContext context) {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      margin: EdgeInsets.only(top: 15,bottom: 15),
+                      margin: EdgeInsets.only(top: 15, bottom: 15),
                       padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -134,7 +131,8 @@ MaterialApp HomeScreen(String name, BuildContext context) {
                                   decoration: BoxDecoration(
                                     color: Color(0xFF858D8F),
                                   ),
-                                  child: Text('Announcement',
+                                  child: Text(
+                                    'Announcement',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 25,
@@ -154,14 +152,15 @@ MaterialApp HomeScreen(String name, BuildContext context) {
                                     .collection("enrolledCourses")
                                     .snapshots(),
                                 builder: (BuildContext context,
-                                    AsyncSnapshot<QuerySnapshot> coursesSnapshot) {
+                                    AsyncSnapshot<QuerySnapshot>
+                                        coursesSnapshot) {
                                   if (!coursesSnapshot.hasData) {
                                     return circularProgress();
                                   }
 
                                   return ListView(
-                                    children:
-                                        coursesSnapshot.data.docs.map((courses) {
+                                    children: coursesSnapshot.data.docs
+                                        .map((courses) {
                                       print(courses.id);
                                       return StreamBuilder(
                                         stream: FirebaseFirestore.instance
@@ -177,7 +176,8 @@ MaterialApp HomeScreen(String name, BuildContext context) {
                                             return Text("Looading");
                                           }
                                           return Column(
-                                              children: announcementSnapshot.data.docs
+                                              children: announcementSnapshot
+                                                  .data.docs
                                                   .map((announcement) {
                                             return HomeAnnouncementTile(
                                               announcement.data()['text'],
@@ -276,14 +276,15 @@ MaterialApp HomeScreen(String name, BuildContext context) {
                       },
                     ),
                   ),
-                  Expanded(flex: 1,
+                  Expanded(
+                      flex: 1,
                       child: Container(
-                        // padding: EdgeInsets.all(15),
-                        margin: EdgeInsets.only(top: 15,bottom: 15),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(40.0),
-                        ),
+                          // padding: EdgeInsets.all(15),
+                          margin: EdgeInsets.only(top: 15, bottom: 15),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(40.0),
+                          ),
                           child: CalendarWithAssignment()))
                 ],
               ),
