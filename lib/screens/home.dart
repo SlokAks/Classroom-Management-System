@@ -193,41 +193,48 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    // Row(
-                                    //   children: [
-                                    //     Expanded(
-                                    //       flex: 1,
-                                    //       child: Image(
-                                    //       image: AssetImage('assets/images/logoo.png'),
-                                    //     ),
-                                    //     ),
-                                    //
-                                    //     Expanded(
-                                    //       flex: 2,
-                                    //       child: Text(
-                                    //       "Classroom System",
-                                    //       textAlign: TextAlign.center,
-                                    //       style: TextStyle(
-                                    //       fontSize: 85.0,
-                                    //       color: Color(0xFFD427A4),
-                                    //     ),),),
-                                    //   ],
-                                    // ),
-                                    //
+                                    Row(
+                                      mainAxisAlignment : MainAxisAlignment.center,
+                                      //mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 20.0,
+                                            left: 15.0,
+                                            bottom: 10.0
+                                          ),
+                                          child: Image(
 
-                                    Image(
-                                        image: AssetImage('assets/images/logooCropp.png'),
-                                     ),
+                                          image: AssetImage('assets/images/logooCropped.png'),
+                                        ),
+                                        ),
 
-
-                                    Text(
-                                      "Classroom System",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 85.0,
-                                        color: Color(0xFFD427A4),
-                                      ),
+                                        Expanded(
+                                          flex: 9,
+                                          child: Text(
+                                          "Classroom System",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                          fontSize: 85.0,
+                                          color: Color(0xFFD427A4),
+                                        ),),),
+                                      ],
                                     ),
+
+                                    //
+                                    // Image(
+                                    //     image: AssetImage('assets/images/logooCropped.png'),
+                                    //  ),
+                                    //
+                                    //
+                                    // Text(
+                                    //   "Classroom System",
+                                    //   textAlign: TextAlign.center,
+                                    //   style: TextStyle(
+                                    //     fontSize: 85.0,
+                                    //     color: Color(0xFFD427A4),
+                                    //   ),
+                                    // ),
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           left: 100.0,  //60
