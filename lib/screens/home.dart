@@ -194,30 +194,31 @@ class _HomePageState extends State<HomePage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
-                                      mainAxisAlignment : MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       //mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                            top: 20.0,
-                                            left: 15.0,
-                                            bottom: 10.0
-                                          ),
+                                              top: 20.0,
+                                              left: 15.0,
+                                              bottom: 10.0),
                                           child: Image(
-
-                                          image: AssetImage('assets/images/logooCropped.png'),
+                                            image: AssetImage(
+                                                'assets/images/logooCropped.png'),
+                                          ),
                                         ),
-                                        ),
-
                                         Expanded(
                                           flex: 9,
                                           child: Text(
-                                          "Classroom System",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                          fontSize: 85.0,
-                                          color: Color(0xFFD427A4),
-                                        ),),),
+                                            "Classroom System",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 85.0,
+                                              color: Color(0xFFD427A4),
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
 
@@ -237,11 +238,10 @@ class _HomePageState extends State<HomePage> {
                                     // ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 100.0,  //60
+                                          left: 100.0, //60
                                           top: 30.0,
                                           right: 100.0, //60
                                           bottom: 10.0),
-
                                       child: TextFormField(
                                         decoration: const InputDecoration(
                                           border: UnderlineInputBorder(),
@@ -269,7 +269,6 @@ class _HomePageState extends State<HomePage> {
                                           top: 30.0,
                                           right: 100.0, //60.0
                                           bottom: 30.0),
-
                                       child: TextFormField(
                                         decoration: const InputDecoration(
                                           border: UnderlineInputBorder(),
@@ -288,15 +287,14 @@ class _HomePageState extends State<HomePage> {
                                     ),
 
                                     Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Container(),
-                                      ),
-
-                                      Expanded(
-                                        flex: 3,
-                                          child:GestureDetector(
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child: Container(),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: GestureDetector(
                                             onTap: () {
                                               setState(() {
                                                 isLoading = true;
@@ -308,14 +306,17 @@ class _HomePageState extends State<HomePage> {
                                             },
                                             child: Card(
                                               elevation: 5.0, //14.0,
-                                              color: Colors.white.withOpacity(0.0),
+                                              color:
+                                                  Colors.white.withOpacity(0.0),
                                               child: Container(
                                                 width: 80.0, //150.0,
                                                 height: 40.0, //60.0,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                  BorderRadius.circular(10), //20
-                                                  color: Theme.of(context).accentColor, //Colors.greenAccent,
+                                                      BorderRadius.circular(
+                                                          10), //20
+                                                  color: Theme.of(context)
+                                                      .accentColor, //Colors.greenAccent,
                                                 ),
                                                 child: Center(
                                                   child: Text("Login"),
@@ -323,16 +324,14 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             ),
                                           ),
-                                      ),
-
-                                      Expanded(
-                                        flex: 2,
-                                        child: Container(),
-                                      ),
-
-                                      Expanded(
-                                        flex: 3,
-                                          child:GestureDetector(
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Container(),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: GestureDetector(
                                             onTap: () {
                                               print("Button Pressed");
                                               Navigator.push(
@@ -345,33 +344,31 @@ class _HomePageState extends State<HomePage> {
                                             },
                                             child: Card(
                                               elevation: 5.0, //14.0,
-                                              color: Colors.white.withOpacity(0.0),
+                                              color:
+                                                  Colors.white.withOpacity(0.0),
                                               child: Container(
                                                 width: 80.0, //150.0,
                                                 height: 40.0, //60.0,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                  BorderRadius.circular(10),
-                                                  color: Theme.of(context).accentColor,
+                                                      BorderRadius.circular(10),
+                                                  color: Theme.of(context)
+                                                      .accentColor,
                                                 ),
                                                 child: Center(
-                                                  child: Text("New User ? Register"),
+                                                  child: Text(
+                                                      "New User ? Register"),
                                                 ),
                                               ),
                                             ),
                                           ),
-
-                                      ),
-
-                                      Expanded(
-                                        flex: 2,
-                                        child: Container(),
-                                      ),
-
-                                    ],
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Container(),
+                                        ),
+                                      ],
                                     ),
-
-
 
                                     isLoading
                                         ? circularProgress()
@@ -860,7 +857,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     if (isSigned) {
-      return HomeScreen(name, context);
+      return HomeScreen(context);
     } else {
       return buildSignInScreen();
     }
