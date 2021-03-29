@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,31 @@ class HomeAnnouncementTile extends StatelessWidget {
   String courseId;
   Timestamp announcementTime;
   String announcementDescription;
-
+  List<Color> randcolor=[
+    Colors.red[500],
+    Colors.green[500],
+    Colors.blue[500],
+    Colors.yellow[500],
+    Colors.pink[500],
+    Colors.purple[500],
+    Colors.orange[500],
+  ];
+  List<Color> randcolorlight=[
+    Colors.red[100],
+    Colors.green[100],
+    Colors.blue[100],
+    Colors.yellow[100],
+    Colors.pink[100],
+    Colors.purple[100],
+    Colors.orange[100],
+  ];
+  Color rColor;
+  Color randomColor(){
+    Random random= new Random();
+    int randomNumber=random.nextInt(7);
+    rColor=randcolorlight[randomNumber];
+    return randcolor[randomNumber];
+  }
   HomeAnnouncementTile(this.announcementDescription,
       {this.courseId, this.announcementTime});
 
@@ -21,7 +47,8 @@ class HomeAnnouncementTile extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8),
             decoration : BoxDecoration(
-              color: Color(0xFFE095F7),
+              // color: Color(0xFFE095F7),
+              color: randomColor(),
               borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0),topRight: Radius.circular(10.0)),
             ),
             child: Row(
@@ -45,7 +72,8 @@ class HomeAnnouncementTile extends StatelessWidget {
           Container(
               padding: EdgeInsets.all(8),
               decoration : BoxDecoration(
-                color: Color(0xFFEEEEEE),
+                // color: Color(0xFFEEEEEE),
+                color: rColor,
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0)),
               ),
               child: Text(announcementDescription)),

@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,32 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
   List _selectedEvents;
   AnimationController _animationController;
   CalendarController _calendarController;
+
+  List<Color> randcolor=[
+    Colors.red,
+    Colors.green,
+    Colors.blue,
+    Colors.yellow,
+    Colors.pink,
+    Colors.purple,
+    Colors.orange,
+  ];
+  List<Color> randcolorlight=[
+    Colors.red[100],
+    Colors.green[100],
+    Colors.blue[100],
+    Colors.yellow[100],
+    Colors.pink[100],
+    Colors.purple[100],
+    Colors.orange[100],
+  ];
+  Color rColor;
+  Color randomColor(){
+    Random random= new Random();
+    int randomNumber=random.nextInt(7);
+    rColor=randcolor[randomNumber];
+    return randcolorlight[randomNumber];
+  }
 
   @override
   void initState() {
@@ -172,16 +199,27 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
       children: _selectedEvents
           .map((event) => Container(
                 decoration: BoxDecoration(
+                  color: randomColor(),
                   border: Border.all(width: 0.8),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 margin:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: Column(
-                  children: [
-                    Text(event[1].toString()),
-                    Text(event[0].toString()),
-                  ],
+                child: Container(
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        margin: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: rColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(event[1].toString()),
+                      ),
+                      Text(event[0].toString()),
+                    ],
+                  ),
                 ),
               ))
           .toList(),
