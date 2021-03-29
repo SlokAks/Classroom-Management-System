@@ -175,11 +175,11 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         children: [
                           Expanded(
-                            flex: 1,
+                            flex: 2,
                             child: Container(),
                           ),
                           Expanded(
-                            flex: 3,
+                            flex: 5,
                             child: Container(
                               // color: Colors.white.withOpacity(0.9),
                               decoration: BoxDecoration(
@@ -193,19 +193,46 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
+                                    // Row(
+                                    //   children: [
+                                    //     Expanded(
+                                    //       flex: 1,
+                                    //       child: Image(
+                                    //       image: AssetImage('assets/images/logoo.png'),
+                                    //     ),
+                                    //     ),
+                                    //
+                                    //     Expanded(
+                                    //       flex: 2,
+                                    //       child: Text(
+                                    //       "Classroom System",
+                                    //       textAlign: TextAlign.center,
+                                    //       style: TextStyle(
+                                    //       fontSize: 85.0,
+                                    //       color: Color(0xFFD427A4),
+                                    //     ),),),
+                                    //   ],
+                                    // ),
+                                    //
+
+                                    Image(
+                                        image: AssetImage('assets/images/logooCropp.png'),
+                                     ),
+
+
                                     Text(
                                       "Classroom System",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontSize: 92.0,
+                                        fontSize: 85.0,
                                         color: Color(0xFFD427A4),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 60.0,
+                                          left: 100.0,  //60
                                           top: 30.0,
-                                          right: 60.0,
+                                          right: 100.0, //60
                                           bottom: 10.0),
 
                                       child: TextFormField(
@@ -231,9 +258,9 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 60.0,
+                                          left: 100.0, //60.0,
                                           top: 30.0,
-                                          right: 60.0,
+                                          right: 100.0, //60.0
                                           bottom: 30.0),
 
                                       child: TextFormField(
@@ -273,15 +300,15 @@ class _HomePageState extends State<HomePage> {
                                               isLoggedIn();
                                             },
                                             child: Card(
-                                              elevation: 14.0,
+                                              elevation: 5.0, //14.0,
                                               color: Colors.white.withOpacity(0.0),
                                               child: Container(
-                                                width: 150.0,
-                                                height: 60.0,
+                                                width: 80.0, //150.0,
+                                                height: 40.0, //60.0,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                  BorderRadius.circular(20),
-                                                  color: Colors.greenAccent,
+                                                  BorderRadius.circular(10), //20
+                                                  color: Theme.of(context).accentColor, //Colors.greenAccent,
                                                 ),
                                                 child: Center(
                                                   child: Text("Login"),
@@ -310,15 +337,15 @@ class _HomePageState extends State<HomePage> {
                                               isLoggedIn();
                                             },
                                             child: Card(
-                                              elevation: 14.0,
+                                              elevation: 5.0, //14.0,
                                               color: Colors.white.withOpacity(0.0),
                                               child: Container(
-                                                width: 150.0,
-                                                height: 60.0,
+                                                width: 80.0, //150.0,
+                                                height: 40.0, //60.0,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                  BorderRadius.circular(20),
-                                                  color: Colors.greenAccent,
+                                                  BorderRadius.circular(10),
+                                                  color: Theme.of(context).accentColor,
                                                 ),
                                                 child: Center(
                                                   child: Text("New User ? Register"),
@@ -358,7 +385,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Expanded(
-                            flex: 1,
+                            flex: 2,
                             child: Container(),
                           ),
                         ],
