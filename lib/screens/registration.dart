@@ -143,8 +143,6 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
                               ),
                             ),
                           ),
-
-
                           Padding(
                             padding: const EdgeInsets.all(0.0),
                             child: SingleChildScrollView(

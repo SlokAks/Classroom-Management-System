@@ -12,106 +12,100 @@ class EnrolledCoursesTile extends StatelessWidget {
     return Card(
       color: Colors.white,
       elevation: 20,
-      child:
-        Stack(
-          children: [
+      child: Stack(
+        children: [
           Container(
-
             child: Column(
               children: [
-                Expanded(flex:2,child: Container(
-                  child: Image.asset('images/thumbnail/thumbnail.png',fit: BoxFit.fill,),
-                )),
+                Expanded(
+                    flex: 2,
+                    child: Container(
+                      child: Image.asset(
+                        'images/thumbnail/thumbnail.png',
+                        fit: BoxFit.fill,
+                      ),
+                    )),
                 Expanded(
                   flex: 1,
-                  child: Column(
-                      children: <Widget>[
+                  child: Column(children: <Widget>[
                     SizedBox(
                       height: 20,
                     ),
-                        Padding(
-                          padding: const EdgeInsets.only(left:8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(courseName,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            courseName,
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left:8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(courseInstructor,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            courseInstructor,
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left:8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(courseDescription,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            courseDescription,
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
                           ),
-                        ),
+                        ],
+                      ),
+                    ),
                   ]),
                 ),
-
               ],
             ),
           ),
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(flex: 3,child: Container()),
-                  Expanded(
-                    flex: 2,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Flexible(
-                            child: CircleAvatar(
-                            radius: 30,
-                            child: Flexible(
-                              child: Icon(
-                                Icons.person,
-                                size: 30,
-                              ),
-                            ),
-
-            ),
-                          ),
-                        ),
-                      ],
+          Column(
+            children: [
+              Expanded(flex: 3, child: Container()),
+              Expanded(
+                flex: 2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      child: Icon(
+                        Icons.person,
+                        size: 30,
+                      ),
                     ),
-                  ),
-                  Expanded(flex:1,child: Container())
-                ],
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
-    //   Column(children: <Widget>[
-    //     Text(courseName),
-    //     Text(courseInstructor),
-    //     Text(courseDescription),
-    //   ]),
+              Expanded(flex: 1, child: Container())
+            ],
+          )
+        ],
+      ),
+      //   Column(children: <Widget>[
+      //     Text(courseName),
+      //     Text(courseInstructor),
+      //     Text(courseDescription),
+      //   ]),
     );
   }
 }
