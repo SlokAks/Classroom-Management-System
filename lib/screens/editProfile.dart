@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:classroom_management/screens/HomeScreen.dart';
 import 'package:classroom_management/screens/home.dart';
 import 'package:classroom_management/widgets/appbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -90,89 +91,181 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: "Edit Profile",).build(context),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            const SizedBox(height: 24.0),
-            // "Name" form.
-            TextFormField(
-              textCapitalization: TextCapitalization.words,
-              controller: cname,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                icon: Icon(Icons.person),
-                hintText: 'What do people call you?',
-                labelText: 'Name *',
+      body: Container(
+        color: Color(0xFFF7F7F7),
+        child: Row(
+          children: [
+            Expanded(child: Container()),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(child: Container()),
+                  Container(
+                    // color: Colors.white,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          topLeft: Radius.circular(20),
+                        )
+                    ),
+                    child: Expanded(
+                      flex: 2,
+
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            const SizedBox(height: 24.0),
+                            // "Name" form.
+                            Center(
+                              // child: Text('EDIT PROFILE',
+                              //   style: TextStyle(
+                              //     fontWeight: FontWeight.w600,
+                              //     fontSize: 25,
+                              //   ),
+                              // ),
+                              child: CircleAvatar(
+                                radius: 40,
+                                child: Icon(Icons.person,
+                                size: 60,),
+                              ),
+                            ),
+                            const SizedBox(height: 24.0),
+                            TextFormField(
+                              textCapitalization: TextCapitalization.words,
+                              controller: cname,
+                              decoration: const InputDecoration(
+                                border: UnderlineInputBorder(),
+                                filled: true,
+                                icon: Icon(Icons.person),
+                                hintText: 'What do people call you?',
+                                labelText: 'Name *',
+                              ),
+                              onSaved: (String value) {
+                                this._name = value;
+                                print('name=$_name');
+                              },
+                              onChanged: (String value) {
+                                this._name = value;
+                                print('name=$_name');
+                              },
+                              validator: _validateName,
+                            ),
+                            const SizedBox(height: 24.0),
+                            // "Phone number" form.
+                            TextFormField(
+                              controller: cphoneNumber,
+                              decoration: const InputDecoration(
+                                border: UnderlineInputBorder(),
+                                filled: true,
+                                icon: Icon(Icons.phone),
+                                hintText: 'Where can we reach you?',
+                                labelText: 'Phone Number *',
+                                prefixText: '+91',
+                              ),
+                              keyboardType: TextInputType.phone,
+                              onSaved: (String value) {
+                                this._phoneNumber = value;
+                                print('phoneNumber=$_phoneNumber');
+                              },
+                              onChanged: (String value) {
+                                this._phoneNumber = value;
+                                print('phoneNumber=$_phoneNumber');
+                              },
+                              // TextInputFormatters are applied in sequence.
+                            ),
+                            const SizedBox(height: 24.0),
+                            TextFormField(
+                              controller: caddress,
+                              textCapitalization: TextCapitalization.words,
+                              decoration: const InputDecoration(
+                                border: UnderlineInputBorder(),
+                                filled: true,
+                                icon: Icon(Icons.home_outlined,
+                                  color: Colors.grey),
+                                hintText: 'What do people call you?',
+                                labelText: 'Address *',
+                              ),
+                              onSaved: (String value) {
+                                this._address = value;
+                                print('address=$_address');
+                              },
+                              onChanged: (String value){
+                                this._address=value;
+                              },
+                              validator: _validateName,
+                            ),
+                            const SizedBox(height: 24.0),
+                            Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                    child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(Icons.date_range,color: Colors.grey,),
+                                  ],
+                                )),
+                                Expanded(
+                                  flex: 10,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        color: Color(0xFFFAFAFA),
+                                          child: Column(
+                                            children: [
+                                              Text('Date of Birth'),
+                                              Text("${selectedDate.toLocal()}".split(' ')[0]),
+
+                                            ],
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                                
+                                Expanded(
+                                  flex: 2,
+                                  child: RaisedButton(
+                                    onPressed: () => _selectDate(context),
+                                    child: Text('Select date'),
+                                  ),
+                                ),
+
+                              ],
+                            ),
+
+                            const SizedBox(height: 24.0),
+                            RaisedButton(
+                              onPressed: () => setData(),
+                              child: Text('Submit'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                      )
+                    ),
+                  )),
+                  Expanded(
+                    flex: 2,
+                      child: Container()),
+                ],
               ),
-              onSaved: (String value) {
-                this._name = value;
-                print('name=$_name');
-              },
-              onChanged: (String value) {
-                this._name = value;
-                print('name=$_name');
-              },
-              validator: _validateName,
             ),
-            const SizedBox(height: 24.0),
-            // "Phone number" form.
-            TextFormField(
-              controller: cphoneNumber,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                icon: Icon(Icons.phone),
-                hintText: 'Where can we reach you?',
-                labelText: 'Phone Number *',
-                prefixText: '+91',
-              ),
-              keyboardType: TextInputType.phone,
-              onSaved: (String value) {
-                this._phoneNumber = value;
-                print('phoneNumber=$_phoneNumber');
-              },
-              onChanged: (String value) {
-                this._phoneNumber = value;
-                print('phoneNumber=$_phoneNumber');
-              },
-              // TextInputFormatters are applied in sequence.
-            ),
-            const SizedBox(height: 24.0),
-            TextFormField(
-              controller: caddress,
-              textCapitalization: TextCapitalization.words,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                icon: Icon(Icons.home_outlined),
-                hintText: 'What do people call you?',
-                labelText: 'Address *',
-              ),
-              onSaved: (String value) {
-                this._address = value;
-                print('address=$_address');
-              },
-              onChanged: (String value){
-                this._address=value;
-              },
-              validator: _validateName,
-            ),
-            const SizedBox(height: 24.0),
-            Text("${selectedDate.toLocal()}".split(' ')[0]),
-            SizedBox(height: 20.0,),
-            RaisedButton(
-              onPressed: () => _selectDate(context),
-              child: Text('Select date'),
-            ),
-            const SizedBox(height: 24.0),
-            RaisedButton(
-              onPressed: () => setData(),
-              child: Text('Submit'),
-            ),
+            Expanded(child: Container()),
           ],
         ),
       ),
