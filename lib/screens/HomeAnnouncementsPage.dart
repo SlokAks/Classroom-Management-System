@@ -1,6 +1,6 @@
 import 'dart:html';
 
-import 'package:classroom_management/widgets/AnnouncementTile.dart';
+import 'package:classroom_management/widgets/CourseAnnouncementTile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

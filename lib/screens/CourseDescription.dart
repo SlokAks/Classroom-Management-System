@@ -1,7 +1,6 @@
 import 'package:classroom_management/screens/course.dart';
-import 'package:flutter/material.dart';
 import 'package:classroom_management/widgets/navbar.dart';
-import 'Announcements.dart';
+import 'package:flutter/material.dart';
 
 class CourseDescription extends StatelessWidget {
   String courseId;
@@ -22,11 +21,7 @@ class CourseDescription extends StatelessWidget {
               gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: <Color>[
-                    Color(0xFFAD70FA),
-                    Color(0xFF8857DF)
-                  ])
-          ),
+                  colors: <Color>[Color(0xFFAD70FA), Color(0xFF8857DF)])),
         ),
         actions: <Widget>[
           // GestureDetector(
@@ -111,7 +106,11 @@ class CourseDescription extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Course(courseId,title: title,description: description,)),
+                      builder: (context) => Course(
+                            courseId,
+                            title: title,
+                            description: description,
+                          )),
                 );
               },
               child: Container(

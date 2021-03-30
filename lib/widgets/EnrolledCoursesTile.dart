@@ -20,7 +20,7 @@ class EnrolledCoursesTile extends StatelessWidget {
                     flex: 2,
                     child: Container(
                       child: Image.asset(
-                        'images/thumbnail/thumbnail.png',
+                        'images/courseTile.png',
                         fit: BoxFit.fill,
                       ),
                     )),

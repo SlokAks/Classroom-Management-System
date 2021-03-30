@@ -1,4 +1,4 @@
-import 'package:classroom_management/screens/Announcements.dart';
+import 'package:classroom_management/screens/HomeAnnouncementsPage.dart';
 import 'package:classroom_management/screens/MakeAnnouncements.dart';
 import 'package:classroom_management/screens/assignments.dart';
 import 'package:classroom_management/screens/chat_screen.dart';
@@ -11,25 +11,31 @@ class Course extends StatefulWidget {
   String description = "NA";
   Course(this.courseId, {this.title, this.description});
   @override
-  _CourseState createState() => _CourseState(courseId:this.courseId,title: this.title,description: this.description);
+  _CourseState createState() => _CourseState(
+      courseId: this.courseId,
+      title: this.title,
+      description: this.description);
 }
 
 class _CourseState extends State<Course> {
   String courseId;
   String title = "NA";
   String description = "NA";
-  _CourseState({this.courseId,this.title,this.description});
+  _CourseState({this.courseId, this.title, this.description});
   @override
   Widget build(BuildContext context) {
     final _kTabPages = <Widget>[
       Column(
-        children: [
-          Announcements(courseId),
-          MakeAnnouncements(courseId)
-        ],
+        children: [Announcements(courseId), MakeAnnouncements(courseId)],
       ),
-      Assignments(courseId: courseId,title: title,description: description,),
-     ChatScreen(courseId: courseId,),
+      Assignments(
+        courseId: courseId,
+        title: title,
+        description: description,
+      ),
+      ChatScreen(
+        courseId: courseId,
+      ),
     ];
     final _kTabs = <Tab>[
       const Tab(icon: Icon(Icons.announcement), text: 'Announcements'),
@@ -41,7 +47,7 @@ class _CourseState extends State<Course> {
       child: Scaffold(
         drawer: NavDrawer(),
         appBar: AppBar(
-          title:  Text(this.title),
+          title: Text(this.title),
           backgroundColor: Theme.of(context).accentColor,
           // If `TabController controller` is not provided, then a
           // DefaultTabController ancestor must be provided instead.

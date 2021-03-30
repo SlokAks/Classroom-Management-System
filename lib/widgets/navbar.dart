@@ -1,8 +1,7 @@
-import 'package:classroom_management/screens/AvailableCourses.dart';
-import 'package:classroom_management/screens/EnroledCourse.dart';
 import 'package:classroom_management/screens/HomeScreen.dart';
 import 'package:classroom_management/screens/editProfile.dart';
 import 'package:classroom_management/screens/home.dart';
+import 'package:classroom_management/widgets/AvailableCoursesTile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +23,7 @@ class NavDrawer extends StatelessWidget {
                   color: Colors.green,
                   image: DecorationImage(
                       fit: BoxFit.fill,
-                      image: AssetImage('assets/images/cover.jpeg'))),
+                      image: AssetImage('assets/images/navbarCover.jpeg'))),
             ),
             ListTile(
               leading: Icon(
@@ -63,25 +62,6 @@ class NavDrawer extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => AvailableCourses())),
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.book_online,
-                color: Colors.white,
-              ),
-              title: Text(
-                'Enroled Courses',
-                style: TextStyle(
-                    fontSize: 22.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-              onTap: () => {
-                Navigator.pop(context),
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => EnroledCourses())),
               },
             ),
             Divider(),

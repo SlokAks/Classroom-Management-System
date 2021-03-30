@@ -99,33 +99,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: Stack(
           children: [
-            // Container(
-            //   decoration: BoxDecoration(
-            //       image: DecorationImage(
-            //           image: AssetImage('assets/images/thumbnail/thumbnail5.png'),
-            //           fit: BoxFit.fitHeight)),
-            // ),
-            // Container(
-            //   color: Color.fromRGBO(255, 255, 255, 0.19),
-            // ),
             Container(
               child: Column(
                 children: <Widget>[
-                  // Expanded(
-                  //   flex: 1,
-                  //   child: Row(
-                  //     children: <Widget>[
-                  //       Expanded(
-                  //         flex: 2,
-                  //         child: Image(
-                  //           width: 200,
-                  //           height: 100,
-                  //           image: AssetImage("assets/images/logo.png"),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                   Expanded(
                     flex: 10,
                     child: Row(
