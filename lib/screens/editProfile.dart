@@ -1,13 +1,16 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:classroom_management/screens/HomeScreen.dart';
 import 'package:classroom_management/screens/home.dart';
 import 'package:classroom_management/widgets/appbar.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:flutter/services.dart';
+import 'package:firebase_storage/firebase_storage.dart'  as firebase_storage;
 class EditProfile extends StatefulWidget {
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -62,6 +65,97 @@ class _EditProfileState extends State<EditProfile> {
     }
     );
   }
+
+
+
+  bool isSubmitted=false;
+  bool isLoading;
+  User user;
+  bool _loadingPath=false;
+  List<PlatformFile> _paths;
+  FileType _pickingType = FileType.any;
+  String _directoryPath;
+  String fileName;
+  bool isLate=false;
+  String _extension;
+  bool _multiPick=false;
+  String userAssignmentUrl="";
+  String userFileName="";
+  String userGrade="";
+
+  storeToFirestore(String url,String fileName) async{
+    try {
+      CollectionReference users = FirebaseFirestore.instance.collection('users');
+      User user = FirebaseAuth.instance.currentUser;
+      await users.doc(user.uid).update({
+        "url" : url,
+        "fileName" :  fileName
+      });
+    }
+    catch(e){
+      SnackBar snackBar= SnackBar(content: Text(e.toString()));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+
+  }
+  Upload(fileName,Uint8List data) async {
+    setState(() => _loadingPath = true);
+    firebase_storage.Reference ref =
+    firebase_storage.FirebaseStorage.instance.ref(
+        'usersdata/${user.uid}/profilepic/${fileName}');
+    _extension = fileName
+        .toString()
+        .split('.').last;
+    firebase_storage.SettableMetadata metadata =
+    firebase_storage.SettableMetadata(
+        contentType: '$_pickingType/$_extension'
+    );
+
+    try {
+      await ref.putData(data,metadata);
+      String downloadURL = await ref.getDownloadURL();
+      print(downloadURL);
+      storeToFirestore(downloadURL,fileName);
+      setState(() {
+        _loadingPath=false;
+      });
+    } catch (e) {
+      SnackBar snackBar= SnackBar(content: Text(e.toString()));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      print(e);
+    }
+  }
+  Future getFileAndUpload()async {
+
+    try {
+      _directoryPath = null;
+      _paths = (await FilePicker.platform.pickFiles(
+        type: _pickingType,
+        allowMultiple: _multiPick,
+        allowedExtensions: (_extension?.isNotEmpty ?? false)
+            ? _extension?.replaceAll(' ', '')?.split(',')
+            : null,
+      ))
+          ?.files;
+    } on PlatformException catch (e) {
+      print("Unsupported operation" + e.toString());
+    } catch (ex) {
+      print(ex);
+    }
+    if (!mounted) return;
+    setState(() {
+      _loadingPath = false;
+
+      _paths != null ? _paths.map((e) => fileName = e.name).toString() : '...';
+      List<int> bytes;
+      _paths != null ? _paths.map((e) => {bytes = e.bytes}).toString() : '...';
+
+      Uint8List data = Uint8List.fromList(bytes);
+      SnackBar snackBar= SnackBar(content: Text("Uploading Your Profile Pic......."));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Upload(fileName, data);
+    });
+  }
   String _validateName(String value) {
     if (value.isEmpty) return 'Name is required.';
     final RegExp nameExp = RegExp(r'^[A-Za-z ]+$');
@@ -69,6 +163,29 @@ class _EditProfileState extends State<EditProfile> {
       return 'Please enter only alphabetical characters.';
     }
     return null;
+  }
+
+  funt()async{
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    User user= FirebaseAuth.instance.currentUser;
+    DocumentSnapshot documentSnapshot = await users.doc(user.uid).get();
+
+    if(documentSnapshot.data()['uid']!=null) {
+      return documentSnapshot.data()['uid'];
+    }
+    else{
+      return null;
+    }
+  }
+  String urll;
+  fun(){
+    if(urll!=null) {
+      return Image.network(urll);
+    }
+    else{
+      return Icon(Icons.person,
+        size: 60,);
+    }
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -82,9 +199,13 @@ class _EditProfileState extends State<EditProfile> {
         selectedDate = picked;
       });
   }
+
   @override
   void initState() {
+    // TODO: implement initState
+    user= FirebaseAuth.instance.currentUser;
     getData();
+    urll=funt();
     super.initState();
   }
   @override
@@ -130,8 +251,7 @@ class _EditProfileState extends State<EditProfile> {
                               // ),
                               child: CircleAvatar(
                                 radius: 40,
-                                child: Icon(Icons.person,
-                                size: 60,),
+                                child: fun(),
                               ),
                             ),
                             const SizedBox(height: 24.0),
@@ -199,6 +319,37 @@ class _EditProfileState extends State<EditProfile> {
                               },
                               validator: _validateName,
                             ),
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.lightBlueAccent,
+                                ),
+                                onPressed: (){
+                                  //Todo : Implement File Submission functionality
+//                                        getPdfAndUpload();
+                                  getFileAndUpload();
+//                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>AssignmentComments(courseId: widget.courseId,AssignmentId: widget.assignmentId,title: widget.title,)));
+                                }, child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(Icons.add,color: Colors.purple,),
+                                ),
+                                SizedBox(width: 4.0,child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.yellow,
+                                  ),
+                                ),),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("upload profile pic",style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight:
+                                    FontWeight.bold,
+                                    color: Colors.black,
+                                  ),),
+                                )
+                              ],
+                            )),
                             const SizedBox(height: 24.0),
                             Row(
                               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -239,7 +390,6 @@ class _EditProfileState extends State<EditProfile> {
 
                               ],
                             ),
-
                             const SizedBox(height: 24.0),
                             RaisedButton(
                               onPressed: () => setData(),
