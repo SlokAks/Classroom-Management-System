@@ -46,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
 //    theme: ThemeData.dark(),
       home: Scaffold(
         backgroundColor: Color(0xFFF7F7F7),
