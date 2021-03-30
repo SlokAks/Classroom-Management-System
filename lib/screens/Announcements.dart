@@ -25,6 +25,7 @@ class _AnnouncementsState extends State<Announcements> {
             .collection("Courses")
             .doc(courseId)
             .collection("Announcements")
+            .orderBy('time', descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
