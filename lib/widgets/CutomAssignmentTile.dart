@@ -1,4 +1,5 @@
 import 'package:classroom_management/screens/AssignmentView.dart';
+import 'package:classroom_management/screens/EditAssignment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:html' as html;
@@ -62,7 +63,7 @@ class CustomAssignmentListTile extends StatelessWidget {
                      SizedBox(width: 60.0,),
                      if(isProf)
                      ElevatedButton(onPressed: (){
-
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => EditAssignment(courseId: courseId,AssignmentId: assignmentId,))) ;
                      }, child: Padding(
                        padding: const EdgeInsets.all(8.0),
                        child: Text("Edit Assignment"),
