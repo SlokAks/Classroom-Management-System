@@ -28,9 +28,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String name = "NA";
+  String urll;
+  Widget profilePicture;
   void initState() {
     // TODO: implement initState
-
+    profilePicture = CircularProgressIndicator();
     FirebaseFirestore.instance
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser.uid)
@@ -39,6 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
       this.setState(() {
         name = user['name'];
       });
+      if(user['url']!=null) {
+        urll=user['url'];
+        this.setState(() {
+          profilePicture = CircleAvatar(
+            radius: 25,
+            backgroundImage: NetworkImage(urll),
+          );
+        });
+      }
     });
 
     super.initState();
@@ -92,10 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ViewProflieDialog();
                     });
               },
-              child: IconButton(
-                icon: const Icon(Icons.account_circle_sharp),
-                //TODO onpressed
-              ),
+              child: profilePicture,
             ),
           ],
         ),

@@ -59,12 +59,16 @@ class EnrolledCoursesTile extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+
                     CircleAvatar(
                       radius: 30,
                       child: Icon(
                         Icons.person,
                         size: 30,
                       ),
+                    ),
+                    SizedBox(
+                      width: 4,
                     ),
                   ],
                 ),

@@ -36,7 +36,13 @@ class _ViewProflieDialogState extends State<ViewProflieDialog> {
     email=Text('loading.....');
     dob=Text('loading.....');
     address=Text('loading.....');
-    profilePicture = CircularProgressIndicator();
+    profilePicture = CircleAvatar(
+      child: Icon(
+        Icons.add,
+        color: Colors.blue,
+      ),
+    );
+
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     users.doc(user.uid).get().then((dataa) {
       if(dataa['contact']!=null) {
@@ -45,6 +51,19 @@ class _ViewProflieDialogState extends State<ViewProflieDialog> {
           contact=Container(
             constraints: BoxConstraints(maxWidth: 400),
             child: Text('Contact : '+ccontact,
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w200
+              ),
+            ),
+          );
+        });
+      }
+      else{
+        setState(() {
+          contact=Container(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: Text('Contact : -',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w200
@@ -67,12 +86,38 @@ class _ViewProflieDialogState extends State<ViewProflieDialog> {
           );
         });
       }
+      else{
+        setState(() {
+          email=Container(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: Text('Email : -',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w200
+              ),
+            ),
+          );
+        });
+      }
       if(dataa['name']!=null) {
         cname = dataa['name'];
         setState(() {
           name=Container(
             constraints: BoxConstraints(maxWidth: 400),
             child: Text('Name : '+cname,
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w200
+              ),
+            ),
+          );
+        });
+      }
+      else{
+        setState(() {
+          name=Container(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: Text('Name : -',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w200
@@ -96,6 +141,20 @@ class _ViewProflieDialogState extends State<ViewProflieDialog> {
           );
         });
       }
+      else{
+        setState(() {
+          address=Container(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: Text('Address: -',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w200
+              ),
+
+            ),
+          );
+        });
+      }
       if(dataa['dob']!=null) {
         DateTime date = dataa['dob'].toDate();
         cdob = date.year.toString()+'-'+date.month.toString()+'-'+date.day.toString();
@@ -104,6 +163,17 @@ class _ViewProflieDialogState extends State<ViewProflieDialog> {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w200,
+            ),
+            softWrap: true,
+          );
+        });
+      }
+      else{
+        setState(() {
+          dob=Text('D.O.B : -' ,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w200,
             ),
             softWrap: true,
           );
