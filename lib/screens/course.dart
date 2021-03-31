@@ -51,6 +51,7 @@ class _CourseState extends State<Course> {
         courseId: courseId,
         title: title,
         description: description,
+        isProf: isProf,
       ),
       ChatScreen(
         courseId: courseId,

@@ -9,9 +9,10 @@ class Assignments extends StatefulWidget {
   String courseId="NA";
   String title = "NA";
   String description = "NA";
-  Assignments({this.courseId,this.title,this.description});
+  bool isProf;
+  Assignments({this.courseId,this.title,this.description,this.isProf});
   @override
-  _AssignmentsState createState() => _AssignmentsState(courseId: courseId,title: title,description: description);
+  _AssignmentsState createState() => _AssignmentsState(courseId: courseId,title: title,description: description,isProf: this.isProf);
 }
 
 class _AssignmentsState extends State<Assignments> {
@@ -19,7 +20,8 @@ class _AssignmentsState extends State<Assignments> {
    String courseId = "NA";
   String title = "NA";
   String description = "NA";
-  _AssignmentsState({this.courseId,this.title,this.description});
+  bool isProf=false;
+  _AssignmentsState({this.courseId,this.title,this.description,this.isProf});
   List <CustomAssignmentListTile> list=[];
   CollectionReference assignments;
 
@@ -53,6 +55,7 @@ class _AssignmentsState extends State<Assignments> {
               description: document.data()['Description'],
               url: document.data()['link'],
               dueDate: document.data()['dueDate'],
+              isProf: isProf,
             );
           }).toList(),
         );}

@@ -158,7 +158,7 @@ class _AddAssignmentState extends State<AddAssignment> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Add Assignment",
+        title: "Add Assignment for ${widget.courseId} Course",
       ).build(context),
       body: Container(
         color: Color(0xFFF7F7F7),

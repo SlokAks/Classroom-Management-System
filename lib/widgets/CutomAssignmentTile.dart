@@ -11,7 +11,8 @@ class CustomAssignmentListTile extends StatelessWidget {
   String url;
   Timestamp dueDate;
   String assignmentId;
-  CustomAssignmentListTile({this.courseId,this.title,this.description,this.dueDate,this.url,this.assignmentId});
+  bool isProf=false;
+  CustomAssignmentListTile({this.courseId,this.title,this.description,this.dueDate,this.url,this.assignmentId,this.isProf});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,6 +58,14 @@ class CustomAssignmentListTile extends StatelessWidget {
                      }, child: Padding(
                        padding: const EdgeInsets.all(8.0),
                        child: Text("Go to Assignment"),
+                     ),),
+                     SizedBox(width: 60.0,),
+                     if(isProf)
+                     ElevatedButton(onPressed: (){
+
+                     }, child: Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: Text("Edit Assignment"),
                      ),)
                    ],
                  ),
