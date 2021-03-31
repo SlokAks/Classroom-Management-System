@@ -18,6 +18,7 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
   final GlobalKey<FormFieldState<String>> _passwordFieldKey =
       GlobalKey<FormFieldState<String>>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
+
   saveUserInfoToFireStore() async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     User user = FirebaseAuth.instance.currentUser;

@@ -129,41 +129,21 @@ class _HomePageState extends State<HomePage> {
             )),
             Column(
               children: [
-                // Expanded(flex: 1,
-                //   child: Container(),
-                // ),
                 Expanded(
                   flex: 10,
                   child: Container(
                     alignment: Alignment.center,
-                    // child: Image.asset('images/thumbnail/thumbnail.png',
-                    //   // fit: BoxFit.fill,
-                    //
-                    // ),
                   ),
                 ),
-                // Expanded(flex: 1,
-                //   child: Container(),
-                // ),
               ],
             ),
-            // Container(color: Colors.white.withOpacity(0.5),),
             Container(
               child: Column(
                 children: [
                   Container(
                     child: Expanded(
                       flex: 1,
-                      child: Container(
-                          // color: Colors.white.withOpacity(0.9),
-                          // child: Text(
-                          //   "Classroom System",
-                          //   style: TextStyle(
-                          //     fontSize: 92.0,
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
-                          ),
+                      child: Container(),
                     ),
                   ),
                   Expanded(
@@ -181,7 +161,6 @@ class _HomePageState extends State<HomePage> {
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.9),
                                 borderRadius: BorderRadius.circular(10),
-                                // borderRadius: BorderRadius.circular(20.0),
                               ),
                               child: SingleChildScrollView(
                                 //padding: const EdgeInsets.symmetric(horizontal: 60.0),
@@ -217,21 +196,6 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ],
                                     ),
-
-                                    //
-                                    // Image(
-                                    //     image: AssetImage('assets/images/logooCropped.png'),
-                                    //  ),
-                                    //
-                                    //
-                                    // Text(
-                                    //   "Classroom System",
-                                    //   textAlign: TextAlign.center,
-                                    //   style: TextStyle(
-                                    //     fontSize: 85.0,
-                                    //     color: Color(0xFFD427A4),
-                                    //   ),
-                                    // ),
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           left: 100.0, //60
@@ -245,7 +209,6 @@ class _HomePageState extends State<HomePage> {
                                           fillColor: Colors.white70,
                                           focusColor: Colors.grey,
                                           icon: Icon(Icons.person),
-                                          // hintText: 'Your email address',
                                           labelText: 'User ID (Email)',
                                         ),
                                         keyboardType:
@@ -272,7 +235,6 @@ class _HomePageState extends State<HomePage> {
                                           icon: Icon(Icons.lock),
                                           fillColor: Colors.white70,
                                           focusColor: Colors.grey,
-                                          //hintText: 'Password',
                                           labelText: 'Password',
                                         ),
                                         obscureText: true,
@@ -281,7 +243,6 @@ class _HomePageState extends State<HomePage> {
                                         },
                                       ),
                                     ),
-
                                     Row(
                                       children: [
                                         Expanded(
@@ -365,7 +326,6 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ],
                                     ),
-
                                     isLoading
                                         ? circularProgress()
                                         : Container(
@@ -404,11 +364,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Center(
-                      // child: Image.asset('images/logoo.png',
-                      // fit: BoxFit.fill,
-                      // ),
-                      ),
+                  child: Center(),
                 ),
                 Expanded(flex: 2, child: Container())
               ],
@@ -416,18 +372,6 @@ class _HomePageState extends State<HomePage> {
                 // ),
                 ),
             Container(
-//            height: MediaQuery.of(context).size.height,
-//            width: MediaQuery.of(context).size.width,
-//               decoration: BoxDecoration(
-              // gradient: LinearGradient(
-              //     begin: Alignment.topLeft,
-              //     end: Alignment.bottomRight,
-              //     colors: [
-              //   Theme.of(context).accentColor,
-              //   Theme.of(context).primaryColor
-              // ]
-              //   )
-              // ),
               alignment: Alignment.center,
               child: SingleChildScrollView(
                 child: Column(),
