@@ -1,3 +1,4 @@
+import 'package:classroom_management/screens/HomeScreen.dart';
 import 'package:classroom_management/widgets/AvailableCoursesTile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,15 @@ class _AvailableCoursesDialogState extends State<AvailableCoursesDialog> {
       backgroundColor: Colors.transparent,
       child: Row(
         children: <Widget>[
-          Expanded(flex: 2, child: Container()),
+          Expanded(flex: 2, child: GestureDetector(
+        onTap:(){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => HomeScreen()));
+        },
+        child: Container(
+          color: Colors.transparent,
+        ),
+      )),
           Expanded(
             flex: 1,
             child: Container(

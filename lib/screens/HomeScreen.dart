@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:classroom_management/screens/AvailableCoursesDialog.dart';
 import 'package:classroom_management/screens/CalendarWithAssignment.dart';
+import 'package:classroom_management/screens/ViewProfileDialog.dart';
 import 'package:classroom_management/screens/course.dart';
 import 'package:classroom_management/widgets/EnrolledCoursesTile.dart';
 import 'package:classroom_management/widgets/HomeAnnouncementTile.dart';
@@ -85,11 +86,11 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 // Navigator.push(context,
                 // MaterialPageRoute(builder: (context) => Make()));
-                // showDialog(
-                //     context: context,
-                //     builder: (BuildContext context) {
-                //       return AvailableCoursesDialog();
-                //     });
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ViewProflieDialog();
+                    });
               },
               child: IconButton(
                 icon: const Icon(Icons.account_circle_sharp),
