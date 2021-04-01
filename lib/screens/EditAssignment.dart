@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -32,6 +33,7 @@ class _EditAssignmentState extends State<EditAssignment> {
   bool isSubmitting=false;
   String errMessage="";
   bool mainLoad=true;
+  String currUrl="";
   TextEditingController tTitle = new TextEditingController();
   TextEditingController tDesc = new TextEditingController();
   String _validate(String value) {
@@ -42,7 +44,7 @@ class _EditAssignmentState extends State<EditAssignment> {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: dueDate,
-        firstDate: DateTime.now(),
+        firstDate: dueDate,
         lastDate: DateTime(2031));
     if (picked != null && picked != dueDate)
       setState(() {
@@ -60,6 +62,9 @@ class _EditAssignmentState extends State<EditAssignment> {
       });
   }
   submit() async{
+    print("title"+title);
+    print("desc:"+description);
+    print("url:"+url);
     if(title=="" || url=="" || description==""){
       setState(() {
         errMessage="Error : Add all fields!";
@@ -72,7 +77,7 @@ class _EditAssignmentState extends State<EditAssignment> {
     CollectionReference assignment = FirebaseFirestore.instance.collection('Courses').doc(widget.courseId).collection("Assignments");
     bool wasSuccess=true;
     try{
-      assignment.add({
+      assignment.doc(widget.AssignmentId).update({
         "title" : title,
         "Description" : description,
         "dueDate" : DateTime(dueDate.year,dueDate.month, dueDate.day, dueTime.hour, dueTime.minute),
@@ -88,6 +93,7 @@ class _EditAssignmentState extends State<EditAssignment> {
     if(wasSuccess){
       setState(() {
         isSubmitting=false;
+        currUrl=url;
       });
       SnackBar snackBar = SnackBar(content: Text("Assignment ${title} submitted Successfully!"));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -151,7 +157,7 @@ class _EditAssignmentState extends State<EditAssignment> {
 
       Uint8List data = Uint8List.fromList(bytes);
       SnackBar snackBar =
-      SnackBar(content: Text("Uploading Assignment....."));
+      SnackBar(content: Text("Uploading New Assignment....."));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Upload(fileName, data);
     });
@@ -161,13 +167,81 @@ class _EditAssignmentState extends State<EditAssignment> {
     setState(() {
       tTitle.text=documentSnapshot.data()['title'];
       tDesc.text=documentSnapshot.data()['Description'];
+      title= documentSnapshot.data()['title'];
+      description=documentSnapshot.data()['Description'];
       Timestamp tt = documentSnapshot.data()['dueDate'];
+      currUrl=documentSnapshot.data()['link'];
+      url=documentSnapshot.data()['link'];
       DateTime dt=tt.toDate();
       dueDate=dt;
       dueTime=TimeOfDay(hour: dt.hour,minute: dt.minute);
       mainLoad=false;
     });
 
+  }
+  deleteAssignment() async{
+    await FirebaseFirestore.instance.collection("Courses").doc(widget.courseId).collection("Assignments").doc(widget.AssignmentId).delete().then((value) {
+      Navigator.pop(context);
+      
+  }) .catchError((error) {setState(() {
+      errMessage=error.toString();
+    });});
+  }
+  Future<void> _showDeleteDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Delete ${title} ',style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.red
+            ),),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Warning:Deleting the Assignment would delete all the assignment related data and submissions of the students!'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Are You Sure that you want to delete ?'),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextButton(
+                child: Text('Delete',style: TextStyle(color: Colors.red),),
+                onPressed: () {
+                 deleteAssignment();
+                 Navigator.pop(context);
+                },
+
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextButton(
+                child: Text('Cancel',style: TextStyle(color: Colors.green),),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+
+              ),
+            ),
+
+          ],
+        );
+      },
+    );
   }
   @override
   void initState() {
@@ -331,7 +405,8 @@ class _EditAssignmentState extends State<EditAssignment> {
                             ],
                           ),
                           const SizedBox(height: 24.0),
-                          _loadingPath? Center(child: CircularProgressIndicator(),) :  Row(
+                          _loadingPath? Center(child: CircularProgressIndicator(),) : Wrap(
+                            direction: Axis.horizontal,
                             children: [
                               Icon(
                                   Icons.upload_rounded,
@@ -340,36 +415,80 @@ class _EditAssignmentState extends State<EditAssignment> {
                               SizedBox(
                                 width: 15,
                               ),
-                              isUploaded?Text("File Uploaded Successfully.Now Submit it!") : ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey[200],
-                                  ),
-                                  onPressed: () {
-                                    //Todo : Implement File Submission functionality
-//                                        getPdfAndUpload();
-                                    getFileAndUpload();
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.grey[200],
+                                    ),
+                                    onPressed: () {
+                                      window.open(
+                                          currUrl, 'new tab');
 //                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>AssignmentComments(courseId: widget.courseId,AssignmentId: widget.assignmentId,title: widget.title,)));
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Upload Assignment",
-                                          style: TextStyle(
-                                            fontSize: 18.0,
-                                            color: Colors.black,
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Download Current Assignment File",
+                                            style: TextStyle(
+                                              fontSize: 18.0,
+                                              color: Colors.black,
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                    ],
-                                  )),
+                                        )
+                                      ],
+                                    )),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              isUploaded?Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("Changed File Uploaded Successfully.Now Submit it!",style: TextStyle(color: Colors.green),),
+                              ) : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.grey[200],
+                                    ),
+                                    onPressed: () {
+                                      //Todo : Implement File Submission functionality
+//                                        getPdfAndUpload();
+                                      getFileAndUpload();
+//                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>AssignmentComments(courseId: widget.courseId,AssignmentId: widget.assignmentId,title: widget.title,)));
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Upload a Different File",
+                                            style: TextStyle(
+                                              fontSize: 18.0,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 24.0),
                           RaisedButton(
                             onPressed: () => submit(),
-                            child: isSubmitting? CircularProgressIndicator():Text('Submit'),
+                            child: isSubmitting? CircularProgressIndicator():Text('Submit Changes'),
+                          ),
+                          const SizedBox(height: 24.0),
+                          RaisedButton(
+                            onPressed: () => _showDeleteDialog(),
+                            child: Text('Delete Assignment'),
+                            color: Colors.red,
                           ),
                           const SizedBox(height: 24.0),
                           Center(
