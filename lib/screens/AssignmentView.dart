@@ -260,10 +260,13 @@ class _AssignmentViewState extends State<AssignmentView> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        this.widget.description,
-                                        style: TextStyle(
-                                          fontSize: 18.0,
+                                      child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          this.widget.description,
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                          ),
                                         ),
                                       ),
                                     ),

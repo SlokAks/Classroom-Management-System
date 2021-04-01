@@ -40,7 +40,9 @@ class CustomAssignmentListTile extends StatelessWidget {
                SizedBox(height: 5.0,),
                Padding(
                  padding: const EdgeInsets.all(8.0),
-                 child: Text(description==null?"":description),
+                 child: Align(
+                     alignment: Alignment.topLeft,
+                     child: Text(description==null?"":description,textAlign: TextAlign.left,)),
                ),
             Divider(),
             SizedBox(height: 5.0,),

@@ -160,219 +160,216 @@ class _AddAssignmentState extends State<AddAssignment> {
       appBar: CustomAppBar(
         title: "Add Assignment for ${widget.courseId} Course",
       ).build(context),
-      body: Container(
-        color: Color(0xFFF7F7F7),
-        child: Row(
-          children: [
-            Expanded(child: Container()),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(child: Container()),
-                  Container(
-                    // color: Colors.white,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          topLeft: Radius.circular(20),
-                        )),
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          const SizedBox(height: 24.0),
-                          TextFormField(
-                            textCapitalization: TextCapitalization.words,
-                            controller: tTitle,
-                            decoration: const InputDecoration(
-                              border: UnderlineInputBorder(),
-                              filled: true,
-                              icon: Icon(Icons.title,color: Colors.purple,),
-                              hintText: 'Give Title to the Assignment',
-                              labelText: 'Title',
-                            ),
-                            onSaved: (String value) {
-                              this.title = value;
-                            },
-                            onChanged: (String value) {
-                              this.title = value;
-                            },
-                            validator: _validate,
-                          ),
-                          const SizedBox(height: 24.0),
-                          // "Phone number" form.
-                          TextFormField(
-                            controller: tDesc,
-                            decoration: const InputDecoration(
-                              border: UnderlineInputBorder(),
-                              filled: true,
-                              icon: Icon(Icons.description,color: Colors.purple),
-                              hintText: 'Add Assignment Description',
-                              labelText: 'Description',
-                            ),
-                            onSaved: (String value) {
-                              this.description = value;
-                            },
-                            onChanged: (String value) {
-                              this.description = value;
-                            },
-                            // TextInputFormatters are applied in sequence.
-                          ),
-                          const SizedBox(height: 24.0),
-                          Wrap(
-                            direction: Axis.horizontal,
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Expanded(
-                                    flex: 1,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.date_range,
-                                          color: Colors.purple,
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Expanded(
-                                  flex: 10,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                          color: Color(0xFFFAFAFA),
-                                          child: Column(
-                                            children: [
-                                              Text('Due Date'),
-                                              Text("${dueDate.toLocal()}"
-                                                  .split(' ')[0]),
-                                            ],
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Expanded(
-                                  flex: 10,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                          color: Color(0xFFFAFAFA),
-                                          child: Column(
-                                            children: [
-                                              Text('Due Time'),
-                                              Text("${dueTime.hour}:${dueTime.minute}"
-                                                  .split(' ')[0]),
-                                            ],
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Expanded(
-                                  flex: 3,
-                                  child: RaisedButton(
-                                    onPressed: () => _selectDate(context),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('Select Due date'),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Expanded(
-                                  flex: 3,
-                                  child: RaisedButton(
-                                    onPressed: () => _selectTime(context),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('Select Due Time'),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 24.0),
-                       _loadingPath? Center(child: CircularProgressIndicator(),) :  Row(
-                            children: [
-                              Icon(
-                                  Icons.upload_rounded,
-                                  color: Colors.purple
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                             isUploaded?Text("File Uploaded Successfully.Now Submit it!") : ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey[200],
-                                  ),
-                                  onPressed: () {
-                                    //Todo : Implement File Submission functionality
+      body: Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: Card(
+          elevation: 14.0,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              color: Color(0xFFF7F7F7),
+
+             child: Container(
+               // color: Colors.white,
+               decoration: BoxDecoration(
+                   color: Colors.white,
+                   borderRadius: BorderRadius.only(
+                     topRight: Radius.circular(20),
+                     topLeft: Radius.circular(20),
+                   )),
+               child: SingleChildScrollView(
+                 child: Column(
+                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                   crossAxisAlignment: CrossAxisAlignment.stretch,
+                   children: <Widget>[
+                     const SizedBox(height: 24.0),
+                     TextFormField(
+                       keyboardType: TextInputType.multiline,
+                       maxLines: null,
+                       textCapitalization: TextCapitalization.words,
+                       controller: tTitle,
+                       decoration: const InputDecoration(
+                         border: UnderlineInputBorder(),
+                         filled: true,
+                         icon: Icon(Icons.title,color: Colors.purple,),
+                         hintText: 'Give Title to the Assignment',
+                         labelText: 'Title',
+                       ),
+                       onSaved: (String value) {
+                         this.title = value;
+                       },
+                       onChanged: (String value) {
+                         this.title = value;
+                       },
+                       validator: _validate,
+                     ),
+                     const SizedBox(height: 24.0),
+                     // "Phone number" form.
+                     TextFormField(
+                       keyboardType: TextInputType.multiline,
+                       maxLines: null,
+                       controller: tDesc,
+                       decoration: const InputDecoration(
+                         border: UnderlineInputBorder(),
+                         filled: true,
+                         icon: Icon(Icons.description,color: Colors.purple),
+                         hintText: 'Add Assignment Description',
+                         labelText: 'Description',
+                       ),
+                       onSaved: (String value) {
+                         this.description = value;
+                       },
+                       onChanged: (String value) {
+                         this.description = value;
+                       },
+                       // TextInputFormatters are applied in sequence.
+                     ),
+                     const SizedBox(height: 24.0),
+                     Wrap(
+                       direction: Axis.horizontal,
+                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child: Expanded(
+                               flex: 1,
+                               child: Row(
+                                 mainAxisAlignment: MainAxisAlignment.start,
+                                 children: [
+                                   Icon(
+                                     Icons.date_range,
+                                     color: Colors.purple,
+                                   ),
+                                 ],
+                               )),
+                         ),
+                         Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child: Expanded(
+                             flex: 10,
+                             child: Row(
+                               mainAxisAlignment: MainAxisAlignment.start,
+                               children: [
+                                 Container(
+                                     color: Color(0xFFFAFAFA),
+                                     child: Column(
+                                       children: [
+                                         Text('Due Date'),
+                                         Text("${dueDate.toLocal()}"
+                                             .split(' ')[0]),
+                                       ],
+                                     )),
+                               ],
+                             ),
+                           ),
+                         ),
+                         Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child: Expanded(
+                             flex: 10,
+                             child: Row(
+                               mainAxisAlignment: MainAxisAlignment.start,
+                               children: [
+                                 Container(
+                                     color: Color(0xFFFAFAFA),
+                                     child: Column(
+                                       children: [
+                                         Text('Due Time'),
+                                         Text("${dueTime.hour}:${dueTime.minute}"
+                                             .split(' ')[0]),
+                                       ],
+                                     )),
+                               ],
+                             ),
+                           ),
+                         ),
+                         Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child: Expanded(
+                             flex: 3,
+                             child: RaisedButton(
+                               onPressed: () => _selectDate(context),
+                               child: Padding(
+                                 padding: const EdgeInsets.all(8.0),
+                                 child: Text('Select Due date'),
+                               ),
+                             ),
+                           ),
+                         ),
+                         Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child: Expanded(
+                             flex: 3,
+                             child: RaisedButton(
+                               onPressed: () => _selectTime(context),
+                               child: Padding(
+                                 padding: const EdgeInsets.all(8.0),
+                                 child: Text('Select Due Time'),
+                               ),
+                             ),
+                           ),
+                         ),
+                       ],
+                     ),
+                     const SizedBox(height: 24.0),
+                  _loadingPath? Center(child: CircularProgressIndicator(),) :  Row(
+                       children: [
+                         Icon(
+                             Icons.upload_rounded,
+                             color: Colors.purple
+                         ),
+                         SizedBox(
+                           width: 15,
+                         ),
+                        isUploaded?Text("File Uploaded Successfully.Now Submit it!") : ElevatedButton(
+                             style: ElevatedButton.styleFrom(
+                               primary: Colors.grey[200],
+                             ),
+                             onPressed: () {
+                               //Todo : Implement File Submission functionality
 //                                        getPdfAndUpload();
-                                    getFileAndUpload();
+                               getFileAndUpload();
 //                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>AssignmentComments(courseId: widget.courseId,AssignmentId: widget.assignmentId,title: widget.title,)));
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Upload Assignment",
-                                          style: TextStyle(
-                                            fontSize: 18.0,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  )),
-                            ],
-                          ),
-                          const SizedBox(height: 24.0),
-                          RaisedButton(
-                            onPressed: () => submit(),
-                            child: isSubmitting? CircularProgressIndicator():Text('Submit'),
-                          ),
-                          const SizedBox(height: 24.0),
-                          Center(
-                            child: Text(errMessage,style: TextStyle(color: Colors.red),),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(20),
-                              bottomLeft: Radius.circular(20),
-                            )),
-                      )),
-                  Expanded(flex: 2, child: Container()),
-                ],
-              ),
+                             },
+                             child: Row(
+                               children: [
+                                 Padding(
+                                   padding: const EdgeInsets.all(8.0),
+                                   child: Text(
+                                     "Upload Assignment",
+                                     style: TextStyle(
+                                       fontSize: 18.0,
+                                       color: Colors.black,
+                                     ),
+                                   ),
+                                 )
+                               ],
+                             )),
+                       ],
+                     ),
+                     const SizedBox(height: 24.0),
+                     Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: RaisedButton(
+                         onPressed: () => submit(),
+                         child: isSubmitting? CircularProgressIndicator():Text('Submit'),
+                       ),
+                     ),
+                     const SizedBox(height: 24.0),
+                     Center(
+                       child: Text(errMessage,style: TextStyle(color: Colors.red),),
+                     )
+                   ],
+                 ),
+               ),
+             ),
+
+
+
+
+
             ),
-            Expanded(child: Container()),
-          ],
+          ),
         ),
       ),
     );
