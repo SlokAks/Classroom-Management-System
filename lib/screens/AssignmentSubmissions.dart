@@ -33,27 +33,26 @@ class _AssignmentSubmissionsState extends State<AssignmentSubmissions> {
                   .collection("enrolledCourses")
                   .doc(courseId)
                   .get()
-                  .then((courseSnapshot) => () {
-                        if (courseSnapshot.exists) {
-                          courseSnapshot.reference
-                              .collection("Assignments")
-                              .doc(assignmentId)
-                              .get()
-                              .then((assignment) => () {
-                                    if (assignment.exists) {
-                                      setState(() {
-                                        studentsList.add(
-                                            AssignmentSubmissionsTile(
-                                                user.id,
-                                                assignment['url'],
-                                                assignment['grade'],
-                                                courseId,
-                                                assignmentId));
-                                      });
-                                    }
-                                  });
-                        }
+                  .then((courseSnapshot) {
+                if (courseSnapshot.exists) {
+                  courseSnapshot.reference
+                      .collection("Assignments")
+                      .doc(assignmentId)
+                      .get()
+                      .then((assignment) {
+                    if (assignment.exists) {
+                      setState(() {
+                        studentsList.add(AssignmentSubmissionsTile(
+                            user.id,
+                            assignment['url'],
+                            assignment['grade'],
+                            courseId,
+                            assignmentId));
                       });
+                    }
+                  });
+                }
+              });
             }));
 
     super.initState();
