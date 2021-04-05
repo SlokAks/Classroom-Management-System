@@ -1,5 +1,6 @@
 import 'package:classroom_management/screens/AcceptStudentRequests.dart';
 import 'package:classroom_management/screens/AddAssignment.dart';
+import 'package:classroom_management/screens/EnroledStudents.dart';
 import 'package:classroom_management/screens/HomeAnnouncementsPage.dart';
 import 'package:classroom_management/screens/MakeAnnouncements.dart';
 import 'package:classroom_management/screens/assignments.dart';
@@ -85,8 +86,10 @@ class _CourseState extends State<Course> {
             if(isProf)
             FlatButton(
               textColor: Colors.white,
-              onPressed: () {},
-              child: Text("Students",style: TextStyle(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> EnroledStudents(courseId: courseId,)));
+              },
+              child: Text("Enroled Students",style: TextStyle(
                 fontSize: 22
               ),),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),

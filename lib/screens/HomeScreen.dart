@@ -12,6 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class AnnouncementsContainer {
   String course;
@@ -75,35 +76,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     colors: <Color>[Color(0xFFAD70FA), Color(0xFF8857DF)])),
           ),
           actions: <Widget>[
-            GestureDetector(
-              onTap: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => AvailableCourses()));
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AvailableCoursesDialog();
-                    });
-              },
-              child: IconButton(
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.blue,
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () {
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => AvailableCourses()));
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AvailableCoursesDialog();
+                      });
+                },
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.blue,
+                  ),
+                  //TODO onpressed
                 ),
-                //TODO onpressed
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                // Navigator.push(context,
-                // MaterialPageRoute(builder: (context) => Make()));
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ViewProflieDialog();
-                    });
-              },
-              child: profilePicture,
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () {
+                  // Navigator.push(context,
+                  // MaterialPageRoute(builder: (context) => Make()));
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ViewProflieDialog();
+                      });
+                },
+                child: profilePicture,
+              ),
             ),
           ],
         ),
@@ -265,30 +272,33 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                           if (courseSnapsot.connectionState ==
                                               ConnectionState.done) {
-                                            return GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Course(
-                                                            courseSnapsot
-                                                                .data.id,
-                                                            title: courseSnapsot
-                                                                .data
-                                                                .data()['name'],
-                                                            description:
-                                                                courseSnapsot
-                                                                        .data
-                                                                        .data()[
-                                                                    'description'],
-                                                          )),
-                                                );
-                                              },
-                                              child: EnrolledCoursesTile(
-                                                  courseSnapsot.data
-                                                      .data()['name'],
-                                                  enrolledCoursesSnapshot.id),
+                                            return MouseRegion(
+                                              cursor: SystemMouseCursors.click,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Course(
+                                                              courseSnapsot
+                                                                  .data.id,
+                                                              title: courseSnapsot
+                                                                  .data
+                                                                  .data()['name'],
+                                                              description:
+                                                                  courseSnapsot
+                                                                          .data
+                                                                          .data()[
+                                                                      'description'],
+                                                            )),
+                                                  );
+                                                },
+                                                child: EnrolledCoursesTile(
+                                                    courseSnapsot.data
+                                                        .data()['name'],
+                                                    enrolledCoursesSnapshot.id),
+                                              ),
                                             );
                                           }
                                           return Center(
