@@ -34,6 +34,7 @@ class CustomListTile extends StatelessWidget {
         .doc(currentUser.uid)
         .collection("enrolledCourses");
     await usersEnroledCourses.doc(courseId).delete();
+    await FirebaseFirestore.instance.collection("Courses").doc(courseId).collection("enrolledStudents").doc(currentUser.uid).delete();
     isEnroled = false;
   }
 
