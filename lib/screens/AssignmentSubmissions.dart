@@ -49,6 +49,11 @@ class _AssignmentSubmissionsState extends State<AssignmentSubmissions> {
                             courseId,
                             assignmentId));
                       });
+                    } else {
+                      setState(() {
+                        studentsList.add(AssignmentSubmissionsTile(
+                            user.id, "", "", courseId, assignmentId));
+                      });
                     }
                   });
                 }
