@@ -88,7 +88,7 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Student Registration             ")
+      appBar: CustomAppBar(title: "Registration             ")
           .build(context),
       body: Stack(
         children: [

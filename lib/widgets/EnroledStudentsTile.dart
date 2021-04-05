@@ -32,6 +32,7 @@ class EnroledStudentTile extends StatelessWidget {
                         fontWeight: FontWeight.w600),
                   ),
                 ),
+
                 ElevatedButton(onPressed: (){},
                   style: ElevatedButton.styleFrom(
                     primary: Colors.teal,
@@ -41,6 +42,7 @@ class EnroledStudentTile extends StatelessWidget {
                   ),
                   child: Text("View Student"),
                 ),
+
                 ElevatedButton(onPressed: (){},
                   style: ElevatedButton.styleFrom(
                     primary: Colors.teal,

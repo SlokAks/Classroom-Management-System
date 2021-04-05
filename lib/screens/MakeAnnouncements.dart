@@ -42,7 +42,7 @@ class _MakeAnnouncementsState extends State<MakeAnnouncements> {
           children: <Widget>[
             TextField(
               controller: this._controller,
-              maxLines: 10,
+              maxLines: 7,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
                 labelText: 'Enter Announcement Description',

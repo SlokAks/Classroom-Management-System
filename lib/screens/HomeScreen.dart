@@ -59,288 +59,515 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
 //    theme: ThemeData.dark(),
-      home: Scaffold(
-        backgroundColor: Color(0xFFF7F7F7),
-        drawer: NavDrawer(),
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          // leading: const Icon(Icons.tag_faces),
-          title: Center(child: Text("Welcome " + name)),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[Color(0xFFAD70FA), Color(0xFF8857DF)])),
-          ),
-          actions: <Widget>[
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) => AvailableCourses()));
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AvailableCoursesDialog();
-                      });
-                },
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.add,
-                    color: Colors.blue,
+        home: Scaffold(
+          backgroundColor: Color(0xFFF7F7F7),
+          drawer: NavDrawer(),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            // leading: const Icon(Icons.tag_faces),
+            title: Center(child: Text("Welcome " + name)),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: <Color>[Color(0xFFAD70FA), Color(0xFF8857DF)])),
+            ),
+            actions: <Widget>[
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => AvailableCourses()));
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AvailableCoursesDialog();
+                        });
+                  },
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.blue,
+                    ),
+                    //TODO onpressed
                   ),
-                  //TODO onpressed
                 ),
               ),
-            ),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.push(context,
-                  // MaterialPageRoute(builder: (context) => Make()));
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return ViewProflieDialog();
-                      });
-                },
-                child: profilePicture,
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigator.push(context,
+                    // MaterialPageRoute(builder: (context) => Make()));
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ViewProflieDialog();
+                        });
+                  },
+                  child: profilePicture,
+                ),
               ),
-            ),
-          ],
-        ),
-        body: Stack(
-          children: [
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 10,
-                    child: Row(
+            ],
+          ),
+          body: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+
+              if(constraints.maxWidth>1420&&constraints.maxHeight>620){
+                return _buildNormalContainer();
+              }
+              else{
+                return _buildWideContainers();
+              }
+            },
+          ),
+        )
+    );
+  }
+  Widget _buildNormalContainer() {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 10,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 15, bottom: 15),
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            margin: EdgeInsets.only(top: 15, bottom: 15),
-                            padding: EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.all(8),
-                                  padding: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: Color(0xFF858D8F),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFF858D8F),
-                                        ),
-                                        child: Text(
-                                          'Latest Announcements',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Center(
-                                    child: StreamBuilder(
-                                      stream: FirebaseFirestore.instance
-                                          .collection("users")
-                                          .doc(FirebaseAuth
-                                              .instance.currentUser.uid)
-                                          .collection("enrolledCourses")
-                                          .snapshots(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<QuerySnapshot>
-                                              coursesSnapshot) {
-                                        if (!coursesSnapshot.hasData) {
-                                          return circularProgress();
-                                        }
-                                        List<dynamic> list = coursesSnapshot
-                                            .data.docs
-                                            .map((courses) {
-                                          print(courses.id);
-                                          return StreamBuilder(
-                                            stream: FirebaseFirestore.instance
-                                                .collection("Courses")
-                                                .doc(courses.id)
-                                                .collection("Announcements")
-                                                .orderBy('time',
-                                                    descending: true)
-                                                .snapshots(),
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot<QuerySnapshot>
-                                                    announcementSnapshot) {
-                                              if (!announcementSnapshot
-                                                  .hasData) {
-                                                return Text("Looading");
-                                              }
-
-                                              List<HomeAnnouncementTile> list =
-                                                  announcementSnapshot.data.docs
-                                                      .map((announcement) {
-                                                return HomeAnnouncementTile(
-                                                  announcement.data()['text'],
-                                                  announcementTime: announcement
-                                                      .data()['time'],
-                                                  courseId: courses.id,
-                                                );
-                                              }).toList();
-
-                                              List<Widget> finalList =
-                                                  announcementSnapshot.data.docs
-                                                      .map((announcement) {
-                                                return HomeAnnouncementTile(
-                                                  announcement.data()['text'],
-                                                  announcementTime: announcement
-                                                      .data()['time'],
-                                                  courseId: courses.id,
-                                                );
-                                              }).toList();
-
-                                              return Column(
-                                                  children: finalList.sublist(
-                                                      0,
-                                                      min(finalList.length,
-                                                          1)));
-
-                                              // return Text("Loading");
-                                            },
-                                          );
-                                        }).toList();
-                                        return ListView(
-                                          children: list,
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                        Container(
+                          margin: EdgeInsets.all(8),
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Color(0xFF858D8F),
                           ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: StreamBuilder(
-                            stream: FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(FirebaseAuth.instance.currentUser.uid)
-                                .collection('enrolledCourses')
-                                .snapshots(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: circularProgress(),
-                                );
-                              }
-
-                              List<dynamic> list = snapshot.data.docs
-                                  .map((enrolledCoursesSnapshot) =>
-                                      FutureBuilder(
-                                        future: FirebaseFirestore.instance
-                                            .collection("Courses")
-                                            .doc(enrolledCoursesSnapshot.id)
-                                            .get(),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot<DocumentSnapshot>
-                                                courseSnapsot) {
-                                          if (courseSnapsot.hasError) {
-                                            return Text("Something went wrong");
-                                          }
-
-                                          if (courseSnapsot.connectionState ==
-                                              ConnectionState.done) {
-                                            return MouseRegion(
-                                              cursor: SystemMouseCursors.click,
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Course(
-                                                              courseSnapsot
-                                                                  .data.id,
-                                                              title: courseSnapsot
-                                                                  .data
-                                                                  .data()['name'],
-                                                              description:
-                                                                  courseSnapsot
-                                                                          .data
-                                                                          .data()[
-                                                                      'description'],
-                                                            )),
-                                                  );
-                                                },
-                                                child: EnrolledCoursesTile(
-                                                    courseSnapsot.data
-                                                        .data()['name'],
-                                                    enrolledCoursesSnapshot.id),
-                                              ),
-                                            );
-                                          }
-                                          return Center(
-                                            child: circularProgress(),
-                                          );
-                                        },
-                                      ))
-                                  .toList();
-
-                              return GridView.builder(
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                ),
-                                primary: false,
-                                padding: const EdgeInsets.all(20),
-                                itemCount: list.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return list[index];
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                        Expanded(
-                            flex: 1,
-                            child: Container(
-                                // padding: EdgeInsets.all(15),
-                                margin: EdgeInsets.only(top: 15, bottom: 15),
+                          child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.center,
+                            children: [
+                              Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(40.0),
+                                  color: Color(0xFF858D8F),
                                 ),
-                                child: CalendarWithAssignment()))
+                                child: Text(
+                                  'Latest Announcements',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(FirebaseAuth
+                                  .instance.currentUser.uid)
+                                  .collection("enrolledCourses")
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot>
+                                  coursesSnapshot) {
+                                if (!coursesSnapshot.hasData) {
+                                  return circularProgress();
+                                }
+                                List<dynamic> list = coursesSnapshot
+                                    .data.docs
+                                    .map((courses) {
+                                  print(courses.id);
+                                  return StreamBuilder(
+                                    stream: FirebaseFirestore.instance
+                                        .collection("Courses")
+                                        .doc(courses.id)
+                                        .collection("Announcements")
+                                        .orderBy('time',
+                                        descending: true)
+                                        .snapshots(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<QuerySnapshot>
+                                        announcementSnapshot) {
+                                      if (!announcementSnapshot
+                                          .hasData) {
+                                        return Text("Looading");
+                                      }
+
+                                      List<HomeAnnouncementTile> list =
+                                      announcementSnapshot.data.docs
+                                          .map((announcement) {
+                                        return HomeAnnouncementTile(
+                                          announcement.data()['text'],
+                                          announcementTime: announcement
+                                              .data()['time'],
+                                          courseId: courses.id,
+                                        );
+                                      }).toList();
+
+                                      List<Widget> finalList =
+                                      announcementSnapshot.data.docs
+                                          .map((announcement) {
+                                        return HomeAnnouncementTile(
+                                          announcement.data()['text'],
+                                          announcementTime: announcement
+                                              .data()['time'],
+                                          courseId: courses.id,
+                                        );
+                                      }).toList();
+
+                                      return Column(
+                                          children: finalList.sublist(
+                                              0,
+                                              min(finalList.length,
+                                                  1)));
+
+                                      // return Text("Loading");
+                                    },
+                                  );
+                                }).toList();
+                                return ListView(
+                                  children: list,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(FirebaseAuth.instance.currentUser.uid)
+                        .collection('enrolledCourses')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: circularProgress(),
+                        );
+                      }
+
+                      List<dynamic> list = snapshot.data.docs
+                          .map((enrolledCoursesSnapshot) =>
+                          FutureBuilder(
+                            future: FirebaseFirestore.instance
+                                .collection("Courses")
+                                .doc(enrolledCoursesSnapshot.id)
+                                .get(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<DocumentSnapshot>
+                                courseSnapsot) {
+                              if (courseSnapsot.hasError) {
+                                return Text("Something went wrong");
+                              }
+
+                              if (courseSnapsot.connectionState ==
+                                  ConnectionState.done) {
+                                return MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Course(
+                                                  courseSnapsot
+                                                      .data.id,
+                                                  title: courseSnapsot
+                                                      .data
+                                                      .data()['name'],
+                                                  description:
+                                                  courseSnapsot
+                                                      .data
+                                                      .data()[
+                                                  'description'],
+                                                )),
+                                      );
+                                    },
+                                    child: EnrolledCoursesTile(
+                                        courseSnapsot.data
+                                            .data()['name'],
+                                        enrolledCoursesSnapshot.id),
+                                  ),
+                                );
+                              }
+                              return Center(
+                                child: circularProgress(),
+                              );
+                            },
+                          ))
+                          .toList();
+
+                      return GridView.builder(
+                        gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                        ),
+                        primary: false,
+                        padding: const EdgeInsets.all(20),
+                        itemCount: list.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return list[index];
+                        },
+                      );
+                    },
+                  ),
+                ),
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                      // padding: EdgeInsets.all(15),
+                        margin: EdgeInsets.only(top: 15, bottom: 15),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        child: CalendarWithAssignment()))
+              ],
             ),
-          ],
-        ),
+          )
+        ],
+      ),
+    );
+  }
+
+
+  Widget _buildWideContainers() {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 10,
+            child: Row(
+              children: [
+                // Expanded(
+                //   flex: 1,
+                //   child: Container(
+                //     margin: EdgeInsets.only(top: 15, bottom: 15),
+                //     padding: EdgeInsets.all(15),
+                //     decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.circular(20.0),
+                //     ),
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.stretch,
+                //       children: [
+                //         Container(
+                //           margin: EdgeInsets.all(8),
+                //           padding: EdgeInsets.all(8),
+                //           decoration: BoxDecoration(
+                //             borderRadius: BorderRadius.circular(10.0),
+                //             color: Color(0xFF858D8F),
+                //           ),
+                //           child: Column(
+                //             crossAxisAlignment:
+                //             CrossAxisAlignment.center,
+                //             children: [
+                //               Container(
+                //                 decoration: BoxDecoration(
+                //                   color: Color(0xFF858D8F),
+                //                 ),
+                //                 child: Text(
+                //                   'Latest Announcements',
+                //                   style: TextStyle(
+                //                     color: Colors.white,
+                //                     fontSize: 25,
+                //                     fontWeight: FontWeight.w800,
+                //                   ),
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //         Expanded(
+                //           child: Center(
+                //             child: StreamBuilder(
+                //               stream: FirebaseFirestore.instance
+                //                   .collection("users")
+                //                   .doc(FirebaseAuth
+                //                   .instance.currentUser.uid)
+                //                   .collection("enrolledCourses")
+                //                   .snapshots(),
+                //               builder: (BuildContext context,
+                //                   AsyncSnapshot<QuerySnapshot>
+                //                   coursesSnapshot) {
+                //                 if (!coursesSnapshot.hasData) {
+                //                   return circularProgress();
+                //                 }
+                //                 List<dynamic> list = coursesSnapshot
+                //                     .data.docs
+                //                     .map((courses) {
+                //                   print(courses.id);
+                //                   return StreamBuilder(
+                //                     stream: FirebaseFirestore.instance
+                //                         .collection("Courses")
+                //                         .doc(courses.id)
+                //                         .collection("Announcements")
+                //                         .orderBy('time',
+                //                         descending: true)
+                //                         .snapshots(),
+                //                     builder: (BuildContext context,
+                //                         AsyncSnapshot<QuerySnapshot>
+                //                         announcementSnapshot) {
+                //                       if (!announcementSnapshot
+                //                           .hasData) {
+                //                         return Text("Looading");
+                //                       }
+                //
+                //                       List<HomeAnnouncementTile> list =
+                //                       announcementSnapshot.data.docs
+                //                           .map((announcement) {
+                //                         return HomeAnnouncementTile(
+                //                           announcement.data()['text'],
+                //                           announcementTime: announcement
+                //                               .data()['time'],
+                //                           courseId: courses.id,
+                //                         );
+                //                       }).toList();
+                //
+                //                       List<Widget> finalList =
+                //                       announcementSnapshot.data.docs
+                //                           .map((announcement) {
+                //                         return HomeAnnouncementTile(
+                //                           announcement.data()['text'],
+                //                           announcementTime: announcement
+                //                               .data()['time'],
+                //                           courseId: courses.id,
+                //                         );
+                //                       }).toList();
+                //
+                //                       return Column(
+                //                           children: finalList.sublist(
+                //                               0,
+                //                               min(finalList.length,
+                //                                   1)));
+                //
+                //                       // return Text("Loading");
+                //                     },
+                //                   );
+                //                 }).toList();
+                //                 return ListView(
+                //                   children: list,
+                //                 );
+                //               },
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                Expanded(
+                  flex: 2,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(FirebaseAuth.instance.currentUser.uid)
+                        .collection('enrolledCourses')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: circularProgress(),
+                        );
+                      }
+
+                      List<dynamic> list = snapshot.data.docs
+                          .map((enrolledCoursesSnapshot) =>
+                          FutureBuilder(
+                            future: FirebaseFirestore.instance
+                                .collection("Courses")
+                                .doc(enrolledCoursesSnapshot.id)
+                                .get(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<DocumentSnapshot>
+                                courseSnapsot) {
+                              if (courseSnapsot.hasError) {
+                                return Text("Something went wrong");
+                              }
+
+                              if (courseSnapsot.connectionState ==
+                                  ConnectionState.done) {
+                                return MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Course(
+                                                  courseSnapsot
+                                                      .data.id,
+                                                  title: courseSnapsot
+                                                      .data
+                                                      .data()['name'],
+                                                  description:
+                                                  courseSnapsot
+                                                      .data
+                                                      .data()[
+                                                  'description'],
+                                                )),
+                                      );
+                                    },
+                                    child: EnrolledCoursesTile(
+                                        courseSnapsot.data
+                                            .data()['name'],
+                                        enrolledCoursesSnapshot.id),
+                                  ),
+                                );
+                              }
+                              return Center(
+                                child: circularProgress(),
+                              );
+                            },
+                          ))
+                          .toList();
+
+                      return GridView.builder(
+                        gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                        ),
+                        primary: false,
+                        padding: const EdgeInsets.all(20),
+                        itemCount: list.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return list[index];
+                        },
+                      );
+                    },
+                  ),
+                ),
+
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
