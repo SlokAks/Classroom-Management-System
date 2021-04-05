@@ -4,6 +4,7 @@ import 'package:classroom_management/screens/AssignmentSubmissions.dart';
 import 'package:classroom_management/screens/AssignmentView.dart';
 import 'package:classroom_management/screens/EditAssignment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomAssignmentListTile extends StatelessWidget {
@@ -32,37 +33,46 @@ class CustomAssignmentListTile extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              Container(
+                padding: EdgeInsets.all(8.0),
+
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: <Color>[Colors.grey[700],Colors.white])),
+
+                // color: Colors.grey[600],
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(title == null ? "" : title),
+                    Text(title == null ? "" : title,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                     SizedBox(
                       width: 20.0,
                     ),
-                    Text("Due Date : " + dueDate.toDate().toString()),
+                    Text("Due Date : " + dueDate.toDate().toString(),
+                    style: TextStyle(
+                      color: Colors.red[900],
+                    ),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(
-                height: 5.0,
-              ),
-              Divider(),
-              SizedBox(
-                height: 5.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              Container(
+                padding: EdgeInsets.all(8.0),
+                color: Colors.grey[100],
                 child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       description == null ? "" : description,
                       textAlign: TextAlign.left,
                     )),
-              ),
-              Divider(),
-              SizedBox(
-                height: 5.0,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -77,9 +87,6 @@ class CustomAssignmentListTile extends StatelessWidget {
                           html.window.open(url, 'new tab');
                         },
                         icon: Icon(Icons.assignment)),
-                    SizedBox(
-                      width: 60.0,
-                    ),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -99,11 +106,12 @@ class CustomAssignmentListTile extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      width: 60.0,
+                      width: 20.0,
                     ),
                     (() {
                       if (isProf) {
                         return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             ElevatedButton(
                               onPressed: () {
@@ -119,6 +127,9 @@ class CustomAssignmentListTile extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text("Edit Assignment"),
                               ),
+                            ),
+                            SizedBox(
+                              width: 20.0,
                             ),
                             ElevatedButton(
                               onPressed: () {

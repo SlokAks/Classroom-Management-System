@@ -46,7 +46,15 @@ class _CourseState extends State<Course> {
   Widget build(BuildContext context) {
     final _kTabPages = <Widget>[
       Column(
-        children: [Announcements(courseId), if(isProf)MakeAnnouncements(courseId)],
+        children: [
+          Container(
+            // color: Colors.grey[200],
+              child: Container(
+                  child: Announcements(courseId)
+              )
+          ),
+          if(isProf)MakeAnnouncements(courseId)
+        ],
       ),
       Assignments(
         courseId: courseId,
@@ -68,6 +76,13 @@ class _CourseState extends State<Course> {
       child: Scaffold(
         drawer: NavDrawer(),
         appBar: AppBar(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[Color(0xFFAD70FA), Color(0xFF8857DF)])),
+          ),
           title: Text(this.title),
           backgroundColor: Theme.of(context).accentColor,
           actions: <Widget>[
@@ -91,6 +106,7 @@ class _CourseState extends State<Course> {
               ),),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             ),
+            if(isProf)
             FlatButton(
               textColor: Colors.white,
               onPressed: () {
@@ -111,16 +127,13 @@ class _CourseState extends State<Course> {
             tabs: _kTabs,
           ),
         ),
-        body: isLoading?Center(child: CircularProgressIndicator()):TabBarView(
+        body: isLoading?Container(
+
+          color: Colors.grey[300],
+            child: Center(child: CircularProgressIndicator())):TabBarView(
           children: _kTabPages,
         ),
-        floatingActionButton: isProf?FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => AddAssignment(courseId: widget.courseId,)));
-          },
-          icon: Icon(Icons.add),
-          label: Text("Add Assignment"),
-        ): Container() ,
+
       ),
     );
   }
