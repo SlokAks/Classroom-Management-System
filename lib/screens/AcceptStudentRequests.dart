@@ -1,3 +1,6 @@
+import 'package:classroom_management/variables/variables.dart';
+import 'package:classroom_management/widgets/verifyCourseTile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AcceptStudentRequests extends StatefulWidget {
@@ -14,17 +17,35 @@ class _AcceptStudentRequestsState extends State<AcceptStudentRequests> {
       appBar: AppBar(
         title: Text("Pending Requests"),
         actions: [
-          FlatButton(
-            textColor: Colors.white,
+          RaisedButton(
+            textColor: Colors.purple,
             onPressed: () {
 
             },
             child: Text("Manually Add a Student",style: TextStyle(
                 fontSize: 22
             ),),
-            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
           ),
         ],
+      ),
+
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection("Courses").doc(widget.courseId).collection("pendingRequests").snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if(snapshot.hasError){
+            return Center(child: Text("Error Occured in fetching details.."),);
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+          if(snapshot.hasData){
+    return ListView(
+    children: snapshot.data.docs.map((document) {
+      return VerifyCourseTile(courseId: widget.courseId,email: document['email'],uid: document['uid'] ,name: document['name'],);
+    } ).toList() );
+          }
+
+        },
       ),
 
     );

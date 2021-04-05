@@ -19,8 +19,11 @@ class CustomListTile extends StatelessWidget {
     await usersEnroledCourses.doc(courseId).set({
       "isVerified" : false
     });
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance.collection("users").doc(currentUser.uid).get();
     await FirebaseFirestore.instance.collection("Courses").doc(courseId).collection("pendingRequests").doc(currentUser.uid).set({
       "uid" : currentUser.uid,
+      "name" : documentSnapshot.data()['name'],
+      "email" : documentSnapshot.data()['email']
     });
     isEnroled = true;
   }
