@@ -10,12 +10,18 @@ class CustomListTile extends StatelessWidget {
   String title;
   String description;
   bool isEnroled = false;
+  bool isVerified=false;
   enrolCourse() async {
     CollectionReference usersEnroledCourses = FirebaseFirestore.instance
         .collection('users')
         .doc(currentUser.uid)
         .collection("enrolledCourses");
-    await usersEnroledCourses.doc(courseId).set({});
+    await usersEnroledCourses.doc(courseId).set({
+      "isVerified" : false
+    });
+    await FirebaseFirestore.instance.collection("Courses").doc(courseId).collection("pendingRequests").doc(currentUser.uid).set({
+      "uid" : currentUser.uid,
+    });
     isEnroled = true;
   }
 
@@ -29,7 +35,7 @@ class CustomListTile extends StatelessWidget {
   }
 
   CustomListTile(this.courseId,
-      {this.widget, this.title, this.description, this.isEnroled});
+      {this.widget, this.title, this.description, this.isEnroled,this.isVerified});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -120,9 +126,9 @@ class CustomListTile extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          isEnroled ? "Enroled" : "Not Enroled",
+                          isEnroled ? (  isVerified?"Enroled":"Request Pending"): "Not Enroled",
                           style: TextStyle(
-                              color: isEnroled ? Colors.green : Colors.red,
+                              color: isEnroled ? (isVerified?Colors.green:Colors.blue) : Colors.red,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -138,10 +144,10 @@ class CustomListTile extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => CourseDescription(
-                                    courseId,
-                                    title: title,
-                                    description: description,
-                                  )),
+                                courseId,
+                                title: title,
+                                description: description,
+                              )),
                         );
                       },
                       child: Padding(

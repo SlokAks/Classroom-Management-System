@@ -1,3 +1,4 @@
+import 'package:classroom_management/screens/AcceptStudentRequests.dart';
 import 'package:classroom_management/screens/AddAssignment.dart';
 import 'package:classroom_management/screens/HomeAnnouncementsPage.dart';
 import 'package:classroom_management/screens/MakeAnnouncements.dart';
@@ -87,6 +88,17 @@ class _CourseState extends State<Course> {
               onPressed: () {},
               child: Text("Students",style: TextStyle(
                 fontSize: 22
+              ),),
+              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+            ),
+            FlatButton(
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AcceptStudentRequests(courseId: courseId,)));
+              },
+              child: Text("Pending Requests",style: TextStyle(
+                  fontSize: 22
               ),),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             ),
