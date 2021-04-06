@@ -1,3 +1,4 @@
+import 'package:classroom_management/screens/ViewStudentProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:classroom_management/models/user.dart';
 class EnroledStudentTile extends StatelessWidget {
@@ -33,7 +34,9 @@ class EnroledStudentTile extends StatelessWidget {
                   ),
                 ),
 
-                ElevatedButton(onPressed: (){},
+                ElevatedButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewProflie(uid: curUser.id,)));
+                },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.teal,
                     onPrimary: Colors.white,

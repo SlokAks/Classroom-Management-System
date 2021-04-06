@@ -108,9 +108,9 @@ class CustomAssignmentListTile extends StatelessWidget {
                     SizedBox(
                       width: 20.0,
                     ),
-                    (() {
-                      if (isProf) {
-                        return Row(
+
+
+                     isProf? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             ElevatedButton(
@@ -148,9 +148,10 @@ class CustomAssignmentListTile extends StatelessWidget {
                               ),
                             )
                           ],
-                        );
-                      }
-                    }())
+                        ) : Container()
+
+
+
                   ],
                 ),
               )
