@@ -35,6 +35,7 @@ dependencies:
   table_calendar: ^2.3.3
   firebase_storage: ^8.0.0
   file_picker: ^3.0.0
+  getwidget: ^1.1.0
 
 
 dev_dependencies:

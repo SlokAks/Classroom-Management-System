@@ -51,11 +51,26 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
     }
     return null;
   }
-
+  String _validaterePass(String value){
+    if(rePass.text!=this._password) return "Password doesn't match!";
+    return null;
+  }
   register() async {
     bool done = true;
     print(this._email);
     print(this._password);
+    if(this._name==null || this._email==null || this._phoneNumber==null)
+      {
+        SnackBar snackBar = SnackBar(content: Text("Enter all Fields correctly"));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        return;
+      }
+    if(rePass.text!=this._password){
+      SnackBar snackBar = SnackBar(content: Text("Passwords doesn't match !"));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    }
+
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -85,7 +100,7 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
       });
     }
   }
-
+  TextEditingController rePass= TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -226,21 +241,34 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
                                     const SizedBox(height: 24.0),
                                     // "Password" form.
 
-                                    PasswordField(
-                                      fieldKey: _passwordFieldKey,
-                                      helperText: 'Not more than 8 characters.',
-                                      labelText: 'Password *',
-                                      onFieldSubmitted: (String value) {
-                                        setState(() {
-                                          this._password = value;
-                                        });
+//                                    PasswordField(
+//                                      fieldKey: _passwordFieldKey,
+//                                      helperText: 'Not more than 8 characters.',
+//                                      labelText: 'Password *',
+//                                      onFieldSubmitted: (String value) {
+//                                        setState(() {
+//                                          this._password = value;
+//                                        });
+//                                      },
+//                                    ),
+                                    TextFormField(
+                                      decoration: const InputDecoration(
+                                        border: UnderlineInputBorder(),
+                                        filled: true,
+                                        icon: Icon(Icons.security),
+                                        labelText: 'Type password (max 8-characters)',
+                                      ),
+                                      maxLength: 8,
+                                      obscureText: true,
+                                      onChanged: (value){
+                                        this._password=value;
                                       },
                                     ),
                                     const SizedBox(height: 24.0),
                                     // "Re-type password" form.
                                     TextFormField(
-                                      enabled: this._password != null &&
-                                          this._password.isNotEmpty,
+                                      controller: rePass,
+                                      validator: _validaterePass,
                                       decoration: const InputDecoration(
                                         border: UnderlineInputBorder(),
                                         filled: true,
