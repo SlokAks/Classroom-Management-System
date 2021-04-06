@@ -37,6 +37,7 @@ class _AssignmentSubmissionsState extends State<AssignmentSubmissions> {
                 Text(
                   'EMAIL',
                   style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -50,6 +51,7 @@ class _AssignmentSubmissionsState extends State<AssignmentSubmissions> {
                 Text(
                   'STUDENT NAME',
                   style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -63,6 +65,7 @@ class _AssignmentSubmissionsState extends State<AssignmentSubmissions> {
                 Text(
                   'WORK',
                   style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -76,6 +79,7 @@ class _AssignmentSubmissionsState extends State<AssignmentSubmissions> {
                 Text(
                   'Grade',
                   style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
                 ),
               ],
             )

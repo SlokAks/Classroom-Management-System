@@ -51,15 +51,26 @@ class _AssignmentSubmissionsTileState extends State<AssignmentSubmissionsTile> {
         text: gradeGiven.isEmpty ? "Not Graded" : gradeGiven);
 
     if (workSubmitted.isEmpty) {
-      workWidget = Expanded(child: Text('Not Submitted'));
-      gradeWidget = Expanded(child: Text('Cant Grade'));
+      workWidget = Expanded(
+          child: Text(
+        'Not Submitted',
+        textAlign: TextAlign.center,
+      ));
+      gradeWidget = Expanded(
+          child: Text(
+        'Cant Grade',
+        textAlign: TextAlign.center,
+      ));
     } else {
       workWidget = Expanded(
         child: ElevatedButton(
             onPressed: () {
               window.open(this.workSubmitted, 'new tab');
             },
-            child: Text('View Work')),
+            child: Text(
+              'View Work',
+              textAlign: TextAlign.center,
+            )),
       );
       gradeWidget = Expanded(
         child: Row(
