@@ -24,8 +24,19 @@ class _RemoveCourseState extends State<RemoveCourse> {
     return Scaffold(
       appBar: AppBar(
         title: Text('REMOVE COURSE'),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    Color(0xFFAD70FA),
+                    Color(0xFF8857DF)
+                  ])),
+        ),
       ),
       body:Container(
+        color: Colors.grey[200],
         child: StreamBuilder(
             stream: courseRef.snapshots(),
             builder: (BuildContext context,
@@ -43,20 +54,61 @@ class _RemoveCourseState extends State<RemoveCourse> {
                     if(!document["isdisabled"])
                     {
                       return
-                        Container(
-                          child: Column(
-                            children: [
-                              Text(document["name"]),
-                              Text(document["description"]),
-                              Text(document.id),
-                              RaisedButton(
-                                child: Text('REMOVE'),
-                                onPressed: () {
-                                  remCourse(document.id);
-                                },
+                        Row(
+                          children: [
+                            Expanded(child: Container()),
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                // padding: EdgeInsets.all(20),
+                                margin: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Container(
+                                        padding: EdgeInsets.all(20),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[700],
+                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+                                        ),
+                                        child: Text(document["name"]+'( '+document.id+' )')),
+                                    Container(
+                                        padding: EdgeInsets.all(20),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                        ),
+                                        child: Text(document["description"])),
+                                    // Container(
+                                    //
+                                    //     child: Text(document.id)),
+                                    Container(
+                                      padding: EdgeInsets.all(20),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20)),
+                                      ),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          remCourse(document.id);
+                                        },
+                                        child: Center(child: Text('REMOVE',
+                                        style: TextStyle(
+                                          color: Colors.blue,
+                                        ),
+                                        )),
+
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Expanded(child: Container()),
+                          ],
                         );
                     }
                     else{
