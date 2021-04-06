@@ -93,9 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: <Color>[
-                              Color(0xFFAD70FA),
-                              Color(0xFF8857DF)
-                            ])),
+                          Color(0xFFAD70FA),
+                          Color(0xFF8857DF)
+                        ])),
                   ),
                   actions: <Widget>[
                     MouseRegion(
@@ -135,9 +135,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: <Color>[
-                              Color(0xFFAD70FA),
-                              Color(0xFF8857DF)
-                            ])),
+                          Color(0xFFAD70FA),
+                          Color(0xFF8857DF)
+                        ])),
                   ),
                   actions: <Widget>[
                     MouseRegion(
@@ -251,56 +251,59 @@ class _HomeScreenState extends State<HomeScreen> {
                                   .snapshots(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot>
-                                  coursesSnapshot) {
+                                      coursesSnapshot) {
                                 if (!coursesSnapshot.hasData) {
                                   return circularProgress();
                                 }
                                 List<dynamic> list =
-                                coursesSnapshot.data.docs.map((courses) {
+                                    coursesSnapshot.data.docs.map((courses) {
                                   print(courses.id);
-                                  return StreamBuilder(
-                                    stream: FirebaseFirestore.instance
-                                        .collection("Courses")
-                                        .doc(courses.id)
-                                        .collection("Announcements")
-                                        .orderBy('time', descending: true)
-                                        .snapshots(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<QuerySnapshot>
-                                        announcementSnapshot) {
-                                      if (!announcementSnapshot.hasData) {
-                                        return Text("Looading");
-                                      }
+                                  if (courses.data()['isVerified'] == false)
+                                    return Container();
+                                  else
+                                    return StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection("Courses")
+                                          .doc(courses.id)
+                                          .collection("Announcements")
+                                          .orderBy('time', descending: true)
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              announcementSnapshot) {
+                                        if (!announcementSnapshot.hasData) {
+                                          return Text("Looading");
+                                        }
 
-                                      List<HomeAnnouncementTile> list =
-                                      announcementSnapshot.data.docs
-                                          .map((announcement) {
-                                        return HomeAnnouncementTile(
-                                          announcement.data()['text'],
-                                          announcementTime:
-                                          announcement.data()['time'],
-                                          courseId: courses.id,
-                                        );
-                                      }).toList();
+                                        List<HomeAnnouncementTile> list =
+                                            announcementSnapshot.data.docs
+                                                .map((announcement) {
+                                          return HomeAnnouncementTile(
+                                            announcement.data()['text'],
+                                            announcementTime:
+                                                announcement.data()['time'],
+                                            courseId: courses.id,
+                                          );
+                                        }).toList();
 
-                                      List<Widget> finalList =
-                                      announcementSnapshot.data.docs
-                                          .map((announcement) {
-                                        return HomeAnnouncementTile(
-                                          announcement.data()['text'],
-                                          announcementTime:
-                                          announcement.data()['time'],
-                                          courseId: courses.id,
-                                        );
-                                      }).toList();
+                                        List<Widget> finalList =
+                                            announcementSnapshot.data.docs
+                                                .map((announcement) {
+                                          return HomeAnnouncementTile(
+                                            announcement.data()['text'],
+                                            announcementTime:
+                                                announcement.data()['time'],
+                                            courseId: courses.id,
+                                          );
+                                        }).toList();
 
-                                      return Column(
-                                          children: finalList.sublist(
-                                              0, min(finalList.length, 1)));
+                                        return Column(
+                                            children: finalList.sublist(
+                                                0, min(finalList.length, 1)));
 
-                                      // return Text("Loading");
-                                    },
-                                  );
+                                        // return Text("Loading");
+                                      },
+                                    );
                                 }).toList();
                                 return ListView(
                                   children: list,
@@ -329,62 +332,68 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       }
 
-                      List<dynamic> list = snapshot.data.docs
-                          .map((enrolledCoursesSnapshot) => FutureBuilder(
-                        future: FirebaseFirestore.instance
-                            .collection("Courses")
-                            .doc(enrolledCoursesSnapshot.id)
-                            .get(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<DocumentSnapshot>
-                            courseSnapsot) {
-                          if (courseSnapsot.hasError) {
-                            return Text("Something went wrong");
-                          }
+                      List<dynamic> list =
+                          snapshot.data.docs.map((enrolledCoursesSnapshot) {
+                        if (enrolledCoursesSnapshot.data()['isVerified'] ==
+                            false) return Container();
+                        return FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection("Courses")
+                              .doc(enrolledCoursesSnapshot.id)
+                              .get(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<DocumentSnapshot> courseSnapsot) {
+                            if (courseSnapsot.hasError) {
+                              return Text("Something went wrong");
+                            }
 
-                          if (courseSnapsot.connectionState ==
-                              ConnectionState.done) {
-                            return MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Course(
-                                          courseSnapsot.data.id,
-                                          title: courseSnapsot.data
-                                              .data()['name'],
-                                          description: courseSnapsot
-                                              .data
-                                              .data()[
-                                          'description'],
-                                        )),
-                                  );
-                                },
-                                child: EnrolledCoursesTile(
-                                    courseSnapsot.data.data()['name'],
-                                    enrolledCoursesSnapshot.id),
-                              ),
+                            if (courseSnapsot.connectionState ==
+                                ConnectionState.done) {
+                              return MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Course(
+                                                courseSnapsot.data.id,
+                                                title: courseSnapsot.data
+                                                    .data()['name'],
+                                                description: courseSnapsot.data
+                                                    .data()['description'],
+                                              )),
+                                    );
+                                  },
+                                  child: EnrolledCoursesTile(
+                                      courseSnapsot.data.data()['name'],
+                                      enrolledCoursesSnapshot.id),
+                                ),
+                              );
+                            }
+                            return Center(
+                              child: circularProgress(),
                             );
-                          }
-                          return Center(
-                            child: circularProgress(),
-                          );
-                        },
-                      ))
-                          .toList();
+                          },
+                        );
+                      }).toList();
+
+                      List<Widget> dummyList=[];
+
+                      for (int i = 0; i < list.length; i++) {
+                        if (list[i] != Container()) dummyList.add(list[i]);
+                      }
 
                       return GridView.builder(
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
                         ),
                         primary: false,
                         padding: const EdgeInsets.all(20),
-                        itemCount: list.length,
+                        itemCount: dummyList.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return list[index];
+                          return dummyList[index];
                         },
                       );
                     },
@@ -393,7 +402,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 1,
                     child: Container(
-                      // padding: EdgeInsets.all(15),
+                        // padding: EdgeInsets.all(15),
                         margin: EdgeInsets.only(top: 15, bottom: 15),
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -443,53 +452,53 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       List<dynamic> list = snapshot.data.docs
                           .map((enrolledCoursesSnapshot) => FutureBuilder(
-                        future: FirebaseFirestore.instance
-                            .collection("Courses")
-                            .doc(enrolledCoursesSnapshot.id)
-                            .get(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<DocumentSnapshot>
-                            courseSnapsot) {
-                          if (courseSnapsot.hasError) {
-                            return Text("Something went wrong");
-                          }
+                                future: FirebaseFirestore.instance
+                                    .collection("Courses")
+                                    .doc(enrolledCoursesSnapshot.id)
+                                    .get(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<DocumentSnapshot>
+                                        courseSnapsot) {
+                                  if (courseSnapsot.hasError) {
+                                    return Text("Something went wrong");
+                                  }
 
-                          if (courseSnapsot.connectionState ==
-                              ConnectionState.done) {
-                            return MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Course(
-                                          courseSnapsot.data.id,
-                                          title: courseSnapsot.data
-                                              .data()['name'],
-                                          description: courseSnapsot
-                                              .data
-                                              .data()[
-                                          'description'],
-                                        )),
+                                  if (courseSnapsot.connectionState ==
+                                      ConnectionState.done) {
+                                    return MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Course(
+                                                      courseSnapsot.data.id,
+                                                      title: courseSnapsot.data
+                                                          .data()['name'],
+                                                      description: courseSnapsot
+                                                              .data
+                                                              .data()[
+                                                          'description'],
+                                                    )),
+                                          );
+                                        },
+                                        child: EnrolledCoursesTile(
+                                            courseSnapsot.data.data()['name'],
+                                            enrolledCoursesSnapshot.id),
+                                      ),
+                                    );
+                                  }
+                                  return Center(
+                                    child: circularProgress(),
                                   );
                                 },
-                                child: EnrolledCoursesTile(
-                                    courseSnapsot.data.data()['name'],
-                                    enrolledCoursesSnapshot.id),
-                              ),
-                            );
-                          }
-                          return Center(
-                            child: circularProgress(),
-                          );
-                        },
-                      ))
+                              ))
                           .toList();
 
                       return GridView.builder(
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
                         ),
                         primary: false,

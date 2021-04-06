@@ -111,7 +111,9 @@ class _AssignmentSubmissionsState extends State<AssignmentSubmissions> {
   void initState() {
     studentsList.add(title());
     FirebaseFirestore.instance
-        .collection("users")
+        .collection("Courses")
+        .doc(courseId)
+        .collection("enrolledStudents")
         .get()
         .then((usersSnapshot) => usersSnapshot.docs.forEach((user) {
               print(user.id);
