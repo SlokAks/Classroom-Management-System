@@ -34,6 +34,7 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
         "contact": this._phoneNumber,
         "isProf": false,
         "isdisabled":false,
+        "isAdmin" :false,
       });
     }
   }
