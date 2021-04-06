@@ -33,7 +33,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget profilePicture;
   void initState() {
     // TODO: implement initState
-    profilePicture = CircularProgressIndicator();
+    profilePicture = CircleAvatar(
+      child: Icon(
+        Icons.person,
+        color: Colors.blue,
+      ),
+    );
     FirebaseFirestore.instance
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser.uid)

@@ -38,7 +38,7 @@ class _ViewProflieDialogState extends State<ViewProflieDialog> {
     address=Text('loading.....');
     profilePicture = CircleAvatar(
       child: Icon(
-        Icons.add,
+        Icons.person,
         color: Colors.blue,
       ),
     );
