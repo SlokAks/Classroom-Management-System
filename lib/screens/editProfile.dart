@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:classroom_management/screens/HomeScreen.dart';
 import 'package:classroom_management/screens/home.dart';
 import 'package:classroom_management/widgets/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -63,7 +64,7 @@ class _EditProfileState extends State<EditProfile> {
     Timer(Duration(seconds: 3), () {
       Navigator.pop(context);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
     });
   }
 
