@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
-class TextFormFieldExample extends StatefulWidget {
-  const TextFormFieldExample({Key key}) : super(key: key);
+class AddProf extends StatefulWidget {
+  const AddProf({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _TextFormFieldExampleState();
+  State<StatefulWidget> createState() => _AddProfState();
 }
 
-class _TextFormFieldExampleState extends State<TextFormFieldExample> {
+class _AddProfState extends State<AddProf> {
   final GlobalKey<FormFieldState<String>> _passwordFieldKey =
-      GlobalKey<FormFieldState<String>>();
+  GlobalKey<FormFieldState<String>>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
 
   saveUserInfoToFireStore() async {
@@ -32,8 +32,8 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
         "name": this._name,
         "email": this._email,
         "contact": this._phoneNumber,
-        "isProf": false,
-        "isdisabled":false,
+        "isProf": true,
+      "isdisabled":false,
       });
     }
   }
@@ -58,7 +58,7 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
     print(this._password);
     try {
       UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: this._email,
         password: this._password,
       );
@@ -78,7 +78,7 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
     if (done) {
       saveUserInfoToFireStore();
       SnackBar snackBar =
-          SnackBar(content: Text("Successfuly Registered! Logging in....."));
+      SnackBar(content: Text("Successfuly Added! "));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Timer(Duration(seconds: 3), () {
         Navigator.pop(context);
@@ -89,7 +89,7 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Registration             ")
+      appBar: CustomAppBar(title: "ADD PROFESSOR             ")
           .build(context),
       body: Stack(
         children: [
@@ -136,7 +136,7 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
                             Padding(
                               padding: const EdgeInsets.all(0.0),
                               child: Text(
-                                "Please enter your info",
+                                "Please enter Professor info",
                                 style: TextStyle(
                                   // fontSize: 92.0,
                                   color: Color(0xFFD427A4),
@@ -150,15 +150,15 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
                                     horizontal: 60.0),
                                 child: Column(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
+                                  CrossAxisAlignment.stretch,
                                   children: <Widget>[
                                     const SizedBox(height: 24.0),
                                     // "Name" form.
                                     TextFormField(
                                       textCapitalization:
-                                          TextCapitalization.words,
+                                      TextCapitalization.words,
                                       decoration: const InputDecoration(
                                         border: UnderlineInputBorder(),
                                         filled: true,
@@ -271,10 +271,10 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
                                               },
                                               elevation: 8.0,
                                               child: Center(
-                                                child: Text("Register"),
+                                                child: Text("Add Professor"),
                                               ),
                                               color:
-                                                  Theme.of(context).accentColor,
+                                              Theme.of(context).accentColor,
                                             ),
                                           ),
                                         ),

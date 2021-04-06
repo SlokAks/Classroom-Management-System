@@ -1,3 +1,4 @@
+import 'package:classroom_management/screens/AdminPanel.dart';
 import 'package:classroom_management/screens/HomeScreen.dart';
 import 'package:classroom_management/screens/editProfile.dart';
 import 'package:classroom_management/screens/home.dart';
@@ -98,6 +99,25 @@ class NavDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () => {Navigator.of(context).pop()},
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(
+                Icons.admin_panel_settings,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Admin Panel',
+                style: TextStyle(
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AdminPanel()));
+              },
             ),
             Divider(),
             ListTile(
