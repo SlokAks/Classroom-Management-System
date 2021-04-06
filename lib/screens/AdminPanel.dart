@@ -18,97 +18,170 @@ class _AdminPanelState extends State<AdminPanel> {
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
-        title: Text("ADMIN"),
+        title: Text("ADMIN PANEL"),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    Color(0xFFAD70FA),
+                    Color(0xFF8857DF)
+                  ])),
+        ),
       ),
       body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 6,
-            ),
-            Divider(),
-            SizedBox(
-              height: 6,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddProf()));
-                },
-                child: Text('ADD PROFESSOR')),
-            SizedBox(
-              height: 6,
-            ),
-            Divider(),
-            SizedBox(
-              height: 6,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RemoveProf()));
-                },
-                child: Text('REMOVE PROFESSOR')),
-            SizedBox(
-              height: 6,
-            ),
-            Divider(),
-            SizedBox(
-              height: 6,
-            ),
-            ElevatedButton(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFFD427A4),
+                  Color(0xFF20BBAA),
+                ]),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Divider(),
+              Divider(),
+              FlatButton(
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AddCourse()));
                 },
-                child: Text('ADD COURSE')),
-            SizedBox(
-              height: 6,
-            ),
-            Divider(),
-            SizedBox(
-              height: 6,
-            ),
-            ElevatedButton(
+                hoverColor: Colors.white60,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text('ADD COURSE', style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 26,
+                    // backgroundColor: Colors.black,
+                  )
+                  ),
+                ),
+                textColor: Colors.white,
+                shape: RoundedRectangleBorder(side: BorderSide(
+                  color: Colors.white70,
+                  width: 5,
+                  style: BorderStyle.solid,
+                ), borderRadius: BorderRadius.circular(50)),
+              ),
+              FlatButton(
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AssignCourses()));
                 },
-                child: Text('ASSIGN COURSE')),
-            SizedBox(
-              height: 6,
-            ),
-            Divider(),
-            SizedBox(
-              height: 6,
-            ),
-            ElevatedButton(
+                hoverColor: Colors.white60,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text('ASSIGN COURSE', style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 26,
+                    // backgroundColor: Colors.black,
+                  )
+                  ),
+                ),
+                textColor: Colors.white,
+                shape: RoundedRectangleBorder(side: BorderSide(
+                  color: Colors.white70,
+                  width: 5,
+                  style: BorderStyle.solid,
+                ), borderRadius: BorderRadius.circular(50)),
+              ),
+              FlatButton(
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => RemoveCourse()));
                 },
-                child: Text('REMOVE COURSE')),
-            SizedBox(
-              height: 6,
-            ),
-            Divider(),
-            SizedBox(
-              height: 6,
-            ),
-            ElevatedButton(
+                hoverColor: Colors.white60,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text('REMOVE COURSE', style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 26,
+                    // backgroundColor: Colors.black,
+                  )
+                  ),
+                ),
+                textColor: Colors.white,
+                shape: RoundedRectangleBorder(side: BorderSide(
+                  color: Colors.white70,
+                  width: 5,
+                  style: BorderStyle.solid,
+                ), borderRadius: BorderRadius.circular(50)),
+              ),
+              FlatButton(
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => RemoveStudent()));
                 },
-                child: Text('REMOVE STUDENT')),
-            SizedBox(
-              height: 6,
-            ),
-            Divider(),
-            SizedBox(
-              height: 6,
-            ),
-          ],
+                hoverColor: Colors.white60,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text('REMOVE STUDENT', style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 26,
+                    // backgroundColor: Colors.black,
+                  )
+                  ),
+                ),
+                textColor: Colors.white,
+                shape: RoundedRectangleBorder(side: BorderSide(
+                  color: Colors.white70,
+                  width: 5,
+                  style: BorderStyle.solid,
+                ), borderRadius: BorderRadius.circular(50)),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddProf()));
+                },
+                hoverColor: Colors.white60,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text('ADD PROFESSOR', style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 26,
+                    // backgroundColor: Colors.black,
+                  )
+                  ),
+                ),
+                textColor: Colors.white,
+                shape: RoundedRectangleBorder(side: BorderSide(
+                  color: Colors.white70,
+                  width: 5,
+                  style: BorderStyle.solid,
+                ), borderRadius: BorderRadius.circular(50)),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RemoveProf()));
+                },
+                hoverColor: Colors.white60,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text('REMOVE PROFESSOR', style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 26,
+                    // backgroundColor: Colors.black,
+                  )
+                  ),
+                ),
+                textColor: Colors.white,
+                shape: RoundedRectangleBorder(side: BorderSide(
+                  color: Colors.white70,
+                  width: 5,
+                  style: BorderStyle.solid,
+                ), borderRadius: BorderRadius.circular(50)),
+              ),
+              Divider(),
+              Divider(),
+            ],
+          ),
         ),
       ),
     );
