@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,7 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
   AnimationController _animationController;
   CalendarController _calendarController;
 
-  List<Color> randcolor=[
+  List<Color> randcolor = [
     Colors.red,
     Colors.green,
     Colors.blue,
@@ -26,7 +27,7 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
     Colors.purple,
     Colors.orange,
   ];
-  List<Color> randcolorlight=[
+  List<Color> randcolorlight = [
     Colors.red[100],
     Colors.green[100],
     Colors.blue[100],
@@ -36,10 +37,10 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
     Colors.orange[100],
   ];
   Color rColor;
-  Color randomColor(){
-    Random random= new Random();
-    int randomNumber=random.nextInt(7);
-    rColor=randcolor[randomNumber];
+  Color randomColor() {
+    Random random = new Random();
+    int randomNumber = random.nextInt(7);
+    rColor = randcolor[randomNumber];
     return randcolorlight[randomNumber];
   }
 
@@ -78,46 +79,48 @@ class _CalendarWithAssignment extends State<CalendarWithAssignment>
         .collection("enrolledCourses");
     enrolledCoursesReference.get().then((courseSnapshot) {
       courseSnapshot.docs.forEach((enrolledCourse) {
-        CollectionReference assignmentsReference = FirebaseFirestore.instance
-            .collection("Courses")
-            .doc(enrolledCourse.id)
-            .collection("Assignments");
-        assignmentsReference.get().then((assignmentSnapshot) {
-          assignmentSnapshot.docs.forEach((assignment) {
-            FirebaseFirestore.instance
-                .collection("Courses")
-                .doc(enrolledCourse.id.trim())
-                .collection("Assignments")
-                .doc((assignment.id).trim())
-                .get()
-                .then((value) {
-              print(assignment.id);
-              String title = value['title'];
-              Timestamp dueDate = value['dueDate'];
+        if (enrolledCourse.data()['isVerified'] == true) {
+          CollectionReference assignmentsReference = FirebaseFirestore.instance
+              .collection("Courses")
+              .doc(enrolledCourse.id)
+              .collection("Assignments");
+          assignmentsReference.get().then((assignmentSnapshot) {
+            assignmentSnapshot.docs.forEach((assignment) {
+              FirebaseFirestore.instance
+                  .collection("Courses")
+                  .doc(enrolledCourse.id.trim())
+                  .collection("Assignments")
+                  .doc((assignment.id).trim())
+                  .get()
+                  .then((value) {
+                print(assignment.id);
+                String title = value['title'];
+                Timestamp dueDate = value['dueDate'];
 
-              if (_events.containsKey(DateTime(dueDate.toDate().year,
-                  dueDate.toDate().month, dueDate.toDate().day))) {
-                print("ho");
-                _events[DateTime(dueDate.toDate().year, dueDate.toDate().month,
-                        dueDate.toDate().day)]
-                    .add([title, enrolledCourse.id]);
-              } else {
-                _events.addAll({
-                  DateTime(dueDate.toDate().year, dueDate.toDate().month,
-                      dueDate.toDate().day): [
-                    [title, enrolledCourse.id]
-                  ]
+                if (_events.containsKey(DateTime(dueDate.toDate().year,
+                    dueDate.toDate().month, dueDate.toDate().day))) {
+                  print("ho");
+                  _events[DateTime(dueDate.toDate().year,
+                          dueDate.toDate().month, dueDate.toDate().day)]
+                      .add([title, enrolledCourse.id]);
+                } else {
+                  _events.addAll({
+                    DateTime(dueDate.toDate().year, dueDate.toDate().month,
+                        dueDate.toDate().day): [
+                      [title, enrolledCourse.id]
+                    ]
+                  });
+                }
+                setState(() {
+                  DateTime now = DateTime.now();
+                  _selectedEvents =
+                      _events[DateTime(now.year, now.month, now.day)] ?? [];
+                  // print(_selectedEvents.toString());
                 });
-              }
-              setState(() {
-                DateTime now = DateTime.now();
-                _selectedEvents =
-                    _events[DateTime(now.year, now.month, now.day)] ?? [];
-                // print(_selectedEvents.toString());
               });
             });
           });
-        });
+        }
       });
     });
   }

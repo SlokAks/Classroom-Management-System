@@ -58,8 +58,8 @@ class _AddProfState extends State<AddProf> {
     bool done = true;
     print(this._email);
     print(this._password);
-    FirebaseApp app = await Firebase.initializeApp(
-        name: 'Secondary', options: Firebase.app().options);
+    FirebaseApp app =
+        await Firebase.initializeApp(options: Firebase.app().options);
     try {
       UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
           .createUserWithEmailAndPassword(
