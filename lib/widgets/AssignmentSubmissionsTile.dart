@@ -77,10 +77,12 @@ class _AssignmentSubmissionsTileState extends State<AssignmentSubmissionsTile> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            SizedBox(
-              width: 300,
-              child: TextFormField(
-                controller: _gradeTextFieldController,
+            Flexible(
+              child: SizedBox(
+                width: 300,
+                child: TextFormField(
+                  controller: _gradeTextFieldController,
+                ),
               ),
             ),
             ButtonTheme(
