@@ -36,17 +36,18 @@ class CustomAssignmentListTile extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(8.0),
 
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: <Color>[Colors.grey[700],Colors.white])),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: <Color>[Colors.grey[700], Colors.white])),
 
                 // color: Colors.grey[600],
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(title == null ? "" : title,
+                    Text(
+                      title == null ? "" : title,
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
@@ -56,10 +57,11 @@ class CustomAssignmentListTile extends StatelessWidget {
                     SizedBox(
                       width: 20.0,
                     ),
-                    Text("Due Date : " + dueDate.toDate().toString(),
-                    style: TextStyle(
-                      color: Colors.red[900],
-                    ),
+                    Text(
+                      "Due Date : " + dueDate.toDate().toString(),
+                      style: TextStyle(
+                        color: Colors.red[900],
+                      ),
                     ),
                   ],
                 ),
@@ -87,71 +89,73 @@ class CustomAssignmentListTile extends StatelessWidget {
                           html.window.open(url, 'new tab');
                         },
                         icon: Icon(Icons.assignment)),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AssignmentView(
-                                    title: this.title,
-                                    description: this.description,
-                                    courseId: this.courseId,
-                                    assignmentId: this.assignmentId,
-                                    dueDate: dueDate,
-                                    url: this.url)));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Go to Assignment"),
-                      ),
-                    ),
+                    (() {
+                      if (!isProf)
+                        return ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AssignmentView(
+                                        title: this.title,
+                                        description: this.description,
+                                        courseId: this.courseId,
+                                        assignmentId: this.assignmentId,
+                                        dueDate: dueDate,
+                                        url: this.url)));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Go to Assignment"),
+                          ),
+                        );
+                      else
+                        return Container();
+                    }()),
                     SizedBox(
                       width: 20.0,
                     ),
-
-
-                     isProf? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => EditAssignment(
-                                              courseId: courseId,
-                                              AssignmentId: assignmentId,
-                                            )));
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text("Edit Assignment"),
+                    isProf
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EditAssignment(
+                                                courseId: courseId,
+                                                AssignmentId: assignmentId,
+                                              )));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("Edit Assignment"),
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 20.0,
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AssignmentSubmissions(
-                                              courseId,
-                                              assignmentId,
-                                            )));
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text("View Submissions"),
+                              SizedBox(
+                                width: 20.0,
                               ),
-                            )
-                          ],
-                        ) : Container()
-
-
-
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AssignmentSubmissions(
+                                                courseId,
+                                                assignmentId,
+                                              )));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("View Submissions"),
+                                ),
+                              )
+                            ],
+                          )
+                        : Container()
                   ],
                 ),
               )

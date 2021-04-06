@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:classroom_management/screens/HomeScreen.dart';
 import 'package:classroom_management/widgets/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
-class TextFormFieldExample extends StatefulWidget {
-  const TextFormFieldExample({Key key}) : super(key: key);
+class Registration extends StatefulWidget {
+  const Registration({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _TextFormFieldExampleState();
+  State<StatefulWidget> createState() => _RegistrationState();
 }
 
-class _TextFormFieldExampleState extends State<TextFormFieldExample> {
+class _RegistrationState extends State<Registration> {
   final GlobalKey<FormFieldState<String>> _passwordFieldKey =
       GlobalKey<FormFieldState<String>>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
@@ -33,7 +34,8 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
         "email": this._email,
         "contact": this._phoneNumber,
         "isProf": false,
-        "isdisabled":false,
+        "isdisabled": false,
+        "isAdmin": false,
       });
     }
   }
@@ -51,21 +53,24 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
     }
     return null;
   }
-  String _validaterePass(String value){
-    if(rePass.text!=this._password) return "Password doesn't match!";
+
+  String _validaterePass(String value) {
+    if (rePass.text != this._password) return "Password doesn't match!";
     return null;
   }
+
   register() async {
     bool done = true;
     print(this._email);
     print(this._password);
-    if(this._name==null || this._email==null || this._phoneNumber==null)
-      {
-        SnackBar snackBar = SnackBar(content: Text("Enter all Fields correctly"));
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        return;
-      }
-    if(rePass.text!=this._password){
+    if (this._name == null ||
+        this._email == null ||
+        this._phoneNumber == null) {
+      SnackBar snackBar = SnackBar(content: Text("Enter all Fields correctly"));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    }
+    if (rePass.text != this._password) {
       SnackBar snackBar = SnackBar(content: Text("Passwords doesn't match !"));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return;
@@ -92,20 +97,23 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
     }
     if (done) {
       saveUserInfoToFireStore();
-      SnackBar snackBar =
-          SnackBar(content: Text("Successfuly Registered! Logging in....."));
+      SnackBar snackBar = SnackBar(
+          content: Text("Successfuly Registered! Logging you in....."));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Timer(Duration(seconds: 3), () {
         Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
       });
     }
   }
-  TextEditingController rePass= TextEditingController();
+
+  TextEditingController rePass = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Registration             ")
-          .build(context),
+      appBar: CustomAppBar(title: "Registration             ").build(context),
       body: Stack(
         children: [
           Container(
@@ -256,12 +264,13 @@ class _TextFormFieldExampleState extends State<TextFormFieldExample> {
                                         border: UnderlineInputBorder(),
                                         filled: true,
                                         icon: Icon(Icons.security),
-                                        labelText: 'Type password (max 8-characters)',
+                                        labelText:
+                                            'Type password (max 8-characters)',
                                       ),
                                       maxLength: 8,
                                       obscureText: true,
-                                      onChanged: (value){
-                                        this._password=value;
+                                      onChanged: (value) {
+                                        this._password = value;
                                       },
                                     ),
                                     const SizedBox(height: 24.0),

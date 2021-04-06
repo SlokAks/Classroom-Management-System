@@ -295,7 +295,7 @@ class _HomePageState extends State<HomePage> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          TextFormFieldExample()));
+                                                          Registration()));
 //                  login();
                                               isLoggedIn();
                                             },

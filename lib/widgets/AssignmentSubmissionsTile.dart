@@ -64,39 +64,47 @@ class _AssignmentSubmissionsTileState extends State<AssignmentSubmissionsTile> {
     } else {
       workWidget = Expanded(
         child: ElevatedButton(
-            onPressed: () {
-              window.open(this.workSubmitted, 'new tab');
-            },
-            child: Text(
-              'View Work',
-              textAlign: TextAlign.center,
-            )),
+          onPressed: () {
+            window.open(this.workSubmitted, 'new tab');
+          },
+          child: Text(
+            'View Work',
+            textAlign: TextAlign.center,
+          ),
+        ),
       );
       gradeWidget = Expanded(
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            SizedBox(
-              width: 100,
-              child: TextFormField(
-                controller: _gradeTextFieldController,
+            Flexible(
+              child: SizedBox(
+                width: 300,
+                child: TextFormField(
+                  controller: _gradeTextFieldController,
+                ),
               ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  String grade = _gradeTextFieldController.text;
+            ButtonTheme(
+              minWidth: 200,
+              height: 40,
+              child: ElevatedButton(
+                  onPressed: () {
+                    String grade = _gradeTextFieldController.text;
 //TODO: check if assignment is submitted
-                  FirebaseFirestore.instance
-                      .collection("users")
-                      .doc(studentId)
-                      .collection("enrolledCourses")
-                      .doc(courseId)
-                      .collection("Assignments")
-                      .doc(assignmentId)
-                      .update({'grade': grade});
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Graded')));
-                },
-                child: Text('Grade'))
+                    FirebaseFirestore.instance
+                        .collection("users")
+                        .doc(studentId)
+                        .collection("enrolledCourses")
+                        .doc(courseId)
+                        .collection("Assignments")
+                        .doc(assignmentId)
+                        .update({'grade': grade});
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text('Graded')));
+                  },
+                  child: Text('Grade')),
+            )
           ],
         ),
       );
@@ -108,6 +116,8 @@ class _AssignmentSubmissionsTileState extends State<AssignmentSubmissionsTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 60,
+      color: Colors.lightBlueAccent,
       child: Card(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -119,6 +129,11 @@ class _AssignmentSubmissionsTileState extends State<AssignmentSubmissionsTile> {
                 style: TextStyle(fontSize: 20),
               ),
             ),
+            VerticalDivider(
+              thickness: 2,
+              width: 20,
+              color: Colors.black,
+            ),
             Expanded(
               child: Text(
                 studentName,
@@ -126,7 +141,17 @@ class _AssignmentSubmissionsTileState extends State<AssignmentSubmissionsTile> {
                 style: TextStyle(fontSize: 20),
               ),
             ),
+            VerticalDivider(
+              thickness: 2,
+              width: 20,
+              color: Colors.black,
+            ),
             workWidget,
+            VerticalDivider(
+              thickness: 2,
+              width: 20,
+              color: Colors.black,
+            ),
             gradeWidget
           ],
         ),

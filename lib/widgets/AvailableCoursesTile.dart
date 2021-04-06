@@ -13,9 +13,9 @@ class AvailableCourses extends StatefulWidget {
 
 class _AvailableCoursesState extends State<AvailableCourses> {
   List<CustomListTile> list = [];
-  Map<String,bool> enroled ={};
+  Map<String, bool> enroled = {};
   bool isLoading = true;
-  bool isVerified=false;
+  bool isVerified = false;
   getEnroledCourses() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('users')
@@ -25,7 +25,7 @@ class _AvailableCoursesState extends State<AvailableCourses> {
     List<DocumentSnapshot> enrol = querySnapshot.docs.toList();
     for (int i = 0; i < enrol.length; i++) {
 //      enroled.add(enrol[i].id.toString());
-      enroled[enrol[i].id.toString()]=enrol[i].data()['isVerified'];
+      enroled[enrol[i].id.toString()] = enrol[i].data()['isVerified'];
     }
     setState(() {
       isLoading = false;
@@ -33,7 +33,7 @@ class _AvailableCoursesState extends State<AvailableCourses> {
   }
 
   CollectionReference courseCollectionReference =
-  FirebaseFirestore.instance.collection("Courses");
+      FirebaseFirestore.instance.collection("Courses");
   @override
   void initState() {
     // TODO: implement initState
@@ -46,59 +46,41 @@ class _AvailableCoursesState extends State<AvailableCourses> {
     return Container(
       child: isLoading
           ? Center(
-        child: circularProgress(),
-      )
+              child: circularProgress(),
+            )
           : StreamBuilder(
-          stream: courseCollectionReference.snapshots(),
-          builder: (BuildContext context,
-              AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Text("Something went wrong");
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            }
+              stream: courseCollectionReference.snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text("Something went wrong");
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
 
-            return ListView(
-              children: snapshot.data.docs.map(
-
+                return ListView(
+                  children: snapshot.data.docs.map(
                     (document) {
-                  bool isVerified=false;
-                  bool isEnroled = enroled.containsKey(document.id);
-                  if(isEnroled){
-                    isVerified = enroled[document.id];
-                  }
-//                       DocumentSnapshot documentSnap = await FirebaseFirestore.instance
-//                            .collection('users')
-//                            .doc(currentUser.uid)
-//                            .collection("enrolledCourses")
-//                            .doc(document.id).get();
-//                       setState(() {
-//                         isVerified=documentSnap.data()['isVerified'];
-//                       });
-//
-//                      }
-//                      if(isReqSubmitted) {
-//                            setState(() {
-//                              isInnerLoad=true;
-//                            });
-//                            find();
-//                      }
-//                      setState(() {
-//                        isInnerLoad=false;
-//                      });
+                      bool isVerified = false;
+                      bool isEnroled = enroled.containsKey(document.id);
+                      print(isVerified);
+                      print(isEnroled);
+                      if (isEnroled) {
+                        isVerified = enroled[document.id];
+                      }
 
-                  return CustomListTile(
-                    document.id,
-                    title: document["name"] + "(" + document.id + ")",
-                    description: document["description"],
-                    isEnroled: isEnroled,
-                    isVerified: isVerified,
-                  );
-                },
-              ).toList(),
-            );
-          }),
+                      return CustomListTile(
+                        document.id,
+                        title: document["name"] + "(" + document.id + ")",
+                        description: document["description"],
+                        isEnroled: isEnroled,
+                        isVerified: isVerified,
+                      );
+                    },
+                  ).toList(),
+                );
+              }),
     );
   }
 }
