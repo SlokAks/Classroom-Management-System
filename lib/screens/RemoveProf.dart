@@ -49,8 +49,6 @@ class _RemoveProfState extends State<RemoveProf> {
                               Text(document["name"]),
                               Text(document["email"]),
                               Text(document["contact"]),
-                              Text(document["isdisabled"].toString()),
-                              Text(document["isProf"].toString()),
                               RaisedButton(
                                 child: Text('REMOVE'),
                                 onPressed: () {

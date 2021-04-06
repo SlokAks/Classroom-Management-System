@@ -88,12 +88,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           return AvailableCoursesDialog();
                         });
                   },
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.add,
-                      color: Colors.blue,
-                    ),
-                    //TODO onpressed
+                  child: Row(
+                    children: [
+                      Icon(Icons.book),
+                      Text('Available Course'),
+                      SizedBox(width: 10,)
+                    ],
                   ),
                 ),
               ),

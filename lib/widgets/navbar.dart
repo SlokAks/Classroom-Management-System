@@ -47,27 +47,6 @@ class NavDrawer extends StatelessWidget {
             Divider(),
             ListTile(
               leading: Icon(
-                Icons.book,
-                color: Colors.white,
-              ),
-              title: Text(
-                'Available Courses',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold),
-              ),
-              onTap: () => {
-                Navigator.pop(context),
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AvailableCourses())),
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(
                 Icons.settings,
                 color: Colors.white,
               ),
