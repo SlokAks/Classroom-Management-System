@@ -66,6 +66,7 @@ class _AboutState extends State<About> {
 //                collapsedTitlebackgroundColor: Colors.transparent,
 //                expandedTitlebackgroundColor: Colors.transparent,
 //                contentbackgroundColor: Colors.transparent,
+              showAccordion: true,
                 collapsedIcon: Text(''),
                 expandedIcon: Text(''),
                 titlePadding: EdgeInsets.only(
@@ -110,11 +111,13 @@ class _AboutState extends State<About> {
 //                collapsedTitlebackgroundColor: Colors.transparent,
 //                expandedTitlebackgroundColor: Colors.transparent,
 //                contentbackgroundColor: Colors.transparent,
+              showAccordion: true,
                 collapsedIcon: Text(''),
                 expandedIcon: Text(''),
                 titlePadding: EdgeInsets.only(
                   right: 10,
                   left: 10,
+                  top: 12.0
                 ),
                 titleChild: ListTile(
                   leading: Icon(
