@@ -1,5 +1,6 @@
 import 'package:classroom_management/screens/AdminPanel.dart';
 import 'package:classroom_management/screens/HomeScreen.dart';
+import 'package:classroom_management/screens/about.dart';
 import 'package:classroom_management/screens/editProfile.dart';
 import 'package:classroom_management/screens/home.dart';
 import 'package:classroom_management/widgets/AvailableCoursesTile.dart';
@@ -65,19 +66,23 @@ class NavDrawer extends StatelessWidget {
             ),
             Divider(),
             ListTile(
+
               leading: Icon(
                 Icons.border_color,
                 color: Colors.white,
               ),
               title: Text(
-                'Feedback',
+                'About',
                 style: TextStyle(
                   fontSize: 22.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
-              onTap: () => {Navigator.of(context).pop()},
+              onTap: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => About()))
+              },
             ),
             Divider(),
             ListTile(
