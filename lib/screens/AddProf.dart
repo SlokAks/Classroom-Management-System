@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:classroom_management/widgets/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +17,7 @@ class AddProf extends StatefulWidget {
 
 class _AddProfState extends State<AddProf> {
   final GlobalKey<FormFieldState<String>> _passwordFieldKey =
-  GlobalKey<FormFieldState<String>>();
+      GlobalKey<FormFieldState<String>>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
 
   saveUserInfoToFireStore() async {
@@ -33,7 +34,8 @@ class _AddProfState extends State<AddProf> {
         "email": this._email,
         "contact": this._phoneNumber,
         "isProf": true,
-      "isdisabled":false,
+        "isdisabled": false,
+        "isAdmin": false,
       });
     }
   }
@@ -56,9 +58,11 @@ class _AddProfState extends State<AddProf> {
     bool done = true;
     print(this._email);
     print(this._password);
+    FirebaseApp app = await Firebase.initializeApp(
+        name: 'Secondary', options: Firebase.app().options);
     try {
-      UserCredential userCredential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+          .createUserWithEmailAndPassword(
         email: this._email,
         password: this._password,
       );
@@ -77,8 +81,7 @@ class _AddProfState extends State<AddProf> {
     }
     if (done) {
       saveUserInfoToFireStore();
-      SnackBar snackBar =
-      SnackBar(content: Text("Successfuly Added! "));
+      SnackBar snackBar = SnackBar(content: Text("Successfuly Added! "));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Timer(Duration(seconds: 3), () {
         Navigator.pop(context);
@@ -89,8 +92,7 @@ class _AddProfState extends State<AddProf> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "ADD PROFESSOR             ")
-          .build(context),
+      appBar: CustomAppBar(title: "ADD PROFESSOR             ").build(context),
       body: Stack(
         children: [
           Container(
@@ -150,15 +152,15 @@ class _AddProfState extends State<AddProf> {
                                     horizontal: 60.0),
                                 child: Column(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment:
-                                  CrossAxisAlignment.stretch,
+                                      CrossAxisAlignment.stretch,
                                   children: <Widget>[
                                     const SizedBox(height: 24.0),
                                     // "Name" form.
                                     TextFormField(
                                       textCapitalization:
-                                      TextCapitalization.words,
+                                          TextCapitalization.words,
                                       decoration: const InputDecoration(
                                         border: UnderlineInputBorder(),
                                         filled: true,
@@ -274,7 +276,7 @@ class _AddProfState extends State<AddProf> {
                                                 child: Text("Add Professor"),
                                               ),
                                               color:
-                                              Theme.of(context).accentColor,
+                                                  Theme.of(context).accentColor,
                                             ),
                                           ),
                                         ),

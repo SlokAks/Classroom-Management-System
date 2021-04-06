@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:classroom_management/screens/HomeScreen.dart';
 import 'package:classroom_management/widgets/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,9 +34,8 @@ class _RegistrationState extends State<Registration> {
         "email": this._email,
         "contact": this._phoneNumber,
         "isProf": false,
-        "isdisabled":false,
-        "isAdmin" :false,
-
+        "isdisabled": false,
+        "isAdmin": false,
       });
     }
   }
@@ -97,11 +97,14 @@ class _RegistrationState extends State<Registration> {
     }
     if (done) {
       saveUserInfoToFireStore();
-      SnackBar snackBar =
-          SnackBar(content: Text("Successfuly Registered! Logging in....."));
+      SnackBar snackBar = SnackBar(
+          content: Text("Successfuly Registered! Logging you in....."));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Timer(Duration(seconds: 3), () {
         Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
       });
     }
   }

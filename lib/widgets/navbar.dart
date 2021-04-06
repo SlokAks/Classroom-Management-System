@@ -1,9 +1,7 @@
-import 'package:classroom_management/screens/AdminPanel.dart';
 import 'package:classroom_management/screens/HomeScreen.dart';
 import 'package:classroom_management/screens/about.dart';
 import 'package:classroom_management/screens/editProfile.dart';
 import 'package:classroom_management/screens/home.dart';
-import 'package:classroom_management/widgets/AvailableCoursesTile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -66,7 +64,6 @@ class NavDrawer extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-
               leading: Icon(
                 Icons.border_color,
                 color: Colors.white,
@@ -80,27 +77,8 @@ class NavDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () => {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => About()))
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.admin_panel_settings,
-                color: Colors.white,
-              ),
-              title: Text(
-                'Admin Panel',
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AdminPanel()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => About()))
               },
             ),
             Divider(),
