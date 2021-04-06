@@ -378,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       }).toList();
 
-                      List<Widget> dummyList;
+                      List<Widget> dummyList=[];
 
                       for (int i = 0; i < list.length; i++) {
                         if (list[i] != Container()) dummyList.add(list[i]);
