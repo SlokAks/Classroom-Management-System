@@ -1,5 +1,6 @@
 import 'package:classroom_management/screens/AddCourse.dart';
 import 'package:classroom_management/screens/AddProf.dart';
+import 'package:classroom_management/screens/AssignCourses.dart';
 import 'package:classroom_management/screens/RemoveCourse.dart';
 import 'package:classroom_management/screens/RemoveProf.dart';
 import 'package:classroom_management/screens/RemoveStudent.dart';
@@ -50,6 +51,16 @@ class _AdminPanelState extends State<AdminPanel> {
                       MaterialPageRoute(builder: (context) => AddCourse()));
                 },
                 child: Text('ADD COURSE')
+            ),
+            SizedBox(height: 6,),
+            Divider(),
+            SizedBox(height: 6,),
+            ElevatedButton(
+                onPressed:(){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AssignCourses()));
+                },
+                child: Text('ASSIGN COURSE')
             ),
             SizedBox(height: 6,),
             Divider(),
