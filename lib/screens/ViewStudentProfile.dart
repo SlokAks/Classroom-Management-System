@@ -1,21 +1,16 @@
-import 'package:classroom_management/screens/HomeScreen.dart';
-import 'package:classroom_management/screens/editProfile.dart';
 import 'package:classroom_management/widgets/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ViewProflie extends StatefulWidget {
-
-  String uid="";
+  String uid = "";
   ViewProflie({this.uid});
   @override
   _ViewProflieDialogState createState() => _ViewProflieDialogState();
 }
 
-
 class _ViewProflieDialogState extends State<ViewProflie> {
-
   @override
   String urll;
   Widget profilePicture;
@@ -35,11 +30,11 @@ class _ViewProflieDialogState extends State<ViewProflie> {
     // TODO: implement initState
 
     User user = FirebaseAuth.instance.currentUser;
-    name=Text('loading.....');
-    contact=Text('loading.....');
-    email=Text('loading.....');
-    dob=Text('loading.....');
-    address=Text('loading.....');
+    name = Text('loading.....');
+    contact = Text('loading.....');
+    email = Text('loading.....');
+    dob = Text('loading.....');
+    address = Text('loading.....');
     profilePicture = CircleAvatar(
       child: Icon(
         Icons.add,
@@ -49,121 +44,119 @@ class _ViewProflieDialogState extends State<ViewProflie> {
 
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     users.doc(widget.uid).get().then((dataa) {
-      if(dataa['contact']!=null) {
+      if (dataa['contact'] != null) {
         ccontact = dataa['contact'];
         setState(() {
-          contact=Container(
+          contact = Container(
             constraints: BoxConstraints(maxWidth: 400),
-            child: Text('Contact : '+ccontact,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200
-              ),
+            child: Text(
+              'Contact : ' + ccontact,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
             ),
           );
         });
-      }
-      else{
+      } else {
         setState(() {
-          contact=Container(
+          contact = Container(
             constraints: BoxConstraints(maxWidth: 400),
-            child: Text('Contact : -',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200
-              ),
+            child: Text(
+              'Contact : -',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
             ),
           );
         });
       }
-      if(dataa['email']!=null) {
+      if (dataa['email'] != null) {
         cemail = dataa['email'];
         setState(() {
-          email=Container(
+          email = Container(
             constraints: BoxConstraints(maxWidth: 400),
-            child: Text('Email : '+cemail,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200
-              ),
+            child: Text(
+              'Email : ' + cemail,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
             ),
           );
         });
-      }
-      else{
+      } else {
         setState(() {
-          email=Container(
+          email = Container(
             constraints: BoxConstraints(maxWidth: 400),
-            child: Text('Email : -',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200
-              ),
+            child: Text(
+              'Email : -',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
             ),
           );
         });
       }
-      if(dataa['name']!=null) {
+      if (dataa['name'] != null) {
         cname = dataa['name'];
         setState(() {
-          name=Container(
+          name = Container(
             constraints: BoxConstraints(maxWidth: 400),
-            child: Text('Name : '+cname,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200
-              ),
+            child: Text(
+              'Name : ' + cname,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
+            ),
+          );
+        });
+      } else {
+        setState(() {
+          name = Container(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: Text(
+              'Name : -',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
             ),
           );
         });
       }
-      else{
-        setState(() {
-          name=Container(
-            constraints: BoxConstraints(maxWidth: 400),
-            child: Text('Name : -',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200
+      if (dataa.data().containsKey('address')) {
+        if (dataa['address'] != null) {
+          caddress = dataa['address'];
+          setState(() {
+            address = Container(
+              constraints: BoxConstraints(maxWidth: 400),
+              child: Text(
+                'Address: ' + caddress,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
               ),
+            );
+          });
+        }
+      } else {
+        setState(() {
+          address = Container(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: Text(
+              'Address: -',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
             ),
           );
         });
       }
-      if(dataa['address']!=null) {
-        caddress = dataa['address'];
-        setState(() {
-          address=Container(
-            constraints: BoxConstraints(maxWidth: 400),
-            child: Text('Address: '+caddress,
+      if (dataa.data().containsKey("dob")) {
+        if (dataa['dob'] != null) {
+          DateTime date = dataa['dob'].toDate();
+          cdob = date.year.toString() +
+              '-' +
+              date.month.toString() +
+              '-' +
+              date.day.toString();
+          setState(() {
+            dob = Text(
+              'D.O.B :' + cdob,
               style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200
+                fontSize: 20,
+                fontWeight: FontWeight.w200,
               ),
-
-            ),
-          );
-        });
-      }
-      else{
+              softWrap: true,
+            );
+          });
+        }
+      } else {
         setState(() {
-          address=Container(
-            constraints: BoxConstraints(maxWidth: 400),
-            child: Text('Address: -',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200
-              ),
-
-            ),
-          );
-        });
-      }
-      if(dataa['dob']!=null) {
-        DateTime date = dataa['dob'].toDate();
-        cdob = date.year.toString()+'-'+date.month.toString()+'-'+date.day.toString();
-        setState(() {
-          dob=Text('D.O.B :'+ cdob,
+          dob = Text(
+            'D.O.B : -',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w200,
@@ -172,34 +165,28 @@ class _ViewProflieDialogState extends State<ViewProflie> {
           );
         });
       }
-      else{
-        setState(() {
-          dob=Text('D.O.B : -' ,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w200,
-            ),
-            softWrap: true,
-          );
-        });
-      }
-      if(dataa['url']!=null) {
-        urll=dataa['url'];
-        this.setState(() {
-          profilePicture = CircleAvatar(
-            radius: 60,
-            backgroundImage: NetworkImage(urll),
-          );
-        });
-      }
+      if (dataa.data().containsKey('url')) {
+        if (dataa['url'] != null) {
+          urll = dataa['url'];
+          this.setState(() {
+            profilePicture = CircleAvatar(
+              radius: 60,
+              backgroundImage: NetworkImage(urll),
+            );
+          });
+        }
+      } else
+        profilePicture = CircleAvatar(child: Icon(Icons.person));
     });
-
 
     super.initState();
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Student Profile",).build(context),
+      appBar: CustomAppBar(
+        title: "Student Profile",
+      ).build(context),
       body: Container(
         child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
@@ -241,7 +228,6 @@ class _ViewProflieDialogState extends State<ViewProflie> {
                                     SizedBox(height: 20),
                                     address,
                                     SizedBox(height: 20),
-
                                   ],
                                 ),
                               ),

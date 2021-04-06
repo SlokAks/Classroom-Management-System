@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = true;
   void initState() {
     // TODO: implement initState
-    profilePicture = CircularProgressIndicator();
+    profilePicture = CircleAvatar(child: Icon(Icons.person));
     getData();
 
     super.initState();
@@ -54,14 +54,16 @@ class _HomeScreenState extends State<HomeScreen> {
         name = user['name'];
         isLoading = false;
       });
-      if (user['url'] != null) {
-        urll = user['url'];
-        this.setState(() {
-          profilePicture = CircleAvatar(
-            radius: 25,
-            backgroundImage: NetworkImage(urll),
-          );
-        });
+      if (user.data().containsKey('url')) {
+        if (user['url'] != null) {
+          urll = user['url'];
+          this.setState(() {
+            profilePicture = CircleAvatar(
+              radius: 25,
+              backgroundImage: NetworkImage(urll),
+            );
+          });
+        }
       }
     });
   }
@@ -378,7 +380,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       }).toList();
 
-                      List<Widget> dummyList=[];
+                      List<Widget> dummyList = [];
 
                       for (int i = 0; i < list.length; i++) {
                         if (list[i] != Container()) dummyList.add(list[i]);
