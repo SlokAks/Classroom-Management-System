@@ -1,5 +1,8 @@
+import 'package:classroom_management/screens/AddCourse.dart';
 import 'package:classroom_management/screens/AddProf.dart';
+import 'package:classroom_management/screens/RemoveCourse.dart';
 import 'package:classroom_management/screens/RemoveProf.dart';
+import 'package:classroom_management/screens/RemoveStudent.dart';
 import 'package:flutter/material.dart';
 
 
@@ -42,21 +45,30 @@ class _AdminPanelState extends State<AdminPanel> {
             Divider(),
             SizedBox(height: 6,),
             ElevatedButton(
-              // onPressed:
+                onPressed:(){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddCourse()));
+                },
                 child: Text('ADD COURSE')
             ),
             SizedBox(height: 6,),
             Divider(),
             SizedBox(height: 6,),
             ElevatedButton(
-              // onPressed:
+                onPressed:(){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RemoveCourse()));
+                },
                 child: Text('REMOVE COURSE')
             ),
             SizedBox(height: 6,),
             Divider(),
             SizedBox(height: 6,),
             ElevatedButton(
-              // onPressed:
+                onPressed:(){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RemoveStudent()));
+                },
                 child: Text('REMOVE STUDENT')
             ),
             SizedBox(height: 6,),

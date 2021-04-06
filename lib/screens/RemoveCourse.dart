@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class RemoveProf extends StatefulWidget {
+class RemoveCourse extends StatefulWidget {
   @override
-  _RemoveProfState createState() => _RemoveProfState();
+  _RemoveCourseState createState() => _RemoveCourseState();
 }
 
-class _RemoveProfState extends State<RemoveProf> {
-  CollectionReference userRef=FirebaseFirestore.instance.collection("users");
-  remProf(String id){
+class _RemoveCourseState extends State<RemoveCourse> {
+  CollectionReference courseRef=FirebaseFirestore.instance.collection("Courses");
+  remCourse(String id){
     setState(() async{
-      CollectionReference users = FirebaseFirestore.instance.collection('users');
+      CollectionReference users = FirebaseFirestore.instance.collection('Courses');
       await users.doc(id).update({
         "isdisabled":true,
       });
@@ -23,11 +23,11 @@ class _RemoveProfState extends State<RemoveProf> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('REMOVE PROFESSOR'),
+        title: Text('REMOVE COURSE'),
       ),
       body:Container(
         child: StreamBuilder(
-            stream: userRef.snapshots(),
+            stream: courseRef.snapshots(),
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -40,18 +40,19 @@ class _RemoveProfState extends State<RemoveProf> {
                 children: snapshot.data.docs.map(
                       (document) {
 
-                    if(!document["isdisabled"]&&document["isProf"]) {
+                    if(!document["isdisabled"])
+                    {
                       return
                         Container(
                           child: Column(
                             children: [
                               Text(document["name"]),
-                              Text(document["email"]),
-                              Text(document["contact"]),
+                              Text(document["description"]),
+                              Text(document.id),
                               RaisedButton(
                                 child: Text('REMOVE'),
                                 onPressed: () {
-                                  remProf(document["id"]);
+                                  remCourse(document.id);
                                 },
                               ),
                             ],

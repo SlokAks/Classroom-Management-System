@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class RemoveProf extends StatefulWidget {
+class RemoveStudent extends StatefulWidget {
   @override
-  _RemoveProfState createState() => _RemoveProfState();
+  _RemoveStudentState createState() => _RemoveStudentState();
 }
 
-class _RemoveProfState extends State<RemoveProf> {
+class _RemoveStudentState extends State<RemoveStudent> {
   CollectionReference userRef=FirebaseFirestore.instance.collection("users");
   remProf(String id){
     setState(() async{
@@ -23,7 +23,7 @@ class _RemoveProfState extends State<RemoveProf> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('REMOVE PROFESSOR'),
+        title: Text('REMOVE STUDENT'),
       ),
       body:Container(
         child: StreamBuilder(
@@ -40,7 +40,7 @@ class _RemoveProfState extends State<RemoveProf> {
                 children: snapshot.data.docs.map(
                       (document) {
 
-                    if(!document["isdisabled"]&&document["isProf"]) {
+                    if(!document["isdisabled"]&&!document["isProf"]) {
                       return
                         Container(
                           child: Column(
