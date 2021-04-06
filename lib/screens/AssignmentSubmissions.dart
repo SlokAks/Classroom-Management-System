@@ -22,68 +22,86 @@ class _AssignmentSubmissionsState extends State<AssignmentSubmissions> {
   Widget title() {
     return Container(
       margin: const EdgeInsets.all(10.0),
-      height: 30,
+      height: 60,
       child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Row(
-              children: [
-                Icon(
-                  Icons.email,
-                  color: Colors.blue,
-                  size: 24.0,
-                ),
-                Text(
-                  'EMAIL',
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Icon(
-                  Icons.perm_identity_outlined,
-                  color: Colors.blue,
-                  size: 24.0,
-                ),
-                Text(
-                  'STUDENT NAME',
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Icon(
-                  Icons.work,
-                  color: Colors.blue,
-                  size: 24.0,
-                ),
-                Text(
-                  'WORK',
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Icon(
-                  Icons.grade,
-                  color: Colors.blue,
-                  size: 24.0,
-                ),
-                Text(
-                  'Grade',
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            )
-          ],
+        color: Colors.blue,
+        child: IntrinsicHeight(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Row(
+                children: [
+                  Icon(
+                    Icons.email,
+                    color: Colors.blue,
+                    size: 24.0,
+                  ),
+                  Text(
+                    'EMAIL',
+                    style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              VerticalDivider(
+                thickness: 2,
+                width: 20,
+                color: Colors.black,
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.perm_identity_outlined,
+                    color: Colors.blue,
+                    size: 24.0,
+                  ),
+                  Text(
+                    'STUDENT NAME',
+                    style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              VerticalDivider(
+                thickness: 2,
+                width: 20,
+                color: Colors.black,
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.work,
+                    color: Colors.blue,
+                    size: 24.0,
+                  ),
+                  Text(
+                    'WORK',
+                    style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              VerticalDivider(
+                thickness: 2,
+                width: 20,
+                color: Colors.black,
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.grade,
+                    color: Colors.blue,
+                    size: 24.0,
+                  ),
+                  Text(
+                    'Grade',
+                    style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
