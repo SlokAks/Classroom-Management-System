@@ -33,7 +33,9 @@ class _RegistrationState extends State<Registration> {
         "email": this._email,
         "contact": this._phoneNumber,
         "isProf": false,
-        "isdisabled": false,
+        "isdisabled":false,
+        "isAdmin" :false,
+
       });
     }
   }
