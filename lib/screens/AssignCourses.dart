@@ -1,5 +1,6 @@
 import 'package:classroom_management/screens/ChooseCourse.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AssignCourses extends StatefulWidget {
@@ -25,6 +26,16 @@ class _AssignCoursesState extends State<AssignCourses> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Assign Course'),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    Color(0xFFAD70FA),
+                    Color(0xFF8857DF)
+                  ])),
+        ),
       ),
       body:Container(
         child: StreamBuilder(
@@ -44,22 +55,43 @@ class _AssignCoursesState extends State<AssignCourses> {
                     if(!document["isdisabled"]&&document["isProf"]) {
                       return
                         Container(
-                          child: Column(
+                          child: Row(
                             children: [
-                              Text(document["name"]),
-                              // Text(document["email"]),
-                              // Text(document["contact"]),
-                              RaisedButton(
-                                child: Text('ASSIGN COURSE'),
-                                onPressed: () {
-                                  // remProf(document["id"]);
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ChooseCourse(document.id);
-                                      });
-                                },
+                              Expanded(child: Container()),
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  padding: EdgeInsets.all(20),
+                                  margin: EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[400],
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(document["name"],
+                                      style: TextStyle(color: Colors.white),
+                                      ),
+                                      // Text(document["email"]),
+                                      // Text(document["contact"]),
+                                      RaisedButton(
+                                        color: Colors.blue,
+                                        child: Text('ASSIGN COURSE'),
+                                        onPressed: () {
+                                          // remProf(document["id"]);
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return ChooseCourse(document.id);
+                                              });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
+                              Expanded(child: Container()),
                             ],
                           ),
                         );

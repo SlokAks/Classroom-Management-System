@@ -27,48 +27,100 @@ class _ChooseCourseState extends State<ChooseCourse> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: Container(
-        color: Colors.white,
-        child: StreamBuilder(
-            stream: courseRef.snapshots(),
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return Text("Something went wrong");
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
-              }
-              return ListView(
-                children: snapshot.data.docs.map(
-                      (document) {
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+              child: Container(color: Colors.transparent,)),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
 
-                    if(!document["isdisabled"])
-                    {
-                      return
-                        Container(
-                          child: Column(
-                            children: [
-                              Text(document["name"]),
-                              Text(document["description"]),
-                              Text(document.id),
-                              RaisedButton(
-                                child: Text('ADD'),
-                                onPressed: () {
-                                  addcourse(pid,document.id);
-                                },
-                              ),
-                            ],
-                          ),
-                        );
+              child: StreamBuilder(
+                  stream: courseRef.snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text("Something went wrong");
                     }
-                    else{
-                      return Container();
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
                     }
-                  },
-                ).toList(),
-              );
-            }),
+                    return ListView(
+                      children: snapshot.data.docs.map(
+                            (document) {
+
+                          if(!document["isdisabled"])
+                          {
+                            return
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      // padding: EdgeInsets.all(20),
+                                      margin: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        children: [
+                                          Divider(color: Colors.white,),
+                                          Container(
+                                              padding: EdgeInsets.all(20),
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[700],
+                                                borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+                                              ),
+                                              child: Text(document["name"]+'( '+document.id+' )')),
+                                          Container(
+                                              padding: EdgeInsets.all(20),
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[300],
+                                              ),
+                                              child: Text(document["description"])),
+                                          // Container(
+                                          //
+                                          //     child: Text(document.id)),
+                                          Container(
+                                            padding: EdgeInsets.all(20),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20)),
+                                            ),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                addcourse(pid,document.id);
+                                              },
+                                              child: Center(child: Text('ADD',
+                                                style: TextStyle(
+                                                  color: Colors.blue,
+                                                ),
+                                              )),
+
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                          }
+                          else{
+                            return Container();
+                          }
+                        },
+                      ).toList(),
+                    );
+                  }),
+            ),
+          ),
+        ],
       ),
     );
   }

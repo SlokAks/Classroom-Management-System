@@ -24,8 +24,19 @@ class _RemoveStudentState extends State<RemoveStudent> {
     return Scaffold(
       appBar: AppBar(
         title: Text('REMOVE STUDENT'),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    Color(0xFFAD70FA),
+                    Color(0xFF8857DF)
+                  ])),
+        ),
       ),
       body:Container(
+        color: Colors.grey[200],
         child: StreamBuilder(
             stream: userRef.snapshots(),
             builder: (BuildContext context,
@@ -43,20 +54,63 @@ class _RemoveStudentState extends State<RemoveStudent> {
                     if(!document["isdisabled"]&&!document["isProf"]) {
                       return
                         Container(
-                          child: Column(
-                            children: [
-                              Text(document["name"]),
-                              Text(document["email"]),
-                              Text(document["contact"]),
-                              RaisedButton(
-                                child: Text('REMOVE'),
-                                onPressed: () {
-                                  remProf(document["id"]);
-                                },
-                              ),
-                            ],
-                          ),
-                        );
+                            child:Row(
+                              children: [
+                                Expanded(child: Container()),
+                                Expanded(
+                                  flex: 4,
+                                  child: Container(
+                                    // padding: EdgeInsets.all(20),
+                                    margin: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                        Container(
+                                            padding: EdgeInsets.all(20),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[700],
+                                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+                                            ),
+                                            child: Text(document["name"]),),
+                                        Container(
+                                            padding: EdgeInsets.all(20),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                            ),
+                                            child: Text(document["email"])),
+                                        // Container(
+                                        //
+                                        //     child: Text(document.id)),
+                                        Container(
+                                          padding: EdgeInsets.all(20),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20)),
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              remProf(document["id"]);
+                                            },
+                                            child: Center(child: Text('REMOVE',
+                                              style: TextStyle(
+                                                color: Colors.blue,
+                                              ),
+                                            )),
+
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(child: Container()),
+                              ],
+                            ));
+
                     }
                     else{
                       return Container();
