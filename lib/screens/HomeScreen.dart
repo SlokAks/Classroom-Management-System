@@ -5,6 +5,7 @@ import 'package:classroom_management/screens/AvailableCoursesDialog.dart';
 import 'package:classroom_management/screens/CalendarWithAssignment.dart';
 import 'package:classroom_management/screens/ViewProfileDialog.dart';
 import 'package:classroom_management/screens/course.dart';
+import 'package:classroom_management/screens/disabledAccountsWaitingPage.dart';
 import 'package:classroom_management/widgets/EnrolledCoursesTile.dart';
 import 'package:classroom_management/widgets/HomeAnnouncementTile.dart';
 import 'package:classroom_management/widgets/navbar.dart';
@@ -31,7 +32,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String name = "NA";
   String urll;
-  bool isAdmin = false, isProf = false;
+  bool isAdmin = false, isProf = false, isdisabled=false;
   Widget profilePicture;
   bool isLoading = true;
   void initState() {
@@ -52,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isAdmin = user['isAdmin'];
         isProf = user['isProf'];
         name = user['name'];
+        isdisabled=user['isdisabled'];
         isLoading = false;
       });
       if (user.data().containsKey('url')) {
@@ -81,6 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
           else {
             if (isAdmin)
               return AdminPanel();
+            else if(isdisabled)
+              return DisabledUserAccount();
             else if (isProf)
               return Scaffold(
                 backgroundColor: Color(0xFFF7F7F7),

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 // String pid;
+
+
 class ChooseCourse extends StatefulWidget {
 
   String profID;
@@ -12,12 +14,22 @@ class ChooseCourse extends StatefulWidget {
 class _ChooseCourseState extends State<ChooseCourse> {
   CollectionReference courseRef=FirebaseFirestore.instance.collection("Courses");
   @override
-
+   Widget messageToShow=Container();
   addcourse(String PID,String CID)async{
     CollectionReference user=FirebaseFirestore.instance.collection("users");
     await user
         .doc(PID).collection("CoursesTeaching").doc(CID)
         .set({});
+    setState(() {
+      messageToShow=Container(
+        child: Text('Course $CID has been Added Successfully!',
+        style: TextStyle(
+          color: Colors.green,
+          fontSize: 20,
+          fontWeight: FontWeight.w400
+        ),),
+      );
+    });
   }
 
 
@@ -31,7 +43,14 @@ class _ChooseCourseState extends State<ChooseCourse> {
         children: [
           Expanded(
             flex: 2,
-              child: Container(color: Colors.transparent,)),
+              child: Container(color: Colors.transparent,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(child: Container()),
+                  Center(child: messageToShow),
+                ],
+              ),)),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -104,6 +123,7 @@ class _ChooseCourseState extends State<ChooseCourse> {
 
                                             ),
                                           ),
+
                                         ],
                                       ),
                                     ),

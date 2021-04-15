@@ -95,7 +95,7 @@ class _RemoveCourseState extends State<RemoveCourse> {
                                         onTap: () {
                                           remCourse(document.id);
                                         },
-                                        child: Center(child: Text('REMOVE',
+                                        child: Center(child: Text('DISABLE',
                                         style: TextStyle(
                                           color: Colors.blue,
                                         ),

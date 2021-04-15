@@ -94,7 +94,7 @@ class _RemoveProfState extends State<RemoveProf> {
                                             onTap: () {
                                               remProf(document["id"]);
                                             },
-                                            child: Center(child: Text('REMOVE',
+                                            child: Center(child: Text('DISABLE',
                                               style: TextStyle(
                                                 color: Colors.blue,
                                               ),
